@@ -29,8 +29,8 @@ export default function BlogPostPage() {
               .gt('published_at', data.published_at || data.created_at)
               .order('published_at', { ascending: true }).limit(1),
           ])
-          if (prevRes.data?.[0]) setPrev(prevRes.data[0])
-          if (nextRes.data?.[0]) setNext(nextRes.data[0])
+          if (prevRes.data?.[0]) setPrev(prevRes.data[0] as unknown as BlogPost)
+          if (nextRes.data?.[0]) setNext(nextRes.data[0] as unknown as BlogPost)
         }
         setLoading(false)
       })
