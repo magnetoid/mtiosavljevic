@@ -1,0 +1,277 @@
+version: "3.9"
+
+# ─────────────────────────────────────────────────────────────
+#  Marko Tiosavljević — Personal Site Full Stack
+#  Services:
+#    · mtio-web       → Vite/React app (nginx)
+#    · mtio-db        → PostgreSQL (Supabase-compatible)
+#    · mtio-rest      → PostgREST API
+#    · mtio-auth      → GoTrue auth
+#    · mtio-storage   → Supabase Storage
+#    · mtio-meta      → pg-meta
+#    · mtio-kong      → Kong API gateway
+#    · mtio-studio    → Supabase Studio UI
+#
+#  Ports: APP=9140, KONG=9141, STUDIO=9142, REST=9143, AUTH=9144, STORAGE=9145, PG=9146
+# ─────────────────────────────────────────────────────────────
+
+networks:
+  mtio-net:
+    driver: bridge
+
+volumes:
+  mtio-postgres-data:
+    external: true
+  mtio-storage-data:
+  mtio-redis-data:
+
+services:
+
+  # ── Frontend app ──────────────────────────────────────────
+  mtio-web:
+    build:
+      context: ./mtiosavljevic-web
+      dockerfile: Dockerfile
+      args:
+        VITE_SUPABASE_URL: ${VITE_SUPABASE_URL}
+        VITE_SUPABASE_ANON_KEY: ${VITE_SUPABASE_ANON_KEY}
+        VITE_APP_URL: ${VITE_APP_URL:-https://mtiosavljevic.com}
+    container_name: mtio-web
+    restart: unless-stopped
+    ports:
+      - "127.0.0.1:${APP_PORT:-9140}:80"
+    networks:
+      - mtio-net
+    depends_on:
+      mtio-db:
+        condition: service_healthy
+    environment:
+      - NODE_ENV=production
+    healthcheck:
+      test: ["CMD", "wget", "-qO-", "http://127.0.0.1:80/health"]
+      interval: 30s
+      timeout: 5s
+      retries: 3
+      start_period: 15s
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.mtio-web-http.rule=Host(`${APP_DOMAIN:-mtiosavljevic.com}`)"
+      - "traefik.http.routers.mtio-web-http.entrypoints=web"
+      - "traefik.http.routers.mtio-web-http.middlewares=mtio-redirect-https"
+      - "traefik.http.routers.mtio-web.rule=Host(`${APP_DOMAIN:-mtiosavljevic.com}`)"
+      - "traefik.http.routers.mtio-web.entrypoints=websecure"
+      - "traefik.http.routers.mtio-web.tls.certresolver=letsencrypt"
+      - "traefik.http.services.mtio-web.loadbalancer.server.port=80"
+      - "traefik.http.middlewares.mtio-redirect-https.redirectscheme.scheme=https"
+      - "traefik.http.middlewares.mtio-redirect-https.redirectscheme.permanent=true"
+
+  # ── Supabase PostgreSQL ───────────────────────────────────
+  mtio-db:
+    image: supabase/postgres:15.1.0.147
+    container_name: mtio-db
+    restart: unless-stopped
+    ports:
+      - "127.0.0.1:${POSTGRES_PORT:-9146}:5432"
+    volumes:
+      - mtio-postgres-data:/var/lib/postgresql/data
+      - ./init.sql:/docker-entrypoint-initdb.d/init.sql:ro
+    networks:
+      - mtio-net
+    environment:
+      POSTGRES_DB: ${POSTGRES_DB:-mtiosavljevic}
+      POSTGRES_USER: ${POSTGRES_USER:-supabase}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-changeme_postgres}
+      JWT_SECRET: ${JWT_SECRET:-your-super-secret-jwt-key-min-32-chars}
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER:-supabase} -d ${POSTGRES_DB:-mtiosavljevic}"]
+      interval: 10s
+      timeout: 5s
+      retries: 30
+      start_period: 120s
+    labels:
+      - "traefik.enable=false"
+
+  # ── PostgREST ─────────────────────────────────────────────
+  mtio-rest:
+    image: postgrest/postgrest:v12.0.2
+    container_name: mtio-rest
+    restart: unless-stopped
+    depends_on:
+      mtio-db:
+        condition: service_healthy
+    networks:
+      - mtio-net
+    environment:
+      PGRST_DB_URI: postgres://${POSTGRES_USER:-supabase}:${POSTGRES_PASSWORD:-changeme_postgres}@mtio-db:5432/${POSTGRES_DB:-mtiosavljevic}
+      PGRST_DB_SCHEMA: public
+      PGRST_DB_ANON_ROLE: anon
+      PGRST_JWT_SECRET: ${JWT_SECRET:-your-super-secret-jwt-key-min-32-chars}
+      PGRST_DB_USE_LEGACY_GUCS: "false"
+      PGRST_APP_SETTINGS_JWT_SECRET: ${JWT_SECRET:-your-super-secret-jwt-key-min-32-chars}
+      PGRST_APP_SETTINGS_JWT_EXP: ${JWT_EXPIRY:-3600}
+    ports:
+      - "127.0.0.1:${POSTGREST_PORT:-9143}:3000"
+    labels:
+      - "traefik.enable=false"
+
+  # ── GoTrue Auth ───────────────────────────────────────────
+  mtio-auth:
+    image: supabase/gotrue:v2.143.0
+    container_name: mtio-auth
+    restart: unless-stopped
+    depends_on:
+      mtio-db:
+        condition: service_healthy
+    networks:
+      - mtio-net
+    environment:
+      GOTRUE_API_HOST: 0.0.0.0
+      GOTRUE_API_PORT: 9999
+      API_EXTERNAL_URL: ${SUPABASE_AUTH_EXTERNAL_URL:-http://localhost:9999}
+      GOTRUE_DB_DRIVER: postgres
+      GOTRUE_DB_DATABASE_URL: postgres://${POSTGRES_USER:-supabase}:${POSTGRES_PASSWORD:-changeme_postgres}@mtio-db:5432/${POSTGRES_DB:-mtiosavljevic}?search_path=auth
+      GOTRUE_SITE_URL: ${VITE_APP_URL:-https://mtiosavljevic.com}
+      GOTRUE_URI_ALLOW_LIST: ${GOTRUE_URI_ALLOW_LIST:-}
+      GOTRUE_DISABLE_SIGNUP: ${DISABLE_SIGNUP:-false}
+      GOTRUE_JWT_ADMIN_ROLES: service_role
+      GOTRUE_JWT_AUD: authenticated
+      GOTRUE_JWT_DEFAULT_GROUP_NAME: authenticated
+      GOTRUE_JWT_EXP: ${JWT_EXPIRY:-3600}
+      GOTRUE_JWT_SECRET: ${JWT_SECRET:-your-super-secret-jwt-key-min-32-chars}
+      GOTRUE_EXTERNAL_EMAIL_ENABLED: "true"
+      GOTRUE_MAILER_AUTOCONFIRM: ${MAILER_AUTOCONFIRM:-true}
+      GOTRUE_SMTP_ADMIN_EMAIL: ${SMTP_ADMIN_EMAIL:-marko.tiosavljevic@gmail.com}
+      GOTRUE_SMTP_HOST: ${SMTP_HOST:-smtp.gmail.com}
+      GOTRUE_SMTP_PORT: ${SMTP_PORT:-587}
+      GOTRUE_SMTP_USER: ${SMTP_USER:-}
+      GOTRUE_SMTP_PASS: ${SMTP_PASS:-}
+      GOTRUE_SMTP_SENDER_NAME: ${SMTP_SENDER_NAME:-Marko Tiosavljevic}
+    ports:
+      - "127.0.0.1:${AUTH_PORT:-9144}:9999"
+    labels:
+      - "traefik.enable=false"
+
+  # ── Supabase Storage ──────────────────────────────────────
+  mtio-storage:
+    image: supabase/storage-api:v0.46.4
+    container_name: mtio-storage
+    restart: unless-stopped
+    depends_on:
+      mtio-db:
+        condition: service_healthy
+      mtio-rest:
+        condition: service_started
+    networks:
+      - mtio-net
+    volumes:
+      - mtio-storage-data:/var/lib/storage
+    environment:
+      ANON_KEY: ${SUPABASE_ANON_KEY:-your-anon-key}
+      SERVICE_KEY: ${SUPABASE_SERVICE_KEY:-your-service-key}
+      POSTGREST_URL: http://mtio-rest:3000
+      PGRST_JWT_SECRET: ${JWT_SECRET:-your-super-secret-jwt-key-min-32-chars}
+      DATABASE_URL: postgres://${POSTGRES_USER:-supabase}:${POSTGRES_PASSWORD:-changeme_postgres}@mtio-db:5432/${POSTGRES_DB:-mtiosavljevic}
+      FILE_SIZE_LIMIT: 52428800
+      STORAGE_BACKEND: file
+      FILE_STORAGE_BACKEND_PATH: /var/lib/storage
+      TENANT_ID: stub
+      REGION: stub
+      GLOBAL_S3_BUCKET: stub
+      ENABLE_IMAGE_TRANSFORMATION: "true"
+    ports:
+      - "127.0.0.1:${STORAGE_PORT:-9145}:5000"
+    labels:
+      - "traefik.enable=false"
+
+  # ── Kong API Gateway ──────────────────────────────────────
+  mtio-kong:
+    image: kong:2.8.1
+    container_name: mtio-kong
+    restart: unless-stopped
+    depends_on:
+      - mtio-auth
+      - mtio-rest
+      - mtio-storage
+    networks:
+      - mtio-net
+    environment:
+      KONG_DATABASE: "off"
+      KONG_DECLARATIVE_CONFIG: /var/lib/kong/kong.yml
+      KONG_DNS_ORDER: LAST,A,CNAME
+      KONG_PLUGINS: request-transformer,cors,key-auth,acl,basic-auth
+      KONG_NGINX_PROXY_PROXY_BUFFER_SIZE: 160k
+      KONG_NGINX_PROXY_PROXY_BUFFERS: "64 160k"
+      SUPABASE_ANON_KEY: ${SUPABASE_ANON_KEY:-your-anon-key}
+      SUPABASE_SERVICE_KEY: ${SUPABASE_SERVICE_KEY:-your-service-key}
+      DASHBOARD_USERNAME: ${DASHBOARD_USERNAME:-admin}
+      DASHBOARD_PASSWORD: ${DASHBOARD_PASSWORD:-changeme_dashboard}
+    volumes:
+      - ./scripts/kong.yml:/var/lib/kong/kong.yml:ro
+    ports:
+      - "127.0.0.1:${KONG_HTTP_PORT:-9141}:8000"
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.mtio-kong.rule=Host(`${APP_DOMAIN:-mtiosavljevic.com}`) && PathPrefix(`/supabase`)"
+      - "traefik.http.routers.mtio-kong.entrypoints=websecure"
+      - "traefik.http.routers.mtio-kong.tls=true"
+      - "traefik.http.routers.mtio-kong.middlewares=mtio-strip-supabase"
+      - "traefik.http.middlewares.mtio-strip-supabase.stripprefix.prefixes=/supabase"
+      - "traefik.http.services.mtio-kong.loadbalancer.server.port=8000"
+      - "traefik.http.routers.mtio-kong-sub.rule=Host(`${SUPABASE_DOMAIN:-supabase.mtiosavljevic.com}`)"
+      - "traefik.http.routers.mtio-kong-sub.entrypoints=websecure"
+      - "traefik.http.routers.mtio-kong-sub.tls.certresolver=letsencrypt"
+      - "traefik.http.routers.mtio-kong-sub-http.rule=Host(`${SUPABASE_DOMAIN:-supabase.mtiosavljevic.com}`)"
+      - "traefik.http.routers.mtio-kong-sub-http.entrypoints=web"
+      - "traefik.http.routers.mtio-kong-sub-http.middlewares=mtio-redirect-https"
+
+  # ── Supabase Studio ───────────────────────────────────────
+  mtio-studio:
+    image: supabase/studio:20240101-8e4a094
+    container_name: mtio-studio
+    restart: unless-stopped
+    depends_on:
+      - mtio-kong
+    networks:
+      - mtio-net
+    environment:
+      STUDIO_PG_META_URL: http://mtio-meta:8080
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-changeme_postgres}
+      DEFAULT_ORGANIZATION_NAME: ${STUDIO_DEFAULT_ORGANIZATION:-Marko Tiosavljevic}
+      DEFAULT_PROJECT_NAME: ${STUDIO_DEFAULT_PROJECT:-mtiosavljevic}
+      SUPABASE_URL: http://mtio-kong:8000
+      SUPABASE_PUBLIC_URL: ${SUPABASE_PUBLIC_URL:-https://supabase.mtiosavljevic.com}
+      SUPABASE_ANON_KEY: ${SUPABASE_ANON_KEY:-your-anon-key}
+      SUPABASE_SERVICE_KEY: ${SUPABASE_SERVICE_KEY:-your-service-key}
+    ports:
+      - "127.0.0.1:${STUDIO_PORT:-9142}:3000"
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.mtio-studio-http.rule=Host(`${STUDIO_DOMAIN:-studio.mtiosavljevic.com}`)"
+      - "traefik.http.routers.mtio-studio-http.entrypoints=web"
+      - "traefik.http.routers.mtio-studio-http.middlewares=mtio-redirect-https"
+      - "traefik.http.routers.mtio-studio.rule=Host(`${STUDIO_DOMAIN:-studio.mtiosavljevic.com}`)"
+      - "traefik.http.routers.mtio-studio.entrypoints=websecure"
+      - "traefik.http.routers.mtio-studio.tls.certresolver=letsencrypt"
+      - "traefik.http.services.mtio-studio.loadbalancer.server.port=3000"
+      - "traefik.http.routers.mtio-studio.middlewares=mtio-studio-auth"
+      - "traefik.http.middlewares.mtio-studio-auth.basicauth.users=${STUDIO_AUTH_USERS:-admin:$$apr1$$xyz}"
+
+  # ── pg-meta ───────────────────────────────────────────────
+  mtio-meta:
+    image: supabase/postgres-meta:v0.75.0
+    container_name: mtio-meta
+    restart: unless-stopped
+    depends_on:
+      mtio-db:
+        condition: service_healthy
+    networks:
+      - mtio-net
+    environment:
+      PG_META_PORT: 8080
+      PG_META_DB_HOST: mtio-db
+      PG_META_DB_PORT: 5432
+      PG_META_DB_NAME: ${POSTGRES_DB:-mtiosavljevic}
+      PG_META_DB_USER: ${POSTGRES_USER:-supabase}
+      PG_META_DB_PASSWORD: ${POSTGRES_PASSWORD:-changeme_postgres}
+    labels:
+      - "traefik.enable=false"
