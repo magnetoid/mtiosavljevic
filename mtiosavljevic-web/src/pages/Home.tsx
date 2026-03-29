@@ -6,33 +6,33 @@ import type { BlogPost } from '@/lib/supabase'
 const EXPERTISE = [
   {
     icon: '◈',
-    title: 'Artificial Intelligence',
-    desc: 'Large language models, generative AI, model architecture, inference optimization, and applied AI at production scale.',
+    title: 'AI & Automation',
+    desc: 'Claude API, MCP workflows, Gemini, Ollama local LLMs, Dify, multi-agent orchestration, and AI-native product development.',
   },
   {
     icon: '◉',
-    title: 'LLM Systems',
-    desc: 'Prompt engineering, RAG pipelines, fine-tuning, evaluation frameworks, and agentic architectures.',
+    title: 'Full-Stack Development',
+    desc: 'React, Vite, TypeScript, Node.js, PHP. From simple landing pages to complex SaaS platforms with Supabase and Docker.',
   },
   {
     icon: '▣',
-    title: 'Data Systems',
-    desc: 'Scalable data pipelines, real-time analytics, distributed databases, and data infrastructure design.',
+    title: 'eCommerce Architecture',
+    desc: 'WooCommerce, Shopify, BigCommerce, Medusa v2. Custom plugins, multivendor, subscriptions, and BookVault POD.',
   },
   {
     icon: '◬',
-    title: 'Cybersecurity',
-    desc: 'AI-driven threat detection, adversarial ML, security audits, and secure system architecture.',
+    title: 'Performance Marketing',
+    desc: 'Google Ads, Meta Ads, Amazon Ads, GA4, GTM, HubSpot. Data-driven campaigns — 130+ businesses scaled.',
   },
   {
     icon: '◫',
-    title: 'Geopolitics & Tech',
-    desc: 'Technology policy, digital sovereignty, AI governance, and the intersection of geopolitics with emerging technology.',
+    title: 'DevOps & Cloud',
+    desc: 'Docker, Coolify, Hetzner VPS, Nginx, self-hosted Supabase, CrowdSec, CI/CD pipelines.',
   },
   {
     icon: '▶',
-    title: 'Applied Research',
-    desc: 'Translating cutting-edge research into production systems. From paper to deployed product.',
+    title: 'Brand & Graphic Design',
+    desc: '25 years from print to pixel. Adobe Creative Suite, brand identity systems, UI/UX, motion graphics.',
   },
 ]
 
@@ -104,7 +104,7 @@ export default function Home() {
           {/* Eyebrow */}
           <div className="flex items-center gap-3 mb-8 reveal">
             <span className="font-mono text-emerald-400 text-[0.65rem] tracking-[0.3em] uppercase">
-              AI Researcher &amp; Technologist
+              Senior Digital Consultant · Developer · AI Specialist
             </span>
             <div className="h-px w-12 bg-emerald-400/40" />
           </div>
@@ -118,7 +118,7 @@ export default function Home() {
             <span className="text-smoke">Tiosavljević</span>
             <br />
             <span className="text-emerald-400 text-[0.6em] tracking-widest font-mono text-[0.55em]">
-              // technocrat · blogger · investor
+              // founder · developer · marketer
             </span>
           </h1>
 
@@ -126,11 +126,12 @@ export default function Home() {
             className="text-smoke-dim text-xl max-w-2xl leading-relaxed mb-10 reveal reveal-delay-2"
             style={{ fontWeight: 300 }}
           >
-            30+ years building at the edge of technology. Working at the intersection of AI, data systems,
-            and applied research. Previously collaborated with{' '}
-            <span className="text-smoke">Google</span>,{' '}
-            <span className="text-smoke">Cloudflare</span>, and{' '}
-            <span className="text-smoke">Amazon</span>.
+            25+ years spanning graphic design, full-stack development, AI automation, and performance marketing.
+            Founder of{' '}
+            <span className="text-smoke">Imba Production</span>{' '}
+            and architect of 10+ live SaaS products.{' '}
+            <span className="text-smoke">130+ businesses scaled</span>{' '}
+            with a 100% Upwork Job Success Score.
           </p>
 
           <div className="flex flex-wrap gap-4 reveal reveal-delay-3">
