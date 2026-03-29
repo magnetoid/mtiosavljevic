@@ -3,41 +3,47 @@ import { Link } from 'react-router-dom'
 const SERVICES = [
   {
     icon: '◈',
-    title: 'AI Strategy Consulting',
-    desc: 'Help organizations navigate the AI landscape — from evaluating models and architectures to building AI roadmaps aligned with business goals.',
-    deliverables: ['AI readiness assessment', 'Technology selection', 'Implementation roadmap', 'Risk analysis'],
+    title: 'AI & Automation',
+    desc: 'Claude API, MCP workflows, Gemini, Ollama local LLMs, Dify, and multi-agent orchestration. From API integration to full agentic systems running on local inference hardware.',
+    deliverables: ['Multi-agent system design', 'LLM integration & workflows', 'AI content pipelines', 'Dify / LobeChat deployment'],
   },
   {
     icon: '◉',
-    title: 'LLM Integration',
-    desc: 'Design and implement large language model integrations: RAG systems, agentic architectures, fine-tuning pipelines, and evaluation frameworks.',
-    deliverables: ['System architecture', 'RAG pipeline design', 'Prompt engineering', 'Evaluation & benchmarking'],
+    title: 'Full-Stack Development',
+    desc: 'React, Vite, TypeScript, Node.js, PHP — from simple landing pages to complex SaaS platforms. 10+ live SaaS products shipped using Supabase, Docker, and Coolify.',
+    deliverables: ['SaaS MVP development', 'React / Next.js apps', 'Supabase & PostgreSQL', 'Docker & Coolify deployments'],
   },
   {
     icon: '▣',
-    title: 'Data Architecture',
-    desc: 'Scalable data infrastructure design — from ingestion pipelines and lakehouse architectures to real-time analytics and data mesh patterns.',
-    deliverables: ['Architecture review', 'Pipeline design', 'Scalability planning', 'Technology selection'],
+    title: 'eCommerce Architecture',
+    desc: 'WooCommerce, Shopify, BigCommerce, Medusa v2. Custom plugins, Dokan multivendor, subscriptions, BookVault POD, and 12-language international stores.',
+    deliverables: ['WooCommerce custom development', 'Shopify & BigCommerce', 'Multivendor platforms', 'Custom checkout plugins'],
   },
   {
     icon: '◬',
-    title: 'AI Security Audit',
-    desc: 'Security assessment for AI systems: adversarial ML, prompt injection, data poisoning, model extraction, and compliance review.',
-    deliverables: ['Threat modeling', 'Penetration testing', 'Vulnerability report', 'Remediation guidance'],
+    title: 'Performance Marketing',
+    desc: 'Google Ads, Meta Ads, Amazon Ads, GA4, GTM, HubSpot. Data-driven campaigns with full funnel strategy, CRO, and attribution. 130+ businesses scaled.',
+    deliverables: ['Google & Meta Ads campaigns', 'GA4 & GTM setup', 'HubSpot CRM', 'Email automation (Mailgun/Sendy)'],
   },
   {
     icon: '◫',
-    title: 'Technical Writing',
-    desc: 'Deep-dive technical content: whitepapers, research summaries, engineering blog posts, and documentation for complex AI and data systems.',
-    deliverables: ['Whitepapers', 'Engineering posts', 'Research summaries', 'API documentation'],
+    title: 'DevOps & Cloud',
+    desc: 'Hetzner VPS, Coolify, Docker Compose, self-hosted Supabase, Nginx, Plesk, CrowdSec security, and CI/CD pipelines. Full infrastructure design and management.',
+    deliverables: ['Hetzner VPS setup', 'Coolify & Docker Compose', 'Self-hosted Supabase', 'CI/CD pipelines'],
+  },
+  {
+    icon: '▶',
+    title: 'Brand Identity & Design',
+    desc: '25 years from pixel to brand system. Adobe Creative Suite, logo and brand identity design, UI/UX, print & packaging — from startup branding to full corporate identity.',
+    deliverables: ['Logo & brand identity', 'Print & packaging', 'UI/UX design', 'Brand guidelines & systems'],
   },
 ]
 
 const PROCESS = [
-  { step: '01', title: 'Discovery', desc: 'We start with a conversation about your goals, constraints, and technical context.' },
-  { step: '02', title: 'Analysis', desc: 'I review your current architecture, stack, or content needs and identify the critical path.' },
-  { step: '03', title: 'Proposal', desc: 'Clear scope, timeline, and deliverables — no vague retainers or scope creep.' },
-  { step: '04', title: 'Delivery', desc: 'Focused, documented work with regular check-ins and a final handover.' },
+  { step: '01', title: 'Discovery', desc: 'We start with a call about your goals, stack, and timeline. No forms, no gatekeeping — just a direct conversation.' },
+  { step: '02', title: 'Strategy', desc: 'I map out the full scope: architecture decisions, tech stack, timeline, and a realistic budget. All upfront.' },
+  { step: '03', title: 'Build', desc: 'Focused execution with weekly updates. Code in your repo from day one. No black boxes.' },
+  { step: '04', title: 'Ship & Hand Off', desc: 'Full documentation, knowledge transfer, and ongoing support as needed. You own everything.' },
 ]
 
 export default function Services() {
