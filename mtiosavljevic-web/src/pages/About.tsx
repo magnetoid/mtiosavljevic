@@ -1,23 +1,25 @@
 import { Link } from 'react-router-dom'
 
 const TIMELINE = [
-  { year: '1990s', label: 'Early internet infrastructure and systems programming' },
-  { year: '2000s', label: 'Distributed systems, database architecture, enterprise software' },
-  { year: '2010s', label: 'Cloud infrastructure, DevOps, big data systems' },
-  { year: '2015–', label: 'Collaboration with Google, Cloudflare, and Amazon' },
-  { year: '2020–', label: 'Deep focus on AI/ML, LLMs, and applied artificial intelligence' },
-  { year: 'Now', label: 'AI research, consulting, writing, and investing in frontier tech' },
+  { year: '1999–2003', label: 'Graphic Designer — print & brand design, logos, brochures, packaging, pre-press and colour management' },
+  { year: '2003–2007', label: 'Web Designer / Developer — HTML/CSS sites, early CMS platforms; Imba Production founded 2005' },
+  { year: '2007–2012', label: 'Digital Marketing Specialist — early SEO, Google AdWords, first eCommerce builds, video production' },
+  { year: '2012–2016', label: 'WordPress / WooCommerce Expert — custom themes at scale, Facebook Ads, 50+ clients across EU and US' },
+  { year: '2016–2020', label: 'Full-Stack eCommerce Architect — WooCommerce, Shopify, performance funnels, brand films, eLearning' },
+  { year: '2020–2022', label: 'Cloud / DevOps & SaaS Pivot — Docker, Hetzner, Coolify, Supabase; SaaS ideation and MVP development' },
+  { year: '2022–2024', label: 'SaaS Developer & AI Integrator — WooPulse, Torsor, Alethia; Claude API, Gemini, Ollama, Dify, MCP' },
+  { year: 'Now', label: 'AI-Native Product Builder — multi-agent systems, vibe coding, 10+ live SaaS products and applications' },
 ]
 
 const FOCUS_AREAS = [
-  'Large Language Models',
-  'AI Systems Architecture',
-  'Data Engineering',
-  'Cybersecurity',
-  'Tech Geopolitics',
-  'Applied AI Research',
-  'AI Governance',
-  'Distributed Systems',
+  'AI & Automation',
+  'Full-Stack Development',
+  'eCommerce Architecture',
+  'Performance Marketing',
+  'DevOps & Cloud',
+  'Brand Identity Design',
+  'SaaS Product Building',
+  'Technical SEO',
 ]
 
 export default function About() {
@@ -41,7 +43,7 @@ export default function About() {
             Marko Tiosavljević
           </h1>
           <p className="font-mono text-[0.65rem] tracking-[0.3em] uppercase text-smoke-faint reveal reveal-delay-2">
-            AI Researcher · Technologist · Blogger · Investor
+            Senior Digital Consultant · Full-Stack Developer · AI Specialist · Founder
           </p>
         </div>
       </section>
@@ -56,24 +58,28 @@ export default function About() {
             </div>
             <div className="flex flex-col gap-5 text-smoke-dim text-lg leading-relaxed" style={{ fontWeight: 300 }}>
               <p>
-                Hello — I'm Marko T., an AI researcher and technologist with a long-standing focus
-                on data-driven systems, scalable architectures, and applied artificial intelligence.
+                Multi-disciplinary digital professional with{' '}
+                <span className="text-smoke">25+ years of hands-on experience</span>{' '}
+                spanning graphic design, brand identity, web and software development,
+                performance marketing, video production, and AI automation.
               </p>
               <p>
-                My work is rooted in more than three decades of hands-on experience with software
-                and computational technologies. I have collaborated with{' '}
-                <span className="text-smoke">Google</span>,{' '}
-                <span className="text-smoke">Cloudflare</span>, and{' '}
-                <span className="text-smoke">Amazon</span>.
+                Started in print and brand design in the late 1990s, evolved through the full arc
+                of the web — from static HTML through CMS platforms, eCommerce, SaaS, and now
+                AI-native product development.
               </p>
               <p>
-                My background combines deep technical expertise with product and growth strategy.
-                I'm particularly interested in the interplay between AI capabilities and the
-                societal, geopolitical, and security implications of those capabilities.
+                Founder of{' '}
+                <span className="text-smoke">Imba Production</span>{' '}
+                (video & digital agency, est. 2005) and architect of multiple live SaaS products.
+                Proven record of scaling{' '}
+                <span className="text-smoke">130+ businesses</span>{' '}
+                with a 100% Job Success Score on Upwork across 15+ years.
               </p>
               <p>
-                I write to think — and to share what I learn. This blog is my public notebook:
-                honest, technical, occasionally opinionated.
+                Operates across the entire product lifecycle: brand identity and UI/UX design,
+                full-stack engineering, cloud infrastructure, paid media, analytics,
+                and go-to-market strategy.
               </p>
             </div>
 
@@ -97,7 +103,7 @@ export default function About() {
           <div className="lg:col-span-2 flex flex-col gap-10">
             {/* Focus areas */}
             <div>
-              <p className="font-mono text-[0.6rem] tracking-[0.2em] uppercase text-emerald-400 mb-4">Focus areas</p>
+              <p className="font-mono text-[0.6rem] tracking-[0.2em] uppercase text-emerald-400 mb-4">Core expertise</p>
               <div className="flex flex-wrap gap-2">
                 {FOCUS_AREAS.map(area => (
                   <span
@@ -110,14 +116,33 @@ export default function About() {
               </div>
             </div>
 
+            {/* Key stats */}
+            <div>
+              <p className="font-mono text-[0.6rem] tracking-[0.2em] uppercase text-emerald-400 mb-4">By the numbers</p>
+              <div className="flex flex-col gap-3">
+                {[
+                  { num: '25+', label: 'Years experience' },
+                  { num: '130+', label: 'Businesses scaled' },
+                  { num: '10+', label: 'Live SaaS products' },
+                  { num: '100%', label: 'Upwork Job Success Score' },
+                ].map(({ num, label }) => (
+                  <div key={label} className="flex items-baseline gap-3">
+                    <span className="font-mono text-emerald-400 text-lg">{num}</span>
+                    <span className="font-mono text-[0.6rem] tracking-wider uppercase text-smoke-faint">{label}</span>
+                  </div>
+                ))}
+              </div>
+            </div>
+
             {/* Links */}
             <div>
               <p className="font-mono text-[0.6rem] tracking-[0.2em] uppercase text-emerald-400 mb-4">Find me online</p>
               <div className="flex flex-col gap-2">
                 {[
-                  { label: 'LinkedIn', href: 'https://linkedin.com/in/mtiosavljevic' },
-                  { label: 'Twitter/X', href: 'https://twitter.com/mtiosavljevic' },
+                  { label: 'LinkedIn', href: 'https://linkedin.com/in/markotiosavljevic' },
+                  { label: 'Imba Production', href: 'https://imbaproduction.com' },
                   { label: 'GitHub', href: 'https://github.com/magnetoid' },
+                  { label: 'Upwork', href: 'https://upwork.com' },
                 ].map(({ label, href }) => (
                   <a
                     key={label}
@@ -139,7 +164,7 @@ export default function About() {
       <section className="py-20 px-6 lg:px-12 bg-ink-2">
         <div className="max-w-screen-xl mx-auto">
           <div className="flex items-center gap-3 mb-12 reveal">
-            <span className="font-mono text-[0.65rem] tracking-[0.3em] uppercase text-smoke-faint">Timeline</span>
+            <span className="font-mono text-[0.65rem] tracking-[0.3em] uppercase text-smoke-faint">25-Year Career Timeline</span>
             <div className="h-px flex-1 bg-white/5" />
           </div>
           <div className="flex flex-col gap-0 max-w-2xl">
