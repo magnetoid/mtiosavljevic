@@ -1,5 +1,15 @@
 import { Link } from 'react-router-dom'
 
+// Map service titles to slugs from SERVICES_DATA
+const SLUG_MAP: Record<string, string> = {
+  'AI & Automation': 'ai-video',
+  'Full-Stack Development': 'elearning-video',
+  'eCommerce Architecture': 'product-video',
+  'Performance Marketing': 'social-video',
+  'DevOps & Cloud': 'post-production',
+  'Brand Identity & Design': 'brand-video',
+}
+
 const SERVICES = [
   {
     icon: '◈',
@@ -76,27 +86,34 @@ export default function Services() {
       {/* ── SERVICES ─────────────────────────────────────────── */}
       <section className="pb-24 px-6 lg:px-12">
         <div className="max-w-screen-xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-6">
-          {SERVICES.map((service) => (
-            <div
-              key={service.title}
-              className="group p-8 border border-white/5 hover:border-emerald-400/30 bg-ink-2/50 hover:bg-ink-2 transition-all duration-300 reveal"
-            >
-              <div className="font-mono text-emerald-400 text-2xl mb-5 group-hover:text-cyan-400 transition-colors">
-                {service.icon}
-              </div>
-              <h3 className="font-mono text-smoke text-base tracking-wide mb-3">{service.title}</h3>
-              <p className="text-smoke-dim text-sm leading-relaxed mb-6" style={{ fontWeight: 300 }}>
-                {service.desc}
-              </p>
-              <div className="flex flex-wrap gap-2">
-                {service.deliverables.map(d => (
-                  <span key={d} className="font-mono text-[0.58rem] tracking-wider uppercase px-2 py-1 border border-white/8 text-smoke-faint">
-                    {d}
-                  </span>
-                ))}
-              </div>
-            </div>
-          ))}
+          {SERVICES.map((service) => {
+            const slug = SLUG_MAP[service.title]
+            return (
+              <Link
+                key={service.title}
+                to={slug ? `/services/${slug}` : '/services'}
+                className="group p-8 border border-white/5 hover:border-emerald-400/30 bg-ink-2/50 hover:bg-ink-2 transition-all duration-300 reveal block"
+              >
+                <div className="font-mono text-emerald-400 text-2xl mb-5 group-hover:text-cyan-400 transition-colors">
+                  {service.icon}
+                </div>
+                <h3 className="font-mono text-smoke text-base tracking-wide mb-3">{service.title}</h3>
+                <p className="text-smoke-dim text-sm leading-relaxed mb-6" style={{ fontWeight: 300 }}>
+                  {service.desc}
+                </p>
+                <div className="flex flex-wrap gap-2 mb-6">
+                  {service.deliverables.map(d => (
+                    <span key={d} className="font-mono text-[0.58rem] tracking-wider uppercase px-2 py-1 border border-white/8 text-smoke-faint">
+                      {d}
+                    </span>
+                  ))}
+                </div>
+                <span className="font-mono text-[0.65rem] tracking-widest uppercase text-emerald-400 group-hover:text-cyan-400 transition-colors">
+                  Learn more →
+                </span>
+              </Link>
+            )
+          })}
 
           {/* CTA card */}
           <div className="p-8 border border-emerald-400/20 bg-emerald-400/5 flex flex-col justify-between reveal">
