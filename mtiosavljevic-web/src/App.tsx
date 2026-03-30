@@ -8,6 +8,7 @@ import BlogPost from '@/pages/BlogPost'
 import About from '@/pages/About'
 import Services from '@/pages/Services'
 import Contact from '@/pages/Contact'
+import ServicePage from '@/pages/services/ServicePage'
 import AdminLayout from '@/admin/AdminLayout'
 import AdminLanding from '@/admin/AdminLanding'
 import Dashboard from '@/admin/Dashboard'
@@ -59,6 +60,7 @@ export default function App() {
       <Route path="/blog/:slug" element={<PublicLayout><BlogPost /></PublicLayout>} />
       <Route path="/about" element={<PublicLayout><About /></PublicLayout>} />
       <Route path="/services" element={<PublicLayout><Services /></PublicLayout>} />
+      <Route path="/services/:slug" element={<PublicLayout><ServicePage /></PublicLayout>} />
       <Route path="/contact" element={<PublicLayout><Contact /></PublicLayout>} />
 
       {/* Admin */}
