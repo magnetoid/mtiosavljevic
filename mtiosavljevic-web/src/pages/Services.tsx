@@ -2,12 +2,12 @@ import { Link } from 'react-router-dom'
 
 // Map service titles to slugs from SERVICES_DATA
 const SLUG_MAP: Record<string, string> = {
-  'AI & Automation': 'ai-video',
-  'Full-Stack Development': 'elearning-video',
-  'eCommerce Architecture': 'product-video',
-  'Performance Marketing': 'social-video',
-  'DevOps & Cloud': 'post-production',
-  'Brand Identity & Design': 'brand-video',
+  'AI & Automation': 'ai-automation',
+  'Full-Stack Development': 'fullstack-dev',
+  'eCommerce Architecture': 'ecommerce',
+  'Performance Marketing': 'performance-marketing',
+  'DevOps & Cloud': 'devops-cloud',
+  'Brand Identity & Design': 'brand-identity',
 }
 
 const SERVICES = [
