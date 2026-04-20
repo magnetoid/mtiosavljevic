@@ -2,9 +2,10 @@ import { Link } from 'react-router-dom'
 
 const LINKS = [
   { label: 'Home', to: '/' },
-  { label: 'Blog', to: '/blog' },
   { label: 'About', to: '/about' },
   { label: 'Services', to: '/services' },
+  { label: 'Projects', to: '/projects' },
+  { label: 'Blog', to: '/blog' },
   { label: 'Contact', to: '/contact' },
 ]
 
