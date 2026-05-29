@@ -14,7 +14,7 @@ export default function BlogPostPage() {
     if (!slug) return
     supabase
       .from('blog_posts')
-      .select('*')
+      .select('*, blog_categories(name, slug)')
       .eq('slug', slug)
       .single()
       .then(async ({ data }) => {
@@ -70,9 +70,9 @@ export default function BlogPostPage() {
           <Link to="/blog" className="font-mono text-[0.65rem] tracking-widest uppercase text-smoke-faint hover:text-emerald-400 transition-colors mb-8 inline-block">
             ← Blog
           </Link>
-          {post.category && (
+          {((post as any).blog_categories?.name || post.category) && (
             <div className="font-mono text-[0.65rem] tracking-[0.3em] uppercase text-emerald-400 mb-4">
-              {post.category}
+              {(post as any).blog_categories?.name || post.category}
             </div>
           )}
           <h1
