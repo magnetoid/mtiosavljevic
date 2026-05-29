@@ -48,20 +48,22 @@ export default function Blog() {
   useEffect(() => {
     supabase
       .from('blog_posts')
-      .select('*')
+      .select('*, blog_categories(name, slug)')
       .eq('published', true)
       .order('published_at', { ascending: false })
       .then(({ data }) => {
         if (data?.length) {
-          setPosts(data)
-          const cats = Array.from(new Set(data.map((p: BlogPost) => p.category).filter(Boolean))) as string[]
+          setPosts(data as BlogPost[])
+          const cats = Array.from(new Set(data.map((p: any) => p.blog_categories?.name || p.category).filter(Boolean))) as string[]
           setCategories(cats)
         }
         setLoading(false)
       })
   }, [])
 
-  const filtered = activeCategory === 'all' ? posts : posts.filter(p => p.category === activeCategory)
+  const filtered = activeCategory === 'all'
+    ? posts
+    : posts.filter(p => ((p as any).blog_categories?.name || p.category) === activeCategory)
 
   return (
     <>
@@ -148,11 +150,11 @@ export default function Blog() {
 
                   {/* Content */}
                   <div className="flex-1 min-w-0">
-                    {post.category && (
+                    {(post as any).blog_categories?.name || post.category ? (
                       <span className="font-mono text-[0.6rem] tracking-widest uppercase text-emerald-400 mb-2 block">
-                        {post.category}
+                        {(post as any).blog_categories?.name || post.category}
                       </span>
-                    )}
+                    ) : null}
                     <h2 className="font-mono text-smoke text-lg leading-snug mb-2 group-hover:text-emerald-400 transition-colors">
                       {post.title}
                     </h2>
