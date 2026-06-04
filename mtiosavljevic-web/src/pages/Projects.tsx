@@ -7,7 +7,7 @@ export default function Projects() {
     <>
       <Seo
         title="Projects — Selected Case Studies"
-        description="Selected case studies: Aletheia, WooPulse, nisam.video. AI platforms, SaaS products, and curation engines built end-to-end."
+        description="Selected case studies across AI, marketing, development, and DevOps: Aletheia, Morpheus OS, WooPulse, Quorum, Vektor, Imba CRM, and more — platforms and products built end-to-end."
         canonicalPath="/projects"
       />
 
@@ -40,9 +40,10 @@ export default function Projects() {
             className="text-smoke-dim max-w-2xl leading-relaxed reveal reveal-delay-2"
             style={{ fontSize: '1.05rem', fontWeight: 300 }}
           >
-            Three long-form case studies. An AI forensic platform fighting corruption.
-            An ecommerce AI brain for WooCommerce. A curation hub that has outlived a decade
-            of algorithm changes. All shipped, all live, all mine end-to-end.
+            Long-form case studies across AI, marketing, development, and DevOps —
+            a forensic intelligence platform, a plugin-native commerce OS, a multi-model
+            consensus engine, an autonomous newsroom, an AI CRM, and more.
+            All shipped, all mine end-to-end.
           </p>
         </div>
       </section>
