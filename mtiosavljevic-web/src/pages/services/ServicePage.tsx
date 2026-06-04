@@ -15,7 +15,7 @@ export default function ServicePage() {
   return (
     <>
       <Seo
-        title={`${service.label} | Tech Consulting Services`}
+        title={service.label}
         description={service.heroDesc}
         canonicalPath={`/services/${service.slug}`}
       />

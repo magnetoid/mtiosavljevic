@@ -200,7 +200,7 @@ export const SERVICES_DATA: ServiceData[] = [
     label: 'Brand Identity & Design',
     tagline: 'Visual systems that tell your story',
     color: '#10B981',
-    heroDesc: '25 years from pixel to brand system. Adobe Creative Suite, logo and brand identity design, UI/UX, print & packaging — from startup branding to full corporate identity. I create visual identities that work across every touchpoint.',
+    heroDesc: '35 years from pixel to brand system. Adobe Creative Suite, logo and brand identity design, UI/UX, print & packaging — from startup branding to full corporate identity. I create visual identities that work across every touchpoint.',
     stats: [
       { num: '25', label: 'years of design experience' },
       { num: '200+', label: 'brand identities created' },

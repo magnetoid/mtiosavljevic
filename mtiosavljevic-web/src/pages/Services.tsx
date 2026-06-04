@@ -44,7 +44,7 @@ const SERVICES = [
   {
     icon: '▶',
     title: 'Brand Identity & Design',
-    desc: '25 years from pixel to brand system. Adobe Creative Suite, logo and brand identity design, UI/UX, print & packaging — from startup branding to full corporate identity.',
+    desc: '35 years from pixel to brand system. Adobe Creative Suite, logo and brand identity design, UI/UX, print & packaging — from startup branding to full corporate identity.',
     deliverables: ['Logo & brand identity', 'Print & packaging', 'UI/UX design', 'Brand guidelines & systems'],
   },
 ]

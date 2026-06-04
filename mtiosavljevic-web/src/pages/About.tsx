@@ -59,7 +59,7 @@ export default function About() {
             <div className="flex flex-col gap-5 text-smoke-dim text-lg leading-relaxed" style={{ fontWeight: 300 }}>
               <p>
                 Multi-disciplinary digital professional with{' '}
-                <span className="text-smoke">25+ years of hands-on experience</span>{' '}
+                <span className="text-smoke">35+ years of hands-on experience</span>{' '}
                 spanning graphic design, brand identity, web and software development,
                 performance marketing, video production, and AI automation.
               </p>
