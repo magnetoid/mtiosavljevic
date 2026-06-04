@@ -32,7 +32,7 @@ const EXPERTISE = [
   {
     icon: '▶',
     title: 'Brand & Graphic Design',
-    desc: '25 years from print to pixel. Adobe Creative Suite, brand identity systems, UI/UX, motion graphics.',
+    desc: '35 years from print to pixel. Adobe Creative Suite, brand identity systems, UI/UX, motion graphics.',
   },
 ]
 
@@ -126,7 +126,7 @@ export default function Home() {
             className="text-smoke-dim text-xl max-w-2xl leading-relaxed mb-10 reveal reveal-delay-2"
             style={{ fontWeight: 300 }}
           >
-            25+ years spanning graphic design, full-stack development, AI automation, and performance marketing.
+            35+ years spanning graphic design, full-stack development, AI automation, and performance marketing.
             Founder of{' '}
             <span className="text-smoke">Imba Production</span>{' '}
             and architect of 10+ live SaaS products.{' '}

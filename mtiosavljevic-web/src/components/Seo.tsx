@@ -14,9 +14,9 @@ interface SeoProps {
   modifiedTime?: string
 }
 
-const SITE_NAME = 'Imba Production'
-const SITE_URL = 'https://imbaproduction.com'
-const DEFAULT_DESC = 'Next-gen video production powered by cinematic craft and AI strategy. Brand films, AI campaigns, product videos, drone, and social content.'
+const SITE_NAME = 'Marko Tiosavljević'
+const SITE_URL = 'https://mtiosavljevic.com'
+const DEFAULT_DESC = '35+ years across graphic design, full-stack development, AI automation, and performance marketing. Founder of Imba Production. 130+ businesses scaled. 100% Upwork JSS.'
 const DEFAULT_OG_IMAGE = `${SITE_URL}/og-default.jpg`
 
 export default function Seo({
@@ -32,7 +32,7 @@ export default function Seo({
   publishedTime,
   modifiedTime,
 }: SeoProps) {
-  const fullTitle = title ? `${title} | ${SITE_NAME}` : `${SITE_NAME} — Cinematic Video Production`
+  const fullTitle = title ? `${title} | ${SITE_NAME}` : `${SITE_NAME} — Senior Digital Consultant · Developer · AI Specialist`
   const canonical = canonicalPath ? `${SITE_URL}${canonicalPath}` : undefined
   const schemas = structuredData
     ? Array.isArray(structuredData) ? structuredData : [structuredData]
@@ -62,7 +62,7 @@ export default function Seo({
 
       {/* Twitter */}
       <meta name="twitter:card" content="summary_large_image" />
-      <meta name="twitter:site" content="@productionimba" />
+      <meta name="twitter:site" content="@mtiosavljevic" />
       <meta name="twitter:title" content={ogTitle ?? fullTitle} />
       <meta name="twitter:description" content={ogDescription ?? description} />
       <meta name="twitter:image" content={ogImage} />
