@@ -9,7 +9,7 @@ import { Separator } from '@/components/ui/separator'
 import {
   LayoutDashboard, Film, Image, FileText, MessageSquare, LogOut, Loader2,
   FolderOpen, Tag, Upload, Globe, Users, Search, ArrowLeft, ChevronRight, Star,
-  Send, Inbox, BarChart2, Settings, Receipt
+  ExternalLink
 } from 'lucide-react'
 
 const NAV_CMS_CONTENT = [
@@ -199,24 +199,20 @@ export default function AdminLayout() {
           </nav>
         )}
 
-        {/* CRM nav */}
+        {/* CRM nav — central imba-crm launcher + local quote requests */}
         {!isLanding && isCRM && (
           <nav className="flex-1 p-3 flex flex-col gap-0.5 overflow-y-auto">
-            <p className="px-3 py-1 text-[0.6rem] font-mono tracking-widest uppercase text-amber-500/40 mb-1">Pipeline</p>
-            <NavItem to="/admin/crm" label="Pipeline" icon={Users} crm />
-            <Separator className="my-2" />
-            <p className="px-3 py-1 text-[0.6rem] font-mono tracking-widest uppercase text-amber-500/40 mb-1">AI Outreach</p>
-            <NavItem to="/admin/crm/ai-search" label="Lead Finder" icon={Search} crm />
-            <NavItem to="/admin/crm/outreach" label="Outreach" icon={Send} crm />
-            <NavItem to="/admin/crm/inbox" label="Inbox" icon={Inbox} crm />
-            <Separator className="my-2" />
-            <p className="px-3 py-1 text-[0.6rem] font-mono tracking-widest uppercase text-amber-500/40 mb-1">Deal closing</p>
-            <NavItem to="/admin/crm/proposals" label="Proposals" icon={FileText} crm />
-            <NavItem to="/admin/crm/invoices" label="Invoices" icon={Receipt} crm />
-            <Separator className="my-2" />
-            <p className="px-3 py-1 text-[0.6rem] font-mono tracking-widest uppercase text-amber-500/40 mb-1">Intelligence</p>
-            <NavItem to="/admin/crm/analytics" label="Analytics" icon={BarChart2} crm />
-            <NavItem to="/admin/crm/settings" label="Settings" icon={Settings} crm />
+            <p className="px-3 py-1 text-[0.6rem] font-mono tracking-widest uppercase text-amber-500/40 mb-1">AI CRM</p>
+            <a
+              href={(import.meta.env.VITE_CRM_URL as string) || '/admin/crm'}
+              className="flex items-center gap-3 px-3 py-2 rounded-md text-sm bg-amber-500/10 text-amber-500 font-medium hover:bg-amber-500/15 transition-colors"
+            >
+              <ExternalLink className="h-4 w-4 flex-shrink-0" />
+              Open AI CRM
+            </a>
+            <p className="px-3 py-2 text-[0.62rem] text-muted-foreground/60 leading-snug">
+              Served centrally — updates automatically.
+            </p>
             <Separator className="my-2" />
             <p className="px-3 py-1 text-[0.6rem] font-mono tracking-widest uppercase text-amber-500/40 mb-1">Leads</p>
             <NavItem to="/admin/quotes" label="Quote Requests" icon={MessageSquare} crm />
