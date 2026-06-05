@@ -35,7 +35,9 @@ Migrations are plain SQL files in `migrations/` named `V###__description.sql`, a
 ./scripts/new-migration.sh "name" # scaffold next V### file
 ```
 
-The runner finds the container by `COOLIFY_APP_ID` (override via env if not on the default), bootstraps a `public.schema_migrations` table, and skips already-recorded versions. Never edit an applied migration — add a new one.
+The runner targets the DB container by its compose `container_name` (`mtio-db`; override with `DB_CONTAINER_NAME=…`, or set `COOLIFY_APP_ID` to use the legacy `supabase-db-<id>` name), connects as `POSTGRES_USER`/`POSTGRES_DB` (default `supabase`/`mtiosavljevic`), bootstraps a `public.schema_migrations` table, and skips already-recorded versions. Never edit an applied migration — add a new one.
+
+> **Deploy note:** the live site is the Coolify app **`mtiosavljevic-com`** (uuid `mxj8c7uxjb48rc3lixgdemeb`), repo `magnetoid/mtiosavljevic`, on `65.21.238.89`, fronted by Plesk nginx. Do **not** confuse it with the separate, legacy `imbaproduction-web-app` Coolify app (uuid `u46q4bzn4vrp4r62cplm4x0c`). Auto-deploy on push has been unreliable — verify/trigger the deploy in Coolify after pushing.
 
 ## Architecture
 
