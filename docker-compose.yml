@@ -36,6 +36,7 @@ services:
         VITE_SUPABASE_URL: ${VITE_SUPABASE_URL}
         VITE_SUPABASE_ANON_KEY: ${VITE_SUPABASE_ANON_KEY}
         VITE_APP_URL: ${VITE_APP_URL:-https://mtiosavljevic.com}
+        VITE_CRM_URL: ${VITE_CRM_URL:-https://crm.imbaproduction.com}
     container_name: mtio-web
     restart: unless-stopped
     ports:
