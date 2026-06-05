@@ -16,7 +16,13 @@
 set -e
 
 # ── Config ─────────────────────────────────────────────────────
-APP_ID="${COOLIFY_APP_ID:-u46q4bzn4vrp4r62cplm4x0c}"
+# The mtiosavljevic compose pins its DB container_name to `mtio-db`, so target
+# that directly. COOLIFY_APP_ID remains an optional fallback for the legacy
+# Coolify-generated name pattern (supabase-db-<app-id>).
+DB_CONTAINER_NAME="${DB_CONTAINER_NAME:-mtio-db}"
+APP_ID="${COOLIFY_APP_ID:-}"
+PG_USER="${POSTGRES_USER:-supabase}"
+PG_DB="${POSTGRES_DB:-mtiosavljevic}"
 DRY_RUN=false
 STATUS_ONLY=false
 
@@ -29,13 +35,18 @@ for arg in "$@"; do
 done
 
 # ── Find DB container ──────────────────────────────────────────
-DB_CONTAINER=$(docker ps --filter "name=supabase-db-${APP_ID}" --format "{{.Names}}" | head -1)
+# Prefer the explicit compose container_name (mtio-db); fall back to the legacy
+# Coolify-generated name (supabase-db-<app-id>) only if COOLIFY_APP_ID is set.
+DB_CONTAINER=$(docker ps --filter "name=^/${DB_CONTAINER_NAME}$" --format "{{.Names}}" | head -1)
+if [ -z "$DB_CONTAINER" ] && [ -n "$APP_ID" ]; then
+  DB_CONTAINER=$(docker ps --filter "name=supabase-db-${APP_ID}" --format "{{.Names}}" | head -1)
+fi
 
 if [ -z "$DB_CONTAINER" ]; then
-  echo "❌  Could not find supabase-db container for app: ${APP_ID}"
-  echo "    Override with: COOLIFY_APP_ID=<your-id> ./scripts/migrate.sh"
-  echo "    Current running containers:"
-  docker ps --filter "name=supabase-db" --format "    {{.Names}}"
+  echo "❌  Could not find the database container (looked for: ${DB_CONTAINER_NAME})"
+  echo "    Override with: DB_CONTAINER_NAME=<name> ./scripts/migrate.sh"
+  echo "    Postgres-like containers currently running:"
+  docker ps --filter "name=db" --format "    {{.Names}}"
   exit 1
 fi
 
@@ -43,7 +54,7 @@ echo "📦  DB container: $DB_CONTAINER"
 
 # ── psql helper ────────────────────────────────────────────────
 run_psql() {
-  docker exec "$DB_CONTAINER" psql -U postgres -d postgres -v ON_ERROR_STOP=1 "$@"
+  docker exec "$DB_CONTAINER" psql -U "$PG_USER" -d "$PG_DB" -v ON_ERROR_STOP=1 "$@"
 }
 
 # ── Bootstrap migrations table ─────────────────────────────────
