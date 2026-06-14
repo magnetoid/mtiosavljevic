@@ -2,7 +2,6 @@ import { useState, useEffect } from 'react'
 import { Link } from 'react-router-dom'
 import { supabase } from '@/lib/supabase'
 import type { BlogPost } from '@/lib/supabase'
-import { stripHtml } from '@/lib/sanitizeHtml'
 
 const DEMO_POSTS: BlogPost[] = [
   {
@@ -75,15 +74,18 @@ export default function Blog() {
           backgroundSize: '60px 60px',
         }} />
         <div className="max-w-screen-xl mx-auto relative z-10">
-          <span className="eyebrow-cyber">Publishing</span>
+          <div className="flex items-center gap-3 mb-6 reveal">
+            <span className="font-mono text-emerald-400 text-[0.65rem] tracking-[0.3em] uppercase">Writing</span>
+            <div className="h-px w-12 bg-emerald-400/40" />
+          </div>
           <h1
-            className="font-display text-smoke mb-4 reveal reveal-delay-1"
-            style={{ fontSize: 'clamp(2.4rem, 5vw, 4.5rem)' }}
+            className="font-mono font-light text-smoke mb-4 reveal reveal-delay-1"
+            style={{ fontSize: 'clamp(2rem, 4vw, 3.5rem)' }}
           >
             Blog
           </h1>
           <p className="text-smoke-dim text-lg max-w-xl reveal reveal-delay-2" style={{ fontWeight: 300 }}>
-            Live published content from the CMS, surfaced through the rebuilt public frontend.
+            Thinking out loud on AI, technology, data, and the future. No fluff.
           </p>
         </div>
       </section>
@@ -135,7 +137,7 @@ export default function Blog() {
                 <Link
                   key={post.id}
                   to={`/blog/${post.slug}`}
-                  className="group py-8 flex flex-col lg:flex-row lg:items-start gap-4 lg:gap-12 hover:bg-ink-2/30 -mx-4 px-4 transition-colors hud-card"
+                  className="group py-8 flex flex-col lg:flex-row lg:items-start gap-4 lg:gap-12 hover:bg-ink-2/30 -mx-4 px-4 transition-colors"
                 >
                   {/* Date */}
                   <div className="flex-shrink-0 lg:w-32">
@@ -153,13 +155,12 @@ export default function Blog() {
                         {(post as any).blog_categories?.name || post.category}
                       </span>
                     ) : null}
-                    <h2 className="font-display text-smoke text-2xl leading-snug mb-2 group-hover:text-emerald-400 transition-colors">
+                    <h2 className="font-mono text-smoke text-lg leading-snug mb-2 group-hover:text-emerald-400 transition-colors">
                       {post.title}
                     </h2>
                     {post.excerpt && (
-                      <p className="text-smoke-dim text-sm leading-relaxed line-clamp-2" style={{ fontWeight: 300 }}>
-                        {stripHtml(post.excerpt, 'Structured content, workflow metadata, and delivery-ready copy live here.')}
-                      </p>
+                      <p className="text-smoke-dim text-sm leading-relaxed line-clamp-2" style={{ fontWeight: 300 }}
+                        dangerouslySetInnerHTML={{ __html: post.excerpt }} />
                     )}
                   </div>
 

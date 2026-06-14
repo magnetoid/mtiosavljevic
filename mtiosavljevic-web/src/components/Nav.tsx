@@ -1,9 +1,15 @@
 import { useState, useEffect } from 'react'
 import { NavLink, Link } from 'react-router-dom'
-import { ActionLink, useSiteTheme } from '@/siteTheme'
+
+const LINKS = [
+  { to: '/about', label: 'About' },
+  { to: '/services', label: 'Services' },
+  { to: '/projects', label: 'Projects' },
+  { to: '/blog', label: 'Blog' },
+  { to: '/contact', label: 'Contact' },
+]
 
 export default function Nav() {
-  const theme = useSiteTheme()
   const [scrolled, setScrolled] = useState(false)
   const [open, setOpen] = useState(false)
 
@@ -23,25 +29,21 @@ export default function Nav() {
         <div className="max-w-screen-xl mx-auto px-6 lg:px-12 flex items-center justify-between">
 
           {/* Logo */}
-          <Link to={theme.brand.homePath} className="flex items-center gap-3 group">
-            <div className="font-mono text-cyan-300 text-xs tracking-wider opacity-70 group-hover:opacity-100 transition-all duration-300 select-none">
+          <Link to="/" className="flex items-center gap-3 group">
+            <div className="font-mono text-emerald-400 text-xs tracking-wider opacity-60 group-hover:opacity-100 transition-all duration-300 select-none">
               &gt;_
             </div>
-            <span className="font-display text-smoke font-light tracking-wider" style={{ fontSize: '1.1rem' }}>
-              {theme.brand.name}
-              <span className="text-emerald-400 group-hover:text-cyan-400 transition-colors duration-300">.</span>
-            </span>
-            <span className="hidden font-mono text-[0.62rem] uppercase tracking-[0.22em] text-white/45 sm:inline">
-              {theme.brand.accent}
+            <span className="font-mono text-smoke font-light tracking-wider" style={{ fontSize: '1.1rem' }}>
+              MT<span className="text-emerald-400 group-hover:text-cyan-400 transition-colors duration-300">.</span>
             </span>
           </Link>
 
           {/* Desktop links */}
           <div className="hidden lg:flex items-center gap-10">
-            {theme.navLinks.map(({ to, label }) => (
+            {LINKS.map(({ to, label }) => (
               <NavLink
-                key={`${to ?? label}-${label}`}
-                to={to ?? '/'}
+                key={to}
+                to={to}
                 className={({ isActive }) =>
                   `font-mono text-[0.65rem] tracking-[0.18em] uppercase transition-colors ${
                     isActive ? 'text-emerald-400' : 'text-smoke-dim hover:text-smoke'
@@ -58,15 +60,12 @@ export default function Nav() {
             <div className="font-mono text-[0.6rem] text-smoke-faint tracking-widest opacity-40 select-none">
               <TimecodeDisplay />
             </div>
-            {theme.navCta && (
-              <ActionLink
-                href={theme.navCta.href}
-                to={theme.navCta.to}
-                className="font-mono text-[0.65rem] tracking-widest uppercase px-4 py-2 border border-emerald-400/40 text-emerald-300 hover:bg-emerald-400/10 hover:border-emerald-300 transition-all duration-200"
-              >
-                {theme.navCta.label}
-              </ActionLink>
-            )}
+            <Link
+              to="/contact"
+              className="font-mono text-[0.65rem] tracking-widest uppercase px-4 py-2 border border-emerald-400/40 text-emerald-400 hover:bg-emerald-400/10 hover:border-emerald-400 transition-all duration-200"
+            >
+              Get in touch
+            </Link>
           </div>
 
           {/* Mobile burger */}
@@ -89,26 +88,23 @@ export default function Nav() {
         }`}
       >
         <div className="flex flex-col gap-8">
-          {theme.navLinks.map(({ to, label }) => (
+          {LINKS.map(({ to, label }) => (
             <NavLink
-              key={`${to ?? label}-${label}`}
-              to={to ?? '/'}
+              key={to}
+              to={to}
               onClick={() => setOpen(false)}
-              className="font-display font-light text-4xl text-smoke hover:text-emerald-400 transition-colors"
+              className="font-mono font-light text-4xl text-smoke hover:text-emerald-400 transition-colors"
             >
               {label}
             </NavLink>
           ))}
-          {theme.navCta && (
-            <ActionLink
-              href={theme.navCta.href}
-              to={theme.navCta.to}
-              onClick={() => setOpen(false)}
-              className="self-start mt-4 font-mono text-[0.65rem] tracking-widest uppercase px-4 py-2 border border-emerald-400/40 text-emerald-300 hover:bg-emerald-400/10 transition-all"
-            >
-              {theme.navCta.label}
-            </ActionLink>
-          )}
+          <Link
+            to="/contact"
+            onClick={() => setOpen(false)}
+            className="self-start mt-4 font-mono text-[0.65rem] tracking-widest uppercase px-4 py-2 border border-emerald-400/40 text-emerald-400 hover:bg-emerald-400/10 transition-all"
+          >
+            Get in touch
+          </Link>
         </div>
       </div>
     </>
