@@ -2,7 +2,6 @@ import { useEffect, useState } from 'react'
 import { useParams, Link } from 'react-router-dom'
 import { supabase } from '@/lib/supabase'
 import type { BlogPost } from '@/lib/supabase'
-import { sanitizeHtml } from '@/lib/sanitizeHtml'
 
 export default function BlogPostPage() {
   const { slug } = useParams<{ slug: string }>()
@@ -77,8 +76,8 @@ export default function BlogPostPage() {
             </div>
           )}
           <h1
-            className="font-display text-smoke leading-snug mb-6"
-            style={{ fontSize: 'clamp(2.2rem, 4vw, 3.4rem)' }}
+            className="font-mono font-light text-smoke leading-snug mb-6"
+            style={{ fontSize: 'clamp(1.8rem, 3.5vw, 2.8rem)' }}
           >
             {post.title}
           </h1>
@@ -96,8 +95,8 @@ export default function BlogPostPage() {
       {/* ── CONTENT ──────────────────────────────────────────── */}
       <section className="pb-20 px-6 lg:px-12">
         <div
-          className="max-w-3xl mx-auto prose-blog"
-          dangerouslySetInnerHTML={{ __html: sanitizeHtml(post.body || '') }}
+          className="max-w-3xl mx-auto prose prose-invert prose-lg prose-headings:font-mono prose-headings:font-light prose-a:text-emerald-400 prose-a:no-underline hover:prose-a:text-emerald-300 prose-code:text-cyan-400 prose-code:bg-ink-3 prose-code:px-1 prose-code:rounded prose-pre:bg-ink-3 prose-pre:border prose-pre:border-white/10"
+          dangerouslySetInnerHTML={{ __html: post.body || '' }}
         />
       </section>
 
