@@ -1,178 +1,230 @@
-import { Link } from 'react-router-dom'
 import { useEffect, useState } from 'react'
+import { Link } from 'react-router-dom'
 import { supabase } from '@/lib/supabase'
 import type { BlogPost } from '@/lib/supabase'
+import { stripHtml } from '@/lib/sanitizeHtml'
+import { ActionLink, useSiteTheme } from '@/siteTheme'
 
-const EXPERTISE = [
-  {
-    icon: '◈',
-    title: 'AI & Automation',
-    desc: 'Claude API, MCP workflows, Gemini, Ollama local LLMs, Dify, multi-agent orchestration, and AI-native product development.',
-  },
-  {
-    icon: '◉',
-    title: 'Full-Stack Development',
-    desc: 'React, Vite, TypeScript, Node.js, PHP. From simple landing pages to complex SaaS platforms with Supabase and Docker.',
-  },
-  {
-    icon: '▣',
-    title: 'eCommerce Architecture',
-    desc: 'WooCommerce, Shopify, BigCommerce, Medusa v2. Custom plugins, multivendor, subscriptions, and BookVault POD.',
-  },
-  {
-    icon: '◬',
-    title: 'Performance Marketing',
-    desc: 'Google Ads, Meta Ads, Amazon Ads, GA4, GTM, HubSpot. Data-driven campaigns — 130+ businesses scaled.',
-  },
-  {
-    icon: '◫',
-    title: 'DevOps & Cloud',
-    desc: 'Docker, Coolify, Hetzner VPS, Nginx, self-hosted Supabase, CrowdSec, CI/CD pipelines.',
-  },
-  {
-    icon: '▶',
-    title: 'Brand & Graphic Design',
-    desc: '35 years from print to pixel. Adobe Creative Suite, brand identity systems, UI/UX, motion graphics.',
-  },
-]
+type PostFeedState =
+  | { status: 'loading' }
+  | { status: 'ready'; posts: BlogPost[] }
+  | { status: 'error' }
 
-const DEMO_POSTS: BlogPost[] = [
-  {
-    id: '1',
-    title: 'The Architecture of Reasoning: How LLMs Think',
-    slug: 'llm-reasoning-architecture',
-    excerpt: 'A deep dive into chain-of-thought, tree-of-thought, and emerging reasoning paradigms in large language models.',
-    published: true,
-    created_at: '2026-03-15',
-    published_at: '2026-03-15',
-    category: 'AI/LLM',
-    read_time_minutes: 12,
-  },
-  {
-    id: '2',
-    title: 'Building RAG Systems That Actually Work',
-    slug: 'rag-systems-production',
-    excerpt: 'Retrieval-augmented generation is not just about vector databases. Here\'s what actually matters in production.',
-    published: true,
-    created_at: '2026-02-28',
-    published_at: '2026-02-28',
-    category: 'Data Systems',
-    read_time_minutes: 9,
-  },
-  {
-    id: '3',
-    title: 'AI Governance in 2026: The Regulatory Landscape',
-    slug: 'ai-governance-2026',
-    excerpt: 'From the EU AI Act to US executive orders — how global regulation is shaping AI development and deployment.',
-    published: true,
-    created_at: '2026-02-10',
-    published_at: '2026-02-10',
-    category: 'Policy',
-    read_time_minutes: 8,
-  },
-]
+function formatDate(input: string | undefined): string {
+  if (!input) return 'Draft'
+  return new Date(input).toLocaleDateString('en-US', {
+    month: 'short',
+    day: 'numeric',
+    year: 'numeric',
+  })
+}
 
-export default function Home() {
-  const [posts, setPosts] = useState<BlogPost[]>(DEMO_POSTS)
+function RecentPosts() {
+  const theme = useSiteTheme()
+  const [state, setState] = useState<PostFeedState>({ status: 'loading' })
 
   useEffect(() => {
+    let active = true
+
     supabase
       .from('blog_posts')
-      .select('*')
+      .select('*, blog_categories(name, slug)')
       .eq('published', true)
       .order('published_at', { ascending: false })
       .limit(3)
-      .then(({ data }) => {
-        if (data?.length) setPosts(data)
+      .then(({ data, error }) => {
+        if (!active) return
+        if (error) {
+          setState({ status: 'error' })
+          return
+        }
+
+        setState({
+          status: 'ready',
+          posts: (data as BlogPost[] | null) ?? [],
+        })
       })
+
+    return () => {
+      active = false
+    }
   }, [])
+
+  const posts = state.status === 'ready' ? state.posts : []
+
+  return (
+    <section className="px-6 py-24 lg:px-12">
+      <div className="mx-auto max-w-screen-xl">
+        <div className="mb-12 flex items-center justify-between gap-6">
+          <span className="eyebrow-cyber">{theme.home.selectedWorkEyebrow}</span>
+          {theme.home.selectedWorkAction && (
+            <ActionLink
+              href={theme.home.selectedWorkAction.href}
+              to={theme.home.selectedWorkAction.to}
+              className="font-mono text-[0.62rem] uppercase tracking-[0.18em] text-emerald-300 transition-colors hover:text-cyan-300"
+            >
+              {theme.home.selectedWorkAction.label} →
+            </ActionLink>
+          )}
+        </div>
+
+        {state.status === 'loading' && (
+          <div className="grid grid-cols-1 gap-6 lg:grid-cols-3">
+            {Array.from({ length: 3 }).map((_, index) => (
+              <div key={index} className="hud-card border border-white/10 bg-ink-2 p-6 animate-pulse">
+                <div className="mb-4 h-40 bg-white/5" />
+                <div className="mb-3 h-3 w-20 bg-white/10" />
+                <div className="mb-2 h-6 w-3/4 bg-white/10" />
+                <div className="h-4 w-full bg-white/5" />
+              </div>
+            ))}
+          </div>
+        )}
+
+        {state.status === 'error' && (
+          <div className="hud-card border border-white/10 bg-ink-2 p-8">
+            <p className="font-display text-2xl text-white mb-3">
+              Published content is not available yet.
+            </p>
+            <p className="max-w-2xl text-smoke-dim">
+              The public theme is live, but the recent-posts preview needs published CMS content to appear.
+            </p>
+          </div>
+        )}
+
+        {state.status === 'ready' && posts.length === 0 && (
+          <div className="hud-card border border-white/10 bg-ink-2 p-8">
+            <p className="font-display text-2xl text-white mb-3">
+              No published posts yet.
+            </p>
+            <p className="max-w-2xl text-smoke-dim">
+              Create and publish content in the CMS, then this section fills automatically.
+            </p>
+          </div>
+        )}
+
+        {posts.length > 0 && (
+          <div className="grid grid-cols-1 gap-6 lg:grid-cols-3">
+            {posts.map((post) => (
+              <Link
+                key={post.id}
+                to={`/blog/${post.slug}`}
+                className="hud-card holo-shimmer group border border-white/10 bg-ink-2 p-6 transition-colors hover:border-emerald-400/30"
+              >
+                <div className="mb-5 flex items-center justify-between gap-4">
+                  <span className="badge-cyber">
+                    {post.blog_categories?.name ?? post.category ?? 'Article'}
+                  </span>
+                  <span className="font-mono text-[0.56rem] uppercase tracking-[0.16em] text-smoke-faint opacity-60">
+                    {formatDate(post.published_at ?? post.created_at)}
+                  </span>
+                </div>
+                <h3 className="font-display text-2xl leading-tight text-white transition-colors group-hover:text-emerald-300">
+                  {post.title}
+                </h3>
+                <p className="mt-4 text-sm leading-relaxed text-smoke-dim">
+                  {stripHtml(post.excerpt, 'Structured content, workflow metadata, and delivery-ready copy live here.')}
+                </p>
+                <div className="mt-6 flex items-center gap-3 font-mono text-[0.6rem] uppercase tracking-[0.18em] text-cyan-300">
+                  <span>Read article</span>
+                  <span>→</span>
+                </div>
+              </Link>
+            ))}
+          </div>
+        )}
+      </div>
+    </section>
+  )
+}
+
+export default function Home() {
+  const theme = useSiteTheme()
 
   return (
     <>
-      {/* ── HERO ─────────────────────────────────────────────── */}
-      <section className="pt-40 pb-28 px-6 lg:px-12 relative overflow-hidden">
-        {/* Grid background */}
-        <div className="absolute inset-0 pointer-events-none" style={{
-          backgroundImage: `linear-gradient(rgba(16,185,129,0.04) 1px, transparent 1px), linear-gradient(90deg, rgba(16,185,129,0.04) 1px, transparent 1px)`,
-          backgroundSize: '60px 60px',
-        }} />
-        {/* Glow */}
-        <div className="absolute top-0 left-1/4 w-[600px] h-[400px] rounded-full pointer-events-none"
-          style={{ background: 'radial-gradient(ellipse, rgba(16,185,129,0.06) 0%, transparent 70%)' }} />
-
-        <div className="max-w-screen-xl mx-auto relative z-10">
-          {/* Eyebrow */}
-          <div className="flex items-center gap-3 mb-8 reveal">
-            <span className="font-mono text-emerald-400 text-[0.65rem] tracking-[0.3em] uppercase">
-              Senior Digital Consultant · Developer · AI Specialist
-            </span>
-            <div className="h-px w-12 bg-emerald-400/40" />
+      <section className="relative overflow-hidden px-6 pb-24 pt-40 lg:px-12 lg:pb-32">
+        <div
+          className="absolute inset-0 pointer-events-none"
+          style={{
+            background:
+              'radial-gradient(circle at 20% 10%, rgba(0,212,255,0.12) 0%, transparent 35%), radial-gradient(circle at 85% 15%, rgba(232,69,42,0.12) 0%, transparent 30%)',
+          }}
+        />
+        <div className="mx-auto max-w-screen-xl">
+          <div className="mb-8 flex items-center gap-3 reveal">
+            <span className="eyebrow-cyber">{theme.home.hero.eyebrow}</span>
+            <div className="angular-divider hidden flex-1 md:block" />
           </div>
+          <div className="grid grid-cols-1 gap-16 lg:grid-cols-[minmax(0,1.15fr)_minmax(320px,0.85fr)]">
+            <div className="reveal reveal-delay-1">
+              <h1 className="font-display text-white leading-[1.02]" style={{ fontSize: 'clamp(3rem, 7vw, 6rem)' }}>
+                {theme.home.hero.title}
+              </h1>
+              <p className="mt-8 max-w-2xl text-lg leading-relaxed text-smoke-dim">
+                {theme.home.hero.lead}
+              </p>
+              <div className="mt-10 flex flex-wrap gap-4">
+                {theme.home.hero.primaryAction && (
+                  <ActionLink
+                    href={theme.home.hero.primaryAction.href}
+                    to={theme.home.hero.primaryAction.to}
+                    className="btn btn-primary"
+                  >
+                    {theme.home.hero.primaryAction.label}
+                  </ActionLink>
+                )}
+                {theme.home.hero.secondaryAction && (
+                  <ActionLink
+                    href={theme.home.hero.secondaryAction.href}
+                    to={theme.home.hero.secondaryAction.to}
+                    className="btn btn-outline"
+                  >
+                    {theme.home.hero.secondaryAction.label}
+                  </ActionLink>
+                )}
+              </div>
+            </div>
 
-          {/* Headline */}
-          <h1
-            className="font-mono font-light leading-[1.05] mb-8 reveal reveal-delay-1"
-            style={{ fontSize: 'clamp(2.6rem, 5.5vw, 5rem)' }}
-          >
-            <span className="text-smoke">Marko</span>{' '}
-            <span className="text-smoke">Tiosavljević</span>
-            <br />
-            <span className="text-emerald-400 text-[0.6em] tracking-widest font-mono text-[0.55em]">
-              // founder · developer · marketer
-            </span>
-          </h1>
-
-          <p
-            className="text-smoke-dim text-xl max-w-2xl leading-relaxed mb-10 reveal reveal-delay-2"
-            style={{ fontWeight: 300 }}
-          >
-            35+ years spanning graphic design, full-stack development, AI automation, and performance marketing.
-            Founder of{' '}
-            <span className="text-smoke">Imba Production</span>{' '}
-            and architect of 10+ live SaaS products.{' '}
-            <span className="text-smoke">130+ businesses scaled</span>{' '}
-            with a 100% Upwork Job Success Score.
-          </p>
-
-          <div className="flex flex-wrap gap-4 reveal reveal-delay-3">
-            <Link
-              to="/blog"
-              className="font-mono text-[0.7rem] tracking-widest uppercase px-6 py-3 bg-emerald-400 text-ink hover:bg-emerald-300 transition-colors"
-            >
-              Read the blog →
-            </Link>
-            <Link
-              to="/about"
-              className="font-mono text-[0.7rem] tracking-widest uppercase px-6 py-3 border border-white/20 text-smoke-dim hover:border-white/40 hover:text-smoke transition-colors"
-            >
-              About me
-            </Link>
+            <div className="hud-card holo-shimmer border border-cyan-400/20 bg-ink-2 p-8 lg:p-10 reveal reveal-delay-2">
+              <div className="mb-6 flex items-center justify-between gap-4">
+                <span className="badge-cyber">Public Runtime</span>
+                <span className="data-readout">cms.public.ready</span>
+              </div>
+              <p className="font-display text-3xl text-white leading-tight">
+                {theme.home.selectedWorkTitle}
+              </p>
+              <div className="mt-8 grid grid-cols-1 gap-4 sm:grid-cols-2">
+                {theme.home.hero.capabilities.map((capability) => (
+                  <div key={capability} className="border border-white/10 bg-white/[0.02] px-4 py-4">
+                    <span className="font-mono text-[0.62rem] uppercase tracking-[0.2em] text-cyan-300">
+                      {capability}
+                    </span>
+                  </div>
+                ))}
+              </div>
+            </div>
           </div>
         </div>
       </section>
 
-      {/* ── EXPERTISE ────────────────────────────────────────── */}
-      <section className="py-24 px-6 lg:px-12 bg-ink-2">
-        <div className="max-w-screen-xl mx-auto">
-          <div className="flex items-center gap-3 mb-12 reveal">
-            <span className="font-mono text-[0.65rem] tracking-[0.3em] uppercase text-smoke-faint">
-              Areas of expertise
-            </span>
-            <div className="h-px flex-1 bg-white/5" />
+      <section className="bg-ink-2 px-6 py-24 lg:px-12">
+        <div className="mx-auto max-w-screen-xl">
+          <div className="mb-12 reveal">
+            <span className="eyebrow">{theme.home.capabilitiesEyebrow}</span>
+            <h2 className="mt-6 max-w-3xl font-display text-4xl text-white lg:text-5xl">
+              {theme.home.capabilitiesTitle}
+            </h2>
           </div>
-
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-            {EXPERTISE.map((item) => (
-              <div
-                key={item.title}
-                className="group p-6 border border-white/5 hover:border-emerald-400/30 bg-ink-3/50 hover:bg-ink-3 transition-all duration-300 reveal"
-              >
-                <div className="font-mono text-emerald-400 text-xl mb-4 group-hover:text-cyan-400 transition-colors">
-                  {item.icon}
+          <div className="services-grid">
+            {theme.home.capabilitiesItems.map((item) => (
+              <div key={item.no} className="bg-ink px-6 py-8 lg:px-8 reveal">
+                <div className="mb-4 font-mono text-[0.6rem] uppercase tracking-[0.18em] text-cyan-300">
+                  {item.no}
                 </div>
-                <h3 className="font-mono text-smoke text-sm tracking-wide mb-2">{item.title}</h3>
-                <p className="text-smoke-dim text-sm leading-relaxed" style={{ fontWeight: 300 }}>
-                  {item.desc}
+                <h3 className="font-display text-2xl text-white">{item.title}</h3>
+                <p className="mt-4 text-sm leading-relaxed text-smoke-dim">
+                  {item.body}
                 </p>
               </div>
             ))}
@@ -180,90 +232,39 @@ export default function Home() {
         </div>
       </section>
 
-      {/* ── RECENT POSTS ─────────────────────────────────────── */}
-      <section className="py-24 px-6 lg:px-12">
-        <div className="max-w-screen-xl mx-auto">
-          <div className="flex items-center justify-between mb-12 reveal">
-            <div className="flex items-center gap-3">
-              <span className="font-mono text-[0.65rem] tracking-[0.3em] uppercase text-smoke-faint">
-                Latest writing
-              </span>
-              <div className="h-px w-12 bg-white/5" />
-            </div>
-            <Link to="/blog" className="font-mono text-[0.65rem] tracking-widest uppercase text-emerald-400 hover:text-emerald-300 transition-colors">
-              All posts →
-            </Link>
-          </div>
+      <RecentPosts />
 
-          <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-            {posts.map((post, i) => (
-              <Link
-                key={post.id}
-                to={`/blog/${post.slug}`}
-                className="group p-6 border border-white/5 hover:border-emerald-400/30 bg-ink-2/50 hover:bg-ink-2 transition-all duration-300 reveal"
-                style={{ animationDelay: `${i * 100}ms` }}
-              >
-                {post.category && (
-                  <span className="font-mono text-[0.6rem] tracking-widest uppercase text-emerald-400 mb-3 block">
-                    {post.category}
-                  </span>
-                )}
-                <h3 className="font-mono text-smoke text-base leading-snug mb-3 group-hover:text-emerald-400 transition-colors">
-                  {post.title}
-                </h3>
-                {post.excerpt && (
-                  <p className="text-smoke-dim text-sm leading-relaxed line-clamp-3" style={{ fontWeight: 300 }}
-                    dangerouslySetInnerHTML={{ __html: post.excerpt }} />
-                )}
-                <div className="flex items-center gap-4 mt-4 pt-4 border-t border-white/5">
-                  <span className="font-mono text-[0.6rem] tracking-wider text-smoke-faint">
-                    {post.published_at ? new Date(post.published_at).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' }) : ''}
-                  </span>
-                  {post.read_time_minutes && (
-                    <span className="font-mono text-[0.6rem] tracking-wider text-smoke-faint">
-                      {post.read_time_minutes} min read
-                    </span>
-                  )}
-                </div>
-              </Link>
-            ))}
+      <section className="bg-ink-2 px-6 py-24 lg:px-12">
+        <div className="mx-auto max-w-screen-xl">
+          <div className="hud-card border border-emerald-400/20 bg-emerald-400/[0.04] p-10 lg:p-14 reveal">
+            <span className="eyebrow">{theme.home.statementEyebrow}</span>
+            <p className="mt-8 max-w-4xl font-display text-3xl leading-tight text-white lg:text-5xl">
+              {theme.home.statementText}{' '}
+              <span className="text-smoke-dim">
+                {theme.home.statementAccentText}
+              </span>
+            </p>
           </div>
         </div>
       </section>
 
-      {/* ── ABOUT CTA ────────────────────────────────────────── */}
-      <section className="py-24 px-6 lg:px-12 bg-ink-2">
-        <div className="max-w-screen-xl mx-auto">
-          <div className="border border-emerald-400/20 p-10 lg:p-16 relative overflow-hidden reveal">
-            {/* Decorative corner */}
-            <div className="absolute top-0 right-0 w-40 h-40 pointer-events-none"
-              style={{ background: 'radial-gradient(circle at top right, rgba(16,185,129,0.08) 0%, transparent 60%)' }} />
-            <div className="font-mono text-[0.65rem] tracking-[0.3em] uppercase text-emerald-400 mb-4">
-              &gt; marko_t --whoami
-            </div>
-            <h2 className="font-mono text-smoke text-3xl lg:text-4xl font-light mb-6" style={{ lineHeight: 1.2 }}>
-              Three decades of building<br />
-              <span className="text-emerald-400">at the frontier.</span>
+      <section className="border-t border-white/10 bg-ink px-6 py-20 lg:px-12">
+        <div className="mx-auto flex max-w-screen-xl flex-col items-start justify-between gap-8 lg:flex-row lg:items-center">
+          <div className="reveal">
+            <p className="eyebrow-cyber mb-4">{theme.home.ctaEyebrow}</p>
+            <h2 className="font-display text-white" style={{ fontSize: 'clamp(2.2rem, 4vw, 3.8rem)' }}>
+              {theme.home.ctaTitle}
             </h2>
-            <p className="text-smoke-dim text-lg max-w-2xl leading-relaxed mb-8" style={{ fontWeight: 300 }}>
-              From early internet infrastructure to modern AI systems. I write about what I build,
-              what I learn, and where technology is headed.
-            </p>
-            <div className="flex flex-wrap gap-4">
-              <Link
-                to="/about"
-                className="font-mono text-[0.7rem] tracking-widest uppercase px-6 py-3 bg-emerald-400 text-ink hover:bg-emerald-300 transition-colors"
-              >
-                Read my story →
-              </Link>
-              <Link
-                to="/services"
-                className="font-mono text-[0.7rem] tracking-widest uppercase px-6 py-3 border border-white/20 text-smoke-dim hover:border-white/40 hover:text-smoke transition-colors"
-              >
-                Work with me
-              </Link>
-            </div>
           </div>
+          {theme.home.ctaAction && (
+            <ActionLink
+              href={theme.home.ctaAction.href}
+              to={theme.home.ctaAction.to}
+              className="btn btn-primary reveal"
+            >
+              {theme.home.ctaAction.label}
+            </ActionLink>
+          )}
         </div>
       </section>
     </>
