@@ -6,6 +6,10 @@ node_modules/
 # Build output
 dist/
 build/
+!dist/
+!dist/**
+!dist-admin/
+!dist-admin/**
 
 # Environment
 .env
