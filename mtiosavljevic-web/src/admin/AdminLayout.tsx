@@ -147,7 +147,7 @@ export default function AdminLayout() {
               {/* Section switcher */}
               <button
                 onClick={() => navigate(isCRM ? '/admin/dashboard' : '/admin/crm')}
-                className="flex items-center gap-1 text-[0.65rem] font-mono text-muted-foreground/50 hover:text-muted-foreground transition-colors border border-border rounded px-1.5 py-0.5"
+                className="flex items-center gap-1 text-[0.65rem] font-mono text-muted-foreground/50 hover:text-foreground transition-colors border border-border rounded px-1.5 py-0.5"
                 title={`Switch to ${isCRM ? 'CMS' : 'CRM'}`}
               >
                 {isCRM ? 'CMS' : 'CRM'}<ChevronRight className="h-3 w-3" />
