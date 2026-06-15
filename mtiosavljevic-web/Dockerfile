@@ -9,7 +9,6 @@ COPY runtime-config.template.js /etc/mtio/runtime-config.template.js
 COPY entrypoint.sh /entrypoint.sh
 
 COPY dist /usr/share/nginx/html
-COPY dist-admin /usr/share/nginx/html/admin
 
 RUN chmod +x /entrypoint.sh
 
