@@ -21,6 +21,88 @@ export interface CaseStudyData {
 
 export const PROJECTS_DATA: CaseStudyData[] = [
   // ────────────────────────────────────────────────────────────
+  //   CLEARCOUNT
+  // ────────────────────────────────────────────────────────────
+  {
+    slug: 'clearcount',
+    name: 'ClearCount',
+    url: 'https://clearcount.ai',
+    year: '2026',
+    category: 'AI · E-commerce Finance',
+    accent: '#14B8A6',
+    tagline: 'The AI finance team for your e-commerce business',
+    hero: 'One login. Every revenue source. Real profit — not guesswork. ClearCount connects your stores, banks, and ad accounts, reconciles them into one clean ledger, and gives you an AI copilot that already knows whether you made money this month.',
+    summary:
+      'ClearCount is a multi-tenant AI finance platform for e-commerce operators. It pulls Shopify, Zendrop, Mercury, Slash, Google Ads, Meta Ads, QuickBooks, and Xero into a single linked ledger, runs four automatic reconciliation passes, and computes true profit — gross margin, ROAS, CAC, LTV, cohort retention — from real commerce data. A commerce-aware AI assistant with 13 tools answers questions about the business in seconds, with the numbers already checked.',
+    role: 'Product architecture, full-stack engineering, integration clients, the reconciliation & metrics engine, AI tool layer, and multi-tenant security.',
+    stack: [
+      'Next.js 16 (App Router)',
+      'React 19',
+      'TypeScript (strict)',
+      'Tailwind CSS v4',
+      'shadcn/ui',
+      'Recharts',
+      'Prisma 7',
+      'PostgreSQL (Supabase)',
+      'NextAuth.js',
+      'Anthropic / OpenAI / Google / OpenRouter / Ollama',
+      'Vercel AI Gateway',
+      'Web Speech API / Whisper / TTS',
+    ],
+    stats: [
+      { num: '8', label: 'data sources in one ledger' },
+      { num: '13', label: 'commerce-aware AI tools' },
+      { num: '6', label: 'stage connect-to-serve pipeline' },
+      { num: 'AES-256', label: 'per-workspace credential encryption' },
+    ],
+    problem: {
+      title: 'Every Sunday turns into a CSV-and-spreadsheet marathon',
+      body: 'Running an online store means living across a dozen tabs — Shopify for orders, Mercury for the bank, Google and Meta for ads, Zendrop for suppliers, QuickBooks for the accountant. Answering one question — "did I actually make money this month?" — means exporting CSVs and reconciling them by hand. Vanity revenue is easy to see; true profit, after refunds, COGS, ad spend, and processor fees, is buried. And the AI tools that promised to help usually answer with generic advice because they have no live context on the actual business.',
+    },
+    approach: [
+      {
+        title: 'A linked graph, not a flat list',
+        body: 'ClearCount is not a spreadsheet of rows — every record has a typed relationship to the others. Orders link to line items, payouts, transactions, and disputes. Crucially, unit cost and FX rate are snapshotted onto each line item at sync time, so the cost of a product today can never retroactively change the margin on an order shipped six months ago. Old orders stay accurate forever.',
+      },
+      {
+        title: 'Reconciliation that runs itself',
+        body: 'Four passes run automatically: payouts matched to bank deposits by currency, amount (±$0.01), and date (±3 days); true COGS pulled from Shopify InventoryItem and layered with Zendrop supplier costs; UTM attribution parsed from landing URL, note attributes, then referrer; and supplier-spend detection that buckets inventory cost out of opex so gross margin stays honest. Ambiguous matches are surfaced for a human to resolve — never silently guessed.',
+      },
+      {
+        title: 'An AI copilot with live business context',
+        body: 'Chat or talk with Claude, GPT, or Gemini — the operator picks the provider, routed through the Vercel AI Gateway for unified fallbacks and observability. The assistant calls 13 commerce-aware tools (get_business_snapshot, get_order_margin, get_payout_health, get_campaign_roas, get_customer_ltv, get_cohort_retention, get_disputes, and more) so its answers are specific to the workspace, not generic.',
+      },
+      {
+        title: 'Tenant isolation enforced at the source',
+        body: 'Every table is scoped by tenantId and every API route runs through a withTenant guard that blocks cross-workspace reads at the database, not in app logic. Every credential is AES-256-GCM encrypted before it touches the DB and never logged in plaintext — so agencies and portfolio owners can run many stores under one account with zero data crossover.',
+      },
+    ],
+    features: [
+      { title: 'One source of truth', desc: 'Shopify, Zendrop, Mercury, Slash, Google Ads, Meta Ads, QuickBooks, and Xero all flowing into a single tidy ledger.' },
+      { title: 'Self-reconciling payouts', desc: 'A Shopify payout of $4,823.17 is matched to the Mercury deposit automatically, down to the cent — unmatched items flagged, never guessed.' },
+      { title: 'Real profit, not vanity revenue', desc: 'A full margin ladder — gross profit, contribution margin, true profit — plus ROAS, CAC, LTV, and cohort retention computed from linked data.' },
+      { title: 'AI assistant with voice', desc: 'A commerce-aware copilot with 13 tools, multi-provider routing, and hands-free voice mode via Web Speech, Whisper, and TTS.' },
+      { title: 'Smart expense categorization', desc: 'Supplier invoices, ad spend, SaaS, and refunds land in the right bucket — regex rules first, AI fallback second.' },
+      { title: 'Books-ready export', desc: 'One-click, idempotent double-entry journals to QuickBooks or Xero, plus RFC 4180 CSV export any accountant can drop in.' },
+    ],
+    outcomes: [
+      { metric: '8', label: 'fragmented sources unified into one ledger' },
+      { metric: '±$0.01', label: 'payout-to-bank matching precision' },
+      { metric: '13', label: 'AI tools operating on live workspace data' },
+      { metric: 'null', label: 'over a fake zero — broken metrics show up broken' },
+    ],
+    lessons: [
+      'A linked graph beats a flat list. Typed relationships plus cost/FX snapshots are what let old orders stay accurate while new data flows in.',
+      'Return null, not a fake zero. A missing metric that shows up broken is honest; one that quietly reads zero hides the bug until it costs money.',
+      'Enforce tenant isolation at the database, not in app code. A withTenant guard at the source makes cross-workspace leaks structurally impossible rather than a code-review hope.',
+    ],
+    quote: {
+      text: 'The whole pitch is replacing the Sunday-night spreadsheet marathon with one dashboard and an AI that already knows the answer — built on a ledger honest enough that you can trust the number it gives you.',
+      attribution: 'Marko Tiosavljevic — creator, ClearCount',
+    },
+  },
+
+  // ────────────────────────────────────────────────────────────
   //   ALETHIA.ME
   // ────────────────────────────────────────────────────────────
   {
