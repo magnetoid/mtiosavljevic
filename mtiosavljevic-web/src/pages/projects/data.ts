@@ -272,7 +272,7 @@ export const PROJECTS_DATA: CaseStudyData[] = [
     hero: 'A sophisticated video discovery platform transforming YouTube content exploration through intelligent categorization and user-centric design — with a dedicated focus on independent investigative journalism in the Balkans.',
     summary:
       'nisam.video is a long-running, personally funded video hub that aggregates, categorizes, and surfaces independent and investigative Serbian-language content from across YouTube. The name is a Serbian pun — "nisam" means "I am not" — a quiet inversion of the region\'s political rhetoric: a platform for the voices that the mainstream says they are not.',
-    role: 'Founder, product designer, developer, curator. Solo build and continuous operation since 2016.',
+    role: 'Founder, developer, and curator. Solo build and continuous operation since 2016.',
     stack: [
       'WordPress / custom theme',
       'YouTube Data API',
