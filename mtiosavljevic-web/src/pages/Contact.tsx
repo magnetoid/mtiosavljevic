@@ -50,7 +50,7 @@ export default function Contact() {
             Get in touch
           </h1>
           <p className="text-smoke-dim text-lg max-w-xl reveal reveal-delay-2" style={{ fontWeight: 300 }}>
-            I'm available for consulting, technical writing, speaking, and interesting collaborations.
+            Open to research collaboration, agent and LLM systems work, and technical writing.
           </p>
         </div>
       </section>
@@ -72,7 +72,7 @@ export default function Contact() {
                   </h2>
                   <p className="text-smoke-dim text-base" style={{ fontWeight: 300 }}>
                     I'll respond within 24–48 hours. In the meantime, you can read the{' '}
-                    <a href="/blog" className="text-emerald-400 hover:text-emerald-300 transition-colors">blog</a>.
+                    <a href="/blog" className="text-emerald-400 hover:text-emerald-300 transition-colors">notes</a>.
                   </p>
                 </div>
               </div>
@@ -132,12 +132,12 @@ export default function Contact() {
                     onChange={e => setForm(f => ({ ...f, service_type: e.target.value }))}
                   >
                     <option value="">Select (optional)</option>
-                    <option>AI Strategy Consulting</option>
-                    <option>LLM Integration</option>
-                    <option>Data Architecture</option>
-                    <option>AI Security Audit</option>
-                    <option>Technical Writing</option>
-                    <option>Speaking / Podcast</option>
+                    <option>Research collaboration</option>
+                    <option>Multi-model / consensus systems</option>
+                    <option>Autonomous agents</option>
+                    <option>Agent memory &amp; MCP tooling</option>
+                    <option>Commerce / full-stack engineering</option>
+                    <option>Technical writing</option>
                     <option>Other</option>
                   </select>
                 </div>
@@ -193,9 +193,9 @@ export default function Contact() {
               <p className="font-mono text-[0.6rem] tracking-[0.2em] uppercase text-emerald-400 mb-4">Profiles</p>
               <div className="flex flex-col gap-2">
                 {[
-                  { label: 'LinkedIn', href: 'https://linkedin.com/in/mtiosavljevic' },
-                  { label: 'Twitter/X', href: 'https://twitter.com/mtiosavljevic' },
                   { label: 'GitHub', href: 'https://github.com/magnetoid' },
+                  // TODO: confirm personal Upwork profile URL
+                  { label: 'Upwork', href: 'https://www.upwork.com/' },
                 ].map(({ label, href }) => (
                   <a
                     key={label}

@@ -2,41 +2,39 @@ import { Link } from 'react-router-dom'
 
 const LINKS = [
   { label: 'Home', to: '/' },
-  { label: 'About', to: '/about' },
-  { label: 'Services', to: '/services' },
   { label: 'Projects', to: '/projects' },
   { label: 'Blog', to: '/blog' },
   { label: 'Contact', to: '/contact' },
 ]
 
-const SOCIAL = [
-  { label: 'LinkedIn', href: 'https://linkedin.com/in/mtiosavljevic' },
-  { label: 'Twitter/X', href: 'https://twitter.com/mtiosavljevic' },
+const PROFILES = [
   { label: 'GitHub', href: 'https://github.com/magnetoid' },
+  // TODO: confirm the personal Upwork profile URL. The only Upwork link found in this
+  // repo is the Imba Production *company* page, not a personal profile.
+  { label: 'Upwork', href: 'https://www.upwork.com/' },
 ]
 
 export default function Footer() {
   return (
-    <footer className="bg-ink-3 border-t border-white/5">
+    <footer className="bg-ink-3 border-t border-white/10">
       <div className="px-6 lg:px-12 py-12 grid grid-cols-1 md:grid-cols-3 gap-10 max-w-screen-xl mx-auto">
         {/* Brand */}
         <div>
-          <div className="font-mono text-smoke text-base mb-3">
-            MT<span className="text-emerald-400">.</span>
-          </div>
-          <p className="text-sm text-smoke-dim leading-relaxed max-w-xs mb-4">
-            AI researcher & technologist. Writing about AI, LLMs, data systems, and the future of technology.
+          <p className="font-mono text-smoke text-sm mb-3">Marko Tiosavljević</p>
+          <p className="text-sm text-smoke-dim leading-relaxed max-w-xs mb-4" style={{ fontWeight: 300 }}>
+            AI &amp; LLM research on multi-model consensus, self-developing agents, and agent
+            memory. Founder of Imba Production LLC.
           </p>
-          <div className="flex flex-col gap-1">
-            {SOCIAL.map(({ label, href }) => (
+          <div className="flex flex-col gap-2">
+            {PROFILES.map(({ label, href }) => (
               <a
                 key={label}
                 href={href}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="font-mono text-[0.65rem] tracking-wider text-smoke-faint hover:text-emerald-400 transition-colors uppercase"
+                className="font-mono text-[0.75rem] text-smoke-dim hover:text-emerald-400 transition-colors"
               >
-                {label} →
+                {label} ↗
               </a>
             ))}
           </div>
@@ -44,7 +42,7 @@ export default function Footer() {
 
         {/* Navigation */}
         <div>
-          <p className="font-mono text-[0.6rem] tracking-[0.18em] uppercase text-emerald-400 mb-4">Navigation</p>
+          <p className="font-mono text-[0.75rem] tracking-[0.18em] uppercase text-smoke-dim mb-4">Navigation</p>
           <ul className="flex flex-col gap-2">
             {LINKS.map(({ label, to }) => (
               <li key={label}>
@@ -56,27 +54,29 @@ export default function Footer() {
           </ul>
         </div>
 
-        {/* Contact */}
+        {/* Contact — the single work-with-me CTA lives here */}
         <div>
-          <p className="font-mono text-[0.6rem] tracking-[0.18em] uppercase text-emerald-400 mb-4">Contact</p>
-          <div className="flex flex-col gap-2 text-sm text-smoke-dim">
+          <p className="font-mono text-[0.75rem] tracking-[0.18em] uppercase text-smoke-dim mb-4">Contact</p>
+          <div className="flex flex-col gap-3 text-sm text-smoke-dim">
             <a href="mailto:marko.tiosavljevic@gmail.com" className="hover:text-emerald-400 transition-colors">
               marko.tiosavljevic@gmail.com
             </a>
-            <p className="text-smoke-faint text-xs mt-2">
-              Available for consulting, speaking,<br />
-              and technical writing engagements.
-            </p>
+            <Link
+              to="/contact"
+              className="self-start font-mono text-[0.75rem] px-4 py-2 border border-emerald-400 text-emerald-400 hover:bg-emerald-400/10 transition-colors"
+            >
+              Work with me
+            </Link>
           </div>
         </div>
       </div>
 
       {/* Bottom */}
-      <div className="border-t border-white/5 px-6 lg:px-12 py-5 flex flex-col md:flex-row items-center justify-between gap-3 max-w-screen-xl mx-auto">
-        <p className="font-mono text-[0.6rem] tracking-[0.1em] text-smoke-faint/50">
-          © {new Date().getFullYear()} Marko Tiosavljević. All rights reserved.
+      <div className="border-t border-white/10 px-6 lg:px-12 py-5 flex flex-col md:flex-row items-center justify-between gap-3 max-w-screen-xl mx-auto">
+        <p className="font-mono text-[0.7rem] text-smoke-dim">
+          © {new Date().getFullYear()} Marko Tiosavljević
         </p>
-        <Link to="/admin" className="font-mono text-[0.6rem] text-smoke-faint/30 hover:text-smoke-dim transition-colors">
+        <Link to="/admin" className="font-mono text-[0.7rem] text-smoke-dim hover:text-smoke transition-colors">
           Admin
         </Link>
       </div>

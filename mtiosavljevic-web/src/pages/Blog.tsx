@@ -85,7 +85,7 @@ export default function Blog() {
             Blog
           </h1>
           <p className="text-smoke-dim text-lg max-w-xl reveal reveal-delay-2" style={{ fontWeight: 300 }}>
-            Thinking out loud on AI, technology, data, and the future. No fluff.
+            Notes on multi-model consensus, self-developing agents, and agent memory — plus what breaks when they meet production.
           </p>
         </div>
       </section>

@@ -16,8 +16,9 @@ interface SeoProps {
 
 const SITE_NAME = 'Marko Tiosavljević'
 const SITE_URL = 'https://mtiosavljevic.com'
-const DEFAULT_DESC = '35+ years across graphic design, full-stack development, AI automation, and performance marketing. Founder of Imba Production. 130+ businesses scaled. 100% Upwork JSS.'
-const DEFAULT_OG_IMAGE = `${SITE_URL}/og-default.jpg`
+const DEFAULT_DESC = 'AI & LLM scientist building multi-model consensus engines, self-healing agents, and agent memory systems. 38 years in software, 30 in marketing, 6 in AI/LLM research. Founder of Imba Production.'
+// TODO: no og:image asset exists yet — add public/og-default.jpg (1200x630) and set this.
+const DEFAULT_OG_IMAGE = ''
 
 export default function Seo({
   title,
@@ -32,7 +33,7 @@ export default function Seo({
   publishedTime,
   modifiedTime,
 }: SeoProps) {
-  const fullTitle = title ? `${title} | ${SITE_NAME}` : `${SITE_NAME} — Senior Digital Consultant · Developer · AI Specialist`
+  const fullTitle = title ? `${title} | ${SITE_NAME}` : `${SITE_NAME} — AI & LLM Scientist · Developer · Marketer`
   const canonical = canonicalPath ? `${SITE_URL}${canonicalPath}` : undefined
   const schemas = structuredData
     ? Array.isArray(structuredData) ? structuredData : [structuredData]
@@ -52,20 +53,19 @@ export default function Seo({
       <meta property="og:type" content={ogType} />
       <meta property="og:title" content={ogTitle ?? fullTitle} />
       <meta property="og:description" content={ogDescription ?? description} />
-      <meta property="og:image" content={ogImage} />
-      <meta property="og:image:width" content="1200" />
-      <meta property="og:image:height" content="630" />
+      {ogImage && <meta property="og:image" content={ogImage} />}
+      {ogImage && <meta property="og:image:width" content="1200" />}
+      {ogImage && <meta property="og:image:height" content="630" />}
       {canonical && <meta property="og:url" content={canonical} />}
       <meta property="og:site_name" content={SITE_NAME} />
       {publishedTime && <meta property="article:published_time" content={publishedTime} />}
       {modifiedTime && <meta property="article:modified_time" content={modifiedTime} />}
 
       {/* Twitter */}
-      <meta name="twitter:card" content="summary_large_image" />
-      <meta name="twitter:site" content="@mtiosavljevic" />
+      <meta name="twitter:card" content={ogImage ? 'summary_large_image' : 'summary'} />
       <meta name="twitter:title" content={ogTitle ?? fullTitle} />
       <meta name="twitter:description" content={ogDescription ?? description} />
-      <meta name="twitter:image" content={ogImage} />
+      {ogImage && <meta name="twitter:image" content={ogImage} />}
 
       {/* Structured data — one <script> per schema */}
       {schemas.map((schema, i) => (

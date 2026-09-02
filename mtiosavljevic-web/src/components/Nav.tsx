@@ -55,18 +55,6 @@ export default function Nav() {
             ))}
           </div>
 
-          {/* CTA */}
-          <div className="hidden lg:flex items-center gap-6">
-            <div className="font-mono text-[0.6rem] text-smoke-faint tracking-widest opacity-40 select-none">
-              <TimecodeDisplay />
-            </div>
-            <Link
-              to="/contact"
-              className="font-mono text-[0.65rem] tracking-widest uppercase px-4 py-2 border border-emerald-400/40 text-emerald-400 hover:bg-emerald-400/10 hover:border-emerald-400 transition-all duration-200"
-            >
-              Get in touch
-            </Link>
-          </div>
 
           {/* Mobile burger */}
           <button
@@ -98,30 +86,10 @@ export default function Nav() {
               {label}
             </NavLink>
           ))}
-          <Link
-            to="/contact"
-            onClick={() => setOpen(false)}
-            className="self-start mt-4 font-mono text-[0.65rem] tracking-widest uppercase px-4 py-2 border border-emerald-400/40 text-emerald-400 hover:bg-emerald-400/10 transition-all"
-          >
-            Get in touch
-          </Link>
         </div>
       </div>
     </>
   )
 }
 
-function TimecodeDisplay() {
-  const [time, setTime] = useState(formatTimecode())
-  useEffect(() => {
-    const t = setInterval(() => setTime(formatTimecode()), 1000)
-    return () => clearInterval(t)
-  }, [])
-  return <>{time}</>
-}
 
-function formatTimecode() {
-  const n = new Date()
-  const pad = (x: number) => String(x).padStart(2, '0')
-  return `${pad(n.getHours())}:${pad(n.getMinutes())}:${pad(n.getSeconds())}`
-}
