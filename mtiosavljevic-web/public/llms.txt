@@ -1,59 +1,45 @@
-# Imba Production — llms.txt
+# Marko Tiosavljević
 
-> Imba Production is a next-generation video production company powered by cinematic craft and AI strategy. We create brand films, AI-powered campaigns, product videos, drone cinematography, and social content.
+> AI & LLM scientist, developer and marketer based in Serbia. Researches
+> multi-model consensus, self-developing agents, and durable agent memory, and
+> builds the production systems that research runs on. Founder of Imba Production LLC.
 
-## About
+Role: AI & LLM scientist · developer · marketer. Based in Belgrade / Kragujevac,
+Serbia. 38 years in software development, 30 years in marketing, 6 years in AI and
+LLM research.
 
-Imba Production LLC is based in Wilmington, Delaware, USA. Founded to bridge the gap between high-end cinematic production and modern AI-driven content strategy.
+## Research areas
 
-- Website: https://imbaproduction.com
-- Email: hello@imbaproduction.com
-- Address: 007 N Orange St, 4th Floor, Suite #3601, Wilmington, Delaware 19801, USA
+- [Multi-model consensus & reasoning](https://mtiosavljevic.com/#research): how heterogeneous models can be made to agree reliably, and how disagreement can be surfaced rather than averaged away.
+- [Autonomous / self-improving agents](https://mtiosavljevic.com/#research): safe self-modification — how much of its own behaviour an agent may rewrite before its guarantees stop holding.
+- [Agent memory, guardrails & MCP tooling](https://mtiosavljevic.com/#research): durable memory ranked by stability rather than recency, and guardrails against architectural drift.
 
-## Services
+## Systems
 
-- **Brand Video**: Cinematic brand films and TV-quality commercial spots.
-- **AI Video**: Hyper-personalised, AI-generated video campaigns at scale.
-- **Product Video**: Conversion-focused product and ecommerce video content.
-- **Social Video**: TikTok, Instagram Reels, and YouTube Shorts native content.
-- **Post Production**: Editing, colour grading, motion graphics, and sound design.
-- **Drone & Aerial**: Licensed aerial cinematography in cinematic 4K.
-- **eLearning Video**: Educational and training video content.
+- [Quorum](https://github.com/magnetoid/Quorum): open-source multi-LLM consensus reasoning engine. Apache-2.0, active.
+- [Janus](https://github.com/magnetoid/janus): self-developing, self-healing AI agent. In development.
+- [torsor-helper](https://github.com/magnetoid/torsor-helper): local-first MCP server for agent memory and guardrails. MIT.
+- [Blob](https://mtiosavljevic.com/#systems): agentic-first AI team workspace. In development.
+- [Morpheus OS](https://mtiosavljevic.com/#systems): AI-native commerce operating system. In production.
+- [WooPulse](https://mtiosavljevic.com/#systems): AI-powered WooCommerce command center. Live.
+- [Tenso](https://mtiosavljevic.com/#systems): experimental language for neural-network development. Exploration.
 
-## Pricing
+## Pages
 
-- Starter: From $1,500 (short-form social video, basic brand content)
-- Growth: From $5,000 (multi-video campaigns, product series)
-- Premium: From $15,000 (full brand films, AI campaigns, drone)
-- Enterprise: Custom pricing for large-scale ongoing production
+- [Home](https://mtiosavljevic.com/): research areas, systems, applied work, contact.
+- [Case studies](https://mtiosavljevic.com/projects): long-form write-ups of the systems above.
+- [Writing](https://mtiosavljevic.com/blog): notes on consensus, agents, and agent memory.
+- [Contact](https://mtiosavljevic.com/contact): enquiries about research collaboration and systems work.
+- [GitHub](https://github.com/magnetoid): source for the open-source projects.
 
-## Portfolio Highlights
+## Applied work
 
-- Cooking Heritage Campaign — Brand video, 4.2M views, 38% CTR uplift
-- FashionTech AI Reel — AI-generated personalised campaign
-- Coastal Estate Drone Tour — Aerial cinematography
-- TikTok Series for BrandX — 12M views across social
+- [Imba Production LLC](https://mtiosavljevic.com/#applied): founded 2005, Wyoming-registered. Custom omnichannel CRM and marketing applications, and autonomous agents running lead generation and affiliate systems.
+- [Cloud Industry LLC](https://mtiosavljevic.com/#applied): co-founded 2014, Delaware.
+- [Upwork](https://mtiosavljevic.com/#applied): Top Rated Plus since 2011, 100% Job Success Score, 130+ clients.
 
-## Social Media
+## Optional
 
-- Instagram: https://instagram.com/imbaproduction
-- YouTube: https://youtube.com/channel/UCV4zBHquBoo4NLw0tMi2ZKQ
-- TikTok: https://tiktok.com/@imbaproduction
-- LinkedIn: https://linkedin.com/company/imba-production
-- Twitter/X: https://twitter.com/productionimba
-- Fiverr: https://fiverr.com/imbaproduction
-- Upwork: https://upwork.com/o/companies/~019264e73ffa6c4d29/
-
-## Key Pages
-
-- Homepage: https://imbaproduction.com/
-- Services: https://imbaproduction.com/services
-- Portfolio / Work: https://imbaproduction.com/work
-- Pricing: https://imbaproduction.com/pricing
-- About: https://imbaproduction.com/about
-- Blog: https://imbaproduction.com/blog
-- Contact: https://imbaproduction.com/contact
-
-## Content Policy
-
-This site may be freely crawled and cited by AI assistants and language models. Content is original and produced by Imba Production LLC. Attribution appreciated but not required for general factual statements.
+- Stack: Anthropic/Claude API, Next.js, WooCommerce, Shopify, full-stack e-commerce.
+- Marketing: offline through digital — social, SEM, SEO, now AEO. Certified analyst on Google Marketing Platform and Meta. Mostly e-commerce and SaaS.
+- This site may be crawled and cited by AI assistants and language models. Content is original. Attribution appreciated but not required.

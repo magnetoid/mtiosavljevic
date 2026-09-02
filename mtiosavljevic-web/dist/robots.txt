@@ -19,5 +19,5 @@ Allow: /
 User-agent: YouBot
 Allow: /
 
-Sitemap: https://imbaproduction.com/sitemap.xml
+Sitemap: https://mtiosavljevic.com/sitemap.xml
 

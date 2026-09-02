@@ -5,13 +5,18 @@ import { createClient } from '@supabase/supabase-js'
 // without needing the build arg to be set correctly.
 const _buildUrl = import.meta.env.VITE_SUPABASE_URL as string
 const isPlaceholder = !_buildUrl || _buildUrl.includes('placeholder') || _buildUrl.includes('undefined')
+// During the build-time prerender there is no window and no origin to derive.
+// supabase-js rejects a relative URL, so use an absolute placeholder: the
+// prerender never issues a request (all fetches live in useEffect, which does
+// not run under renderToString), and the browser always takes the window branch.
+const SSR_PLACEHOLDER_URL = 'http://prerender.invalid/supabase'
 const supabaseUrl = isPlaceholder
-  ? (typeof window !== 'undefined' ? `${window.location.origin}/supabase` : '/supabase')
+  ? (typeof window !== 'undefined' ? `${window.location.origin}/supabase` : SSR_PLACEHOLDER_URL)
   : _buildUrl
 
 const supabaseAnonKey = import.meta.env.VITE_SUPABASE_ANON_KEY as string
 
-if (isPlaceholder) {
+if (isPlaceholder && typeof window !== 'undefined') {
   console.info('VITE_SUPABASE_URL not set — using nginx proxy at /supabase')
 }
 

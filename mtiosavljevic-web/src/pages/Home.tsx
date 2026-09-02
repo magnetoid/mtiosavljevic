@@ -4,6 +4,7 @@ import { RESEARCH_AREAS } from '@/data/research'
 import { SYSTEMS } from '@/data/systems'
 import { NOTE_STUBS } from '@/data/notes'
 import SystemSketch from '@/components/SystemSketch'
+import { PERSON_SCHEMA } from '@/data/person-schema'
 
 const CURRENTLY_EXPLORING = [
   'Consensus protocols across heterogeneous models',
@@ -36,7 +37,7 @@ const CREDENTIALS = [
 export default function Home() {
   return (
     <>
-      <Seo canonicalPath="/" />
+      <Seo canonicalPath="/" structuredData={PERSON_SCHEMA} />
 
       {/* ── 1. HERO ──────────────────────────────────────────── */}
       <section className="pt-40 pb-28 px-6 lg:px-12">
