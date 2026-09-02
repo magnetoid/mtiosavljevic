@@ -69,22 +69,18 @@ export default function Blog() {
     <>
       {/* ── HERO ─────────────────────────────────────────────── */}
       <section className="pt-36 pb-16 px-6 lg:px-12 relative overflow-hidden">
-        <div className="absolute inset-0 pointer-events-none" style={{
-          backgroundImage: `linear-gradient(rgba(16,185,129,0.03) 1px, transparent 1px), linear-gradient(90deg, rgba(16,185,129,0.03) 1px, transparent 1px)`,
-          backgroundSize: '60px 60px',
-        }} />
         <div className="max-w-screen-xl mx-auto relative z-10">
-          <div className="flex items-center gap-3 mb-6 reveal">
-            <span className="font-mono text-emerald-400 text-[0.65rem] tracking-[0.3em] uppercase">Writing</span>
-            <div className="h-px w-12 bg-emerald-400/40" />
+          <div className="flex items-center gap-3 mb-6">
+            <span className="font-mono text-signal text-[0.65rem] tracking-[0.3em] uppercase">Writing</span>
+            <div className="h-px w-12 bg-signal/40" />
           </div>
           <h1
-            className="font-mono font-light text-smoke mb-4 reveal reveal-delay-1"
+            className="font-mono font-light text-smoke mb-4"
             style={{ fontSize: 'clamp(2rem, 4vw, 3.5rem)' }}
           >
             Blog
           </h1>
-          <p className="text-smoke-dim text-lg max-w-xl reveal reveal-delay-2" style={{ fontWeight: 300 }}>
+          <p className="text-smoke-dim text-lg max-w-xl" style={{ fontWeight: 300 }}>
             Notes on multi-model consensus, self-developing agents, and agent memory — plus what breaks when they meet production.
           </p>
         </div>
@@ -98,7 +94,7 @@ export default function Blog() {
               onClick={() => setActiveCategory('all')}
               className={`font-mono text-[0.6rem] tracking-widest uppercase px-4 py-2 border transition-colors ${
                 activeCategory === 'all'
-                  ? 'border-emerald-400 text-emerald-400 bg-emerald-400/5'
+                  ? 'border-signal text-signal bg-signal/5'
                   : 'border-white/10 text-smoke-faint hover:border-white/30 hover:text-smoke-dim'
               }`}
             >
@@ -110,7 +106,7 @@ export default function Blog() {
                 onClick={() => setActiveCategory(cat)}
                 className={`font-mono text-[0.6rem] tracking-widest uppercase px-4 py-2 border transition-colors ${
                   activeCategory === cat
-                    ? 'border-emerald-400 text-emerald-400 bg-emerald-400/5'
+                    ? 'border-signal text-signal bg-signal/5'
                     : 'border-white/10 text-smoke-faint hover:border-white/30 hover:text-smoke-dim'
                 }`}
               >
@@ -126,7 +122,7 @@ export default function Blog() {
         <div className="max-w-screen-xl mx-auto">
           {loading ? (
             <div className="flex items-center gap-3 py-12">
-              <div className="w-2 h-2 bg-emerald-400 rounded-full animate-pulse" />
+              <div className="w-2 h-2 bg-signal rounded-full animate-pulse" />
               <span className="font-mono text-[0.65rem] tracking-wider text-smoke-faint uppercase">Loading posts…</span>
             </div>
           ) : filtered.length === 0 ? (
@@ -151,11 +147,11 @@ export default function Blog() {
                   {/* Content */}
                   <div className="flex-1 min-w-0">
                     {(post as any).blog_categories?.name || post.category ? (
-                      <span className="font-mono text-[0.6rem] tracking-widest uppercase text-emerald-400 mb-2 block">
+                      <span className="font-mono text-[0.6rem] tracking-widest uppercase text-signal mb-2 block">
                         {(post as any).blog_categories?.name || post.category}
                       </span>
                     ) : null}
-                    <h2 className="font-mono text-smoke text-lg leading-snug mb-2 group-hover:text-emerald-400 transition-colors">
+                    <h2 className="font-mono text-smoke text-lg leading-snug mb-2 group-hover:text-signal transition-colors">
                       {post.title}
                     </h2>
                     {post.excerpt && (
@@ -171,7 +167,7 @@ export default function Blog() {
                         {post.read_time_minutes} min
                       </span>
                     )}
-                    <span className="font-mono text-[0.6rem] tracking-wider text-emerald-400/50 group-hover:text-emerald-400 transition-colors">
+                    <span className="font-mono text-[0.6rem] tracking-wider text-signal/50 group-hover:text-signal transition-colors">
                       →
                     </span>
                   </div>

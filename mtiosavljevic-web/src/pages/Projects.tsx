@@ -13,30 +13,23 @@ export default function Projects() {
 
       {/* ── HERO ─────────────────────────────────────────────── */}
       <section className="pt-36 pb-20 px-6 lg:px-12 bg-ink relative overflow-hidden">
-        <div
-          className="absolute inset-0 pointer-events-none"
-          style={{
-            backgroundImage: `linear-gradient(rgba(16,185,129,0.03) 1px, transparent 1px), linear-gradient(90deg, rgba(16,185,129,0.03) 1px, transparent 1px)`,
-            backgroundSize: '60px 60px',
-          }}
-        />
         <div className="relative max-w-screen-xl mx-auto">
-          <div className="flex items-center gap-3 mb-6 reveal">
-            <span className="font-mono text-emerald-400 text-[0.65rem] tracking-[0.3em] uppercase">
+          <div className="flex items-center gap-3 mb-6">
+            <span className="font-mono text-signal text-[0.65rem] tracking-[0.3em] uppercase">
               Case studies
             </span>
-            <div className="h-px w-12 bg-emerald-400/40" />
+            <div className="h-px w-12 bg-signal/40" />
           </div>
 
           <h1
-            className="font-mono font-light text-smoke leading-[1.05] mb-6 reveal reveal-delay-1"
+            className="font-mono font-light text-smoke leading-[1.05] mb-6"
             style={{ fontSize: 'clamp(2.4rem, 5vw, 4.2rem)' }}
           >
             Case studies
           </h1>
 
           <p
-            className="text-smoke-dim max-w-2xl leading-relaxed reveal reveal-delay-2"
+            className="text-smoke-dim max-w-2xl leading-relaxed"
             style={{ fontSize: '1.05rem', fontWeight: 300 }}
           >
             Long-form write-ups of the systems listed on the front page — a multi-model
@@ -53,7 +46,7 @@ export default function Projects() {
             <Link
               key={p.slug}
               to={`/projects/${p.slug}`}
-              className="group block relative border border-white/5 bg-ink-2/40 hover:bg-ink-2 transition-all duration-300 reveal overflow-hidden"
+              className="group block relative border border-white/5 bg-ink-2/40 hover:bg-ink-2 transition-all duration-300 overflow-hidden"
               style={{ transitionDelay: `${i * 80}ms` }}
             >
               {/* Accent stripe */}

@@ -44,7 +44,7 @@ export default function ProjectPage() {
           <div className="grid lg:grid-cols-12 gap-12">
             <div className="lg:col-span-8">
               {/* Label + meta */}
-              <div className="flex flex-wrap items-center gap-4 mb-8 reveal">
+              <div className="flex flex-wrap items-center gap-4 mb-8">
                 <span
                   className="font-mono text-[0.6rem] tracking-[0.22em] uppercase px-3 py-1 border"
                   style={{ color: accent, borderColor: `${accent}55` }}
@@ -65,27 +65,27 @@ export default function ProjectPage() {
               </div>
 
               <h1
-                className="font-mono font-light text-smoke leading-[1.05] mb-6 reveal reveal-delay-1"
+                className="font-mono font-light text-smoke leading-[1.05] mb-6"
                 style={{ fontSize: 'clamp(2.4rem, 5vw, 4.6rem)' }}
               >
                 {project.name}
               </h1>
 
               <p
-                className="font-mono font-light leading-tight mb-10 reveal reveal-delay-2"
+                className="font-mono font-light leading-tight mb-10"
                 style={{ fontSize: 'clamp(1.1rem, 2vw, 1.55rem)', color: accent }}
               >
                 {project.tagline}
               </p>
 
               <p
-                className="text-smoke-dim leading-relaxed max-w-3xl mb-10 reveal reveal-delay-3"
+                className="text-smoke-dim leading-relaxed max-w-3xl mb-10"
                 style={{ fontSize: '1.02rem', fontWeight: 300 }}
               >
                 {project.hero}
               </p>
 
-              <div className="flex flex-wrap gap-4 reveal reveal-delay-3">
+              <div className="flex flex-wrap gap-4">
                 <a
                   href={project.url}
                   target="_blank"
@@ -105,7 +105,7 @@ export default function ProjectPage() {
             </div>
 
             {/* Side card — role & stack */}
-            <aside className="lg:col-span-4 reveal reveal-delay-2">
+            <aside className="lg:col-span-4">
               <div className="p-6 border border-white/5 bg-ink-2/60 h-full">
                 <div className="mb-6">
                   <div className="font-mono text-[0.58rem] tracking-[0.22em] uppercase text-smoke-faint mb-3">
@@ -163,7 +163,7 @@ export default function ProjectPage() {
       <section className="py-24 px-6 lg:px-12 bg-ink">
         <div className="max-w-screen-xl mx-auto grid lg:grid-cols-12 gap-12">
           <div className="lg:col-span-4">
-            <div className="flex items-center gap-3 reveal">
+            <div className="flex items-center gap-3">
               <span className="font-mono text-[0.65rem] tracking-[0.3em] uppercase text-smoke-faint">
                 Overview
               </span>
@@ -172,7 +172,7 @@ export default function ProjectPage() {
           </div>
           <div className="lg:col-span-8">
             <p
-              className="text-smoke leading-relaxed reveal"
+              className="text-smoke leading-relaxed"
               style={{ fontSize: '1.2rem', fontWeight: 300 }}
             >
               {project.summary}
@@ -185,13 +185,13 @@ export default function ProjectPage() {
       <section className="py-24 px-6 lg:px-12 bg-ink-2 border-t border-white/5">
         <div className="max-w-screen-xl mx-auto grid lg:grid-cols-12 gap-12">
           <div className="lg:col-span-4">
-            <div className="flex items-center gap-3 mb-6 reveal">
+            <div className="flex items-center gap-3 mb-6">
               <span className="font-mono text-[0.65rem] tracking-[0.3em] uppercase" style={{ color: accent }}>
                 01 — Problem
               </span>
             </div>
             <h2
-              className="font-mono font-light text-smoke leading-tight reveal reveal-delay-1"
+              className="font-mono font-light text-smoke leading-tight"
               style={{ fontSize: 'clamp(1.6rem, 2.8vw, 2.2rem)' }}
             >
               {project.problem.title}
@@ -199,7 +199,7 @@ export default function ProjectPage() {
           </div>
           <div className="lg:col-span-8">
             <p
-              className="text-smoke-dim leading-relaxed reveal reveal-delay-2"
+              className="text-smoke-dim leading-relaxed"
               style={{ fontSize: '1.02rem', fontWeight: 300 }}
             >
               {project.problem.body}
@@ -211,7 +211,7 @@ export default function ProjectPage() {
       {/* ── APPROACH ───────────────────────────────────────── */}
       <section className="py-24 px-6 lg:px-12 bg-ink border-t border-white/5">
         <div className="max-w-screen-xl mx-auto">
-          <div className="flex items-center gap-3 mb-14 reveal">
+          <div className="flex items-center gap-3 mb-14">
             <span className="font-mono text-[0.65rem] tracking-[0.3em] uppercase" style={{ color: accent }}>
               02 — Approach
             </span>
@@ -221,7 +221,6 @@ export default function ProjectPage() {
             {project.approach.map((a, i) => (
               <div
                 key={a.title}
-                className="reveal"
                 style={{ transitionDelay: `${i * 80}ms` }}
               >
                 <div
@@ -245,7 +244,7 @@ export default function ProjectPage() {
       {/* ── FEATURES ───────────────────────────────────────── */}
       <section className="py-24 px-6 lg:px-12 bg-ink-2 border-t border-white/5">
         <div className="max-w-screen-xl mx-auto">
-          <div className="flex items-center gap-3 mb-14 reveal">
+          <div className="flex items-center gap-3 mb-14">
             <span className="font-mono text-[0.65rem] tracking-[0.3em] uppercase" style={{ color: accent }}>
               03 — What was built
             </span>
@@ -255,7 +254,7 @@ export default function ProjectPage() {
             {project.features.map((f, i) => (
               <div
                 key={f.title}
-                className="p-6 border border-white/5 bg-ink/50 hover:bg-ink transition-colors reveal"
+                className="p-6 border border-white/5 bg-ink/50 hover:bg-ink transition-colors"
                 style={{
                   transitionDelay: `${i * 50}ms`,
                   borderColor: `rgba(255,255,255,0.05)`,
@@ -280,7 +279,7 @@ export default function ProjectPage() {
       {/* ── OUTCOMES ───────────────────────────────────────── */}
       <section className="py-24 px-6 lg:px-12 bg-ink border-t border-white/5">
         <div className="max-w-screen-xl mx-auto">
-          <div className="flex items-center gap-3 mb-14 reveal">
+          <div className="flex items-center gap-3 mb-14">
             <span className="font-mono text-[0.65rem] tracking-[0.3em] uppercase" style={{ color: accent }}>
               04 — Outcomes
             </span>
@@ -290,7 +289,7 @@ export default function ProjectPage() {
             {project.outcomes.map((o, i) => (
               <div
                 key={o.label}
-                className="p-8 border border-white/5 bg-ink-2/40 reveal"
+                className="p-8 border border-white/5 bg-ink-2/40"
                 style={{ transitionDelay: `${i * 60}ms` }}
               >
                 <div
@@ -312,7 +311,7 @@ export default function ProjectPage() {
       {project.quote && (
         <section className="py-24 px-6 lg:px-12 bg-ink-2 border-t border-white/5">
           <div className="max-w-screen-xl mx-auto max-w-3xl">
-            <div className="reveal">
+            <div>
               <div
                 className="font-mono text-[2.5rem] leading-none mb-6"
                 style={{ color: accent }}
@@ -337,13 +336,13 @@ export default function ProjectPage() {
       <section className="py-24 px-6 lg:px-12 bg-ink border-t border-white/5">
         <div className="max-w-screen-xl mx-auto grid lg:grid-cols-12 gap-12">
           <div className="lg:col-span-4">
-            <div className="flex items-center gap-3 mb-6 reveal">
+            <div className="flex items-center gap-3 mb-6">
               <span className="font-mono text-[0.65rem] tracking-[0.3em] uppercase" style={{ color: accent }}>
                 05 — What I took away
               </span>
             </div>
             <h2
-              className="font-mono font-light text-smoke leading-tight reveal reveal-delay-1"
+              className="font-mono font-light text-smoke leading-tight"
               style={{ fontSize: 'clamp(1.4rem, 2.4vw, 1.9rem)' }}
             >
               The lessons worth carrying to the next build.
@@ -353,7 +352,7 @@ export default function ProjectPage() {
             {project.lessons.map((l, i) => (
               <div
                 key={i}
-                className="flex gap-6 reveal"
+                className="flex gap-6"
                 style={{ transitionDelay: `${i * 80}ms` }}
               >
                 <div
@@ -377,7 +376,7 @@ export default function ProjectPage() {
       {/* ── OTHER PROJECTS ─────────────────────────────────── */}
       <section className="py-20 px-6 lg:px-12 bg-ink-2 border-t border-white/5">
         <div className="max-w-screen-xl mx-auto">
-          <div className="flex items-center gap-3 mb-12 reveal">
+          <div className="flex items-center gap-3 mb-12">
             <span className="font-mono text-[0.65rem] tracking-[0.3em] uppercase text-smoke-faint">
               Other projects
             </span>
@@ -388,7 +387,7 @@ export default function ProjectPage() {
               <Link
                 key={p.slug}
                 to={`/projects/${p.slug}`}
-                className="group p-8 border border-white/5 hover:bg-ink transition-all duration-300 reveal"
+                className="group p-8 border border-white/5 hover:bg-ink transition-all duration-300"
                 style={{ transitionDelay: `${i * 60}ms` }}
               >
                 <div className="flex items-center gap-3 mb-5">

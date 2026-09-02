@@ -3,6 +3,7 @@ import Seo from '@/components/Seo'
 import { RESEARCH_AREAS } from '@/data/research'
 import { SYSTEMS } from '@/data/systems'
 import { NOTE_STUBS } from '@/data/notes'
+import SystemSketch from '@/components/SystemSketch'
 
 const CURRENTLY_EXPLORING = [
   'Consensus protocols across heterogeneous models',
@@ -53,7 +54,7 @@ export default function Home() {
             I build AI systems that reason together, repair themselves, and remember.
           </h1>
 
-          <p className="text-smoke-dim text-lg max-w-2xl leading-relaxed mb-12" style={{ fontWeight: 300 }}>
+          <p className="text-smoke-dim text-lg max-w-2xl leading-relaxed mb-12">
             AI &amp; LLM research on multi-model consensus, self-developing agents, and agent
             memory — grounded in 38 years of shipping production software.
           </p>
@@ -76,12 +77,12 @@ export default function Home() {
           </div>
 
           <div className="border-l border-white/20 pl-5 max-w-xl">
-            <p className="font-mono text-[0.75rem] uppercase tracking-[0.2em] text-smoke-dim mb-3">
+            <p className="font-mono text-[0.78rem] text-smoke-faint mb-3">
               Currently exploring
             </p>
             <ul className="flex flex-col gap-2">
               {CURRENTLY_EXPLORING.map(item => (
-                <li key={item} className="text-smoke-dim text-sm leading-relaxed" style={{ fontWeight: 300 }}>
+                <li key={item} className="text-smoke-dim text-sm leading-relaxed" style={{ fontSize: '0.95rem' }}>
                   {item}
                 </li>
               ))}
@@ -93,9 +94,9 @@ export default function Home() {
       {/* ── 2. RESEARCH AREAS ────────────────────────────────── */}
       <section id="research" className="py-24 px-6 lg:px-12 bg-ink-2 border-t border-white/10">
         <div className="max-w-screen-xl mx-auto">
-          <h2 className="font-mono text-smoke text-xl font-light mb-8">Research areas</h2>
+          <h2 className="font-mono text-smoke text-xl mb-8">Research areas</h2>
 
-          <div className="max-w-3xl flex flex-col gap-5 text-smoke-dim leading-relaxed mb-16" style={{ fontWeight: 300 }}>
+          <div className="max-w-3xl flex flex-col gap-5 text-smoke-dim leading-relaxed mb-16">
             <p>
               Three questions organise the work: how heterogeneous models can be made to agree
               reliably; how far an agent can safely modify itself; and what durable memory and
@@ -113,20 +114,20 @@ export default function Home() {
             </p>
           </div>
 
-          <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+          <div className="grid grid-cols-1 lg:grid-cols-3 gap-x-10 gap-y-12">
             {RESEARCH_AREAS.map(area => (
-              <div key={area.id} className="p-6 border border-white/10 bg-ink-3/40 flex flex-col">
+              <div key={area.id} className="flex flex-col border-t border-smoke-faint/40 pt-5">
                 <h3 className="font-mono text-smoke text-sm leading-snug mb-4">{area.title}</h3>
-                <p className="text-smoke-dim text-sm leading-relaxed mb-5 flex-1" style={{ fontWeight: 300 }}>
+                <p className="text-smoke-dim leading-relaxed mb-5 flex-1" style={{ fontSize: '0.95rem' }}>
                   {area.thesis}
                 </p>
                 <a
                   href={area.repoUrl}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="font-mono text-[0.75rem] text-signal hover:underline break-all"
+                  className="font-mono text-[0.78rem] text-signal underline underline-offset-4 decoration-signal/40 hover:decoration-signal break-all py-1"
                 >
-                  {area.repoLabel} ↗
+                  {area.repoLabel}
                 </a>
               </div>
             ))}
@@ -137,55 +138,59 @@ export default function Home() {
       {/* ── 3. SYSTEMS & EXPERIMENTS ─────────────────────────── */}
       <section id="systems" className="py-24 px-6 lg:px-12 border-t border-white/10">
         <div className="max-w-screen-xl mx-auto">
-          <h2 className="font-mono text-smoke text-xl font-light mb-4">Systems &amp; experiments</h2>
-          <p className="text-smoke-dim text-sm mb-16 max-w-2xl" style={{ fontWeight: 300 }}>
+          <h2 className="font-mono text-smoke text-xl mb-4">Systems &amp; experiments</h2>
+          <p className="text-smoke-dim text-sm mb-16 max-w-2xl">
             Problem, approach, and current status for each. Longer write-ups live in{' '}
-            <Link to="/projects" className="text-signal hover:underline">case studies</Link>.
+            <Link to="/projects" className="text-signal underline underline-offset-4 decoration-signal/40 hover:decoration-signal">case studies</Link>.
           </p>
 
-          <ol className="flex flex-col gap-12">
-            {SYSTEMS.map((s, i) => (
-              <li key={s.id} className="grid lg:grid-cols-12 gap-6 pb-12 border-b border-white/10 last:border-b-0">
+          <ul className="flex flex-col">
+            {SYSTEMS.map(sys => (
+              <li
+                key={sys.id}
+                className="grid lg:grid-cols-12 gap-x-10 gap-y-6 py-10 border-t border-smoke-faint/40 last:border-b last:border-smoke-faint/40"
+              >
                 <div className="lg:col-span-3">
-                  <p className="font-mono text-[0.75rem] text-smoke-dim mb-2">
-                    {String(i + 1).padStart(2, '0')}
-                  </p>
-                  <h3 className="font-mono text-smoke text-lg font-light mb-1">{s.name}</h3>
-                  <p className="font-mono text-[0.75rem] text-smoke-dim leading-snug">{s.kind}</p>
+                  <h3 className="font-mono text-smoke text-lg mb-1">{sys.name}</h3>
+                  <p className="font-mono text-[0.78rem] text-smoke-dim leading-snug">{sys.kind}</p>
                 </div>
 
-                <div className="lg:col-span-9 flex flex-col gap-4">
-                  <Field label="Problem" value={s.problem} />
-                  <Field label="Approach" value={s.approach} />
-                  <Field label="Status" value={s.status} />
+                <div className="lg:col-span-6 flex flex-col gap-4">
+                  <Field label="Problem" value={sys.problem} />
+                  <Field label="Approach" value={sys.approach} />
+                  <Field label="Status" value={sys.status} />
 
-                  {s.repoUrl && (
+                  {sys.repoUrl && (
                     <a
-                      href={s.repoUrl}
+                      href={sys.repoUrl}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="font-mono text-[0.8rem] text-signal hover:underline break-all"
+                      className="font-mono text-[0.8rem] text-signal underline underline-offset-4 decoration-signal/40 hover:decoration-signal break-all py-1 self-start"
                     >
-                      {s.repoLabel} ↗
+                      {sys.repoLabel}
                     </a>
                   )}
-                  {s.todo && (
-                    <p className="font-mono text-[0.75rem] text-smoke-dim border-l-2 border-white/25 pl-3">
-                      TODO — {s.todo}
+                  {sys.todo && (
+                    <p className="font-mono text-[0.78rem] text-smoke-dim border-l border-smoke-faint/50 pl-3">
+                      TODO — {sys.todo}
                     </p>
                   )}
                 </div>
+
+                <div className="lg:col-span-3">
+                  <SystemSketch id={sys.id} />
+                </div>
               </li>
             ))}
-          </ol>
+          </ul>
         </div>
       </section>
 
       {/* ── 4. WRITING / NOTES ───────────────────────────────── */}
       <section id="writing" className="py-24 px-6 lg:px-12 bg-ink-2 border-t border-white/10">
         <div className="max-w-screen-xl mx-auto">
-          <h2 className="font-mono text-smoke text-xl font-light mb-4">Writing / notes</h2>
-          <p className="text-smoke-dim text-sm mb-12 max-w-2xl" style={{ fontWeight: 300 }}>
+          <h2 className="font-mono text-smoke text-xl mb-4">Writing / notes</h2>
+          <p className="text-smoke-dim text-sm mb-12 max-w-2xl">
             One write-up planned per major system. Nothing published here yet — these are
             placeholders, not links to work that exists.
           </p>
@@ -196,13 +201,13 @@ export default function Home() {
                 <span className="font-mono text-[0.75rem] text-smoke-dim w-28 shrink-0">
                   {note.about}
                 </span>
-                <span className="text-smoke-dim" style={{ fontWeight: 300 }}>{note.title}</span>
+                <span className="text-smoke-dim">{note.title}</span>
               </li>
             ))}
           </ul>
 
-          <Link to="/blog" className="inline-block mt-8 font-mono text-[0.8rem] text-signal hover:underline">
-            Existing posts →
+          <Link to="/blog" className="inline-block mt-8 font-mono text-[0.8rem] text-signal underline underline-offset-4 decoration-signal/40 hover:decoration-signal py-1">
+            Existing posts
           </Link>
         </div>
       </section>
@@ -210,13 +215,13 @@ export default function Home() {
       {/* ── 5. APPLIED WORK & CREDENTIALS ────────────────────── */}
       <section id="applied" className="py-24 px-6 lg:px-12 border-t border-white/10">
         <div className="max-w-screen-xl mx-auto">
-          <h2 className="font-mono text-smoke text-xl font-light mb-12">Applied work &amp; credentials</h2>
+          <h2 className="font-mono text-smoke text-xl mb-12">Applied work &amp; credentials</h2>
 
           <dl className="max-w-4xl grid grid-cols-1 md:grid-cols-[10rem_1fr] gap-x-8 gap-y-5">
             {CREDENTIALS.map(c => (
               <div key={c.label} className="contents">
                 <dt className="font-mono text-[0.8rem] text-smoke pt-0.5">{c.label}</dt>
-                <dd className="text-smoke-dim text-sm leading-relaxed mb-4 md:mb-0" style={{ fontWeight: 300 }}>
+                <dd className="text-smoke-dim text-sm leading-relaxed mb-4 md:mb-0">
                   {c.body}
                 </dd>
               </div>
@@ -228,23 +233,23 @@ export default function Home() {
       {/* ── 6. CONTACT ───────────────────────────────────────── */}
       <section id="contact" className="py-24 px-6 lg:px-12 bg-ink-2 border-t border-white/10">
         <div className="max-w-screen-xl mx-auto">
-          <h2 className="font-mono text-smoke text-xl font-light mb-8">Contact</h2>
+          <h2 className="font-mono text-smoke text-xl mb-8">Contact</h2>
           <ul className="flex flex-col gap-3 font-mono text-[0.9rem]">
             <li>
-              <a href="mailto:marko.tiosavljevic@gmail.com" className="text-signal hover:underline">
+              <a href="mailto:marko.tiosavljevic@gmail.com" className="text-signal underline underline-offset-4 decoration-signal/40 hover:decoration-signal">
                 marko.tiosavljevic@gmail.com
               </a>
             </li>
             <li>
               <a href="https://github.com/magnetoid" target="_blank" rel="noopener noreferrer"
-                className="text-signal hover:underline">
+                className="text-signal underline underline-offset-4 decoration-signal/40 hover:decoration-signal">
                 github.com/magnetoid ↗
               </a>
             </li>
             <li>
               {/* TODO: replace with the personal Upwork profile URL once confirmed. */}
               <a href="https://www.upwork.com/" target="_blank" rel="noopener noreferrer"
-                className="text-signal hover:underline">
+                className="text-signal underline underline-offset-4 decoration-signal/40 hover:decoration-signal">
                 Upwork ↗
               </a>
               <span className="text-smoke-dim"> — TODO: profile URL</span>
@@ -259,10 +264,8 @@ export default function Home() {
 function Field({ label, value }: { label: string; value: string }) {
   return (
     <div className="grid sm:grid-cols-[6rem_1fr] gap-x-4 gap-y-1">
-      <span className="font-mono text-[0.75rem] uppercase tracking-[0.14em] text-smoke-dim pt-1">
-        {label}
-      </span>
-      <p className="text-smoke-dim leading-relaxed" style={{ fontWeight: 300 }}>{value}</p>
+      <span className="font-mono text-[0.78rem] text-smoke-faint pt-1">{label}</span>
+      <p className="text-smoke-dim leading-relaxed" style={{ fontSize: '0.95rem' }}>{value}</p>
     </div>
   )
 }

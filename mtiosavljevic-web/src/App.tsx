@@ -1,5 +1,4 @@
 import { Routes, Route } from 'react-router-dom'
-import { useEffect } from 'react'
 import Nav from '@/components/Nav'
 import Footer from '@/components/Footer'
 import Home from '@/pages/Home'
@@ -23,28 +22,7 @@ import TestimonialsAdmin from '@/admin/TestimonialsAdmin'
 import SeoAdmin from '@/admin/SeoAdmin'
 import CRMLauncher from '@/admin/crm/CRMLauncher'
 
-// Scroll reveal observer
-function useScrollReveal() {
-  useEffect(() => {
-    const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting) {
-            entry.target.classList.add('in-view')
-            observer.unobserve(entry.target)
-          }
-        })
-      },
-      { threshold: 0.1 }
-    )
-    const els = document.querySelectorAll('.reveal')
-    els.forEach((el) => observer.observe(el))
-    return () => observer.disconnect()
-  })
-}
-
 function PublicLayout({ children }: { children: React.ReactNode }) {
-  useScrollReveal()
   return (
     <>
       <a href="#main-content" className="skip-to-content">Skip to content</a>

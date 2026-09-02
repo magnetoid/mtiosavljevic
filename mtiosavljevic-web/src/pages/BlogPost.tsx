@@ -40,7 +40,7 @@ export default function BlogPostPage() {
     return (
       <div className="pt-40 pb-24 px-6 lg:px-12 max-w-screen-xl mx-auto">
         <div className="flex items-center gap-3">
-          <div className="w-2 h-2 bg-emerald-400 rounded-full animate-pulse" />
+          <div className="w-2 h-2 bg-signal rounded-full animate-pulse" />
           <span className="font-mono text-[0.65rem] tracking-wider text-smoke-faint uppercase">Loading…</span>
         </div>
       </div>
@@ -51,7 +51,7 @@ export default function BlogPostPage() {
     return (
       <div className="pt-40 pb-24 px-6 lg:px-12 max-w-screen-xl mx-auto">
         <p className="font-mono text-smoke-dim">Post not found.</p>
-        <Link to="/blog" className="font-mono text-[0.65rem] tracking-widest uppercase text-emerald-400 hover:text-emerald-300 mt-4 inline-block">
+        <Link to="/blog" className="font-mono text-[0.65rem] tracking-widest uppercase text-signal hover:text-signal mt-4 inline-block">
           ← Back to blog
         </Link>
       </div>
@@ -67,11 +67,11 @@ export default function BlogPostPage() {
           backgroundSize: '60px 60px',
         }} />
         <div className="max-w-3xl mx-auto relative z-10">
-          <Link to="/blog" className="font-mono text-[0.65rem] tracking-widest uppercase text-smoke-faint hover:text-emerald-400 transition-colors mb-8 inline-block">
+          <Link to="/blog" className="font-mono text-[0.65rem] tracking-widest uppercase text-smoke-faint hover:text-signal transition-colors mb-8 inline-block">
             ← Blog
           </Link>
           {((post as any).blog_categories?.name || post.category) && (
-            <div className="font-mono text-[0.65rem] tracking-[0.3em] uppercase text-emerald-400 mb-4">
+            <div className="font-mono text-[0.65rem] tracking-[0.3em] uppercase text-signal mb-4">
               {(post as any).blog_categories?.name || post.category}
             </div>
           )}
@@ -95,7 +95,7 @@ export default function BlogPostPage() {
       {/* ── CONTENT ──────────────────────────────────────────── */}
       <section className="pb-20 px-6 lg:px-12">
         <div
-          className="max-w-3xl mx-auto prose prose-invert prose-lg prose-headings:font-mono prose-headings:font-light prose-a:text-emerald-400 prose-a:no-underline hover:prose-a:text-emerald-300 prose-code:text-cyan-400 prose-code:bg-ink-3 prose-code:px-1 prose-code:rounded prose-pre:bg-ink-3 prose-pre:border prose-pre:border-white/10"
+          className="max-w-3xl mx-auto prose prose-invert prose-lg prose-headings:font-mono prose-headings:font-light prose-a:text-signal prose-a:no-underline hover:prose-a:text-signal prose-code:text-signal prose-code:bg-ink-3 prose-code:px-1 prose-code:rounded prose-pre:bg-ink-3 prose-pre:border prose-pre:border-white/10"
           dangerouslySetInnerHTML={{ __html: post.body || '' }}
         />
       </section>
@@ -106,7 +106,7 @@ export default function BlogPostPage() {
           {prev ? (
             <Link to={`/blog/${prev.slug}`} className="group flex flex-col gap-1">
               <span className="font-mono text-[0.6rem] tracking-widest uppercase text-smoke-faint">← Previous</span>
-              <span className="font-mono text-sm text-smoke group-hover:text-emerald-400 transition-colors line-clamp-2">
+              <span className="font-mono text-sm text-smoke group-hover:text-signal transition-colors line-clamp-2">
                 {prev.title}
               </span>
             </Link>
@@ -114,7 +114,7 @@ export default function BlogPostPage() {
           {next ? (
             <Link to={`/blog/${next.slug}`} className="group flex flex-col gap-1 sm:text-right">
               <span className="font-mono text-[0.6rem] tracking-widest uppercase text-smoke-faint">Next →</span>
-              <span className="font-mono text-sm text-smoke group-hover:text-emerald-400 transition-colors line-clamp-2">
+              <span className="font-mono text-sm text-smoke group-hover:text-signal transition-colors line-clamp-2">
                 {next.title}
               </span>
             </Link>
