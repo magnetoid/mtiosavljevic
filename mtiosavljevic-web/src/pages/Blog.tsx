@@ -3,44 +3,8 @@ import { Link } from 'react-router-dom'
 import { supabase } from '@/lib/supabase'
 import type { BlogPost } from '@/lib/supabase'
 
-const DEMO_POSTS: BlogPost[] = [
-  {
-    id: '1',
-    title: 'The Architecture of Reasoning: How LLMs Think',
-    slug: 'llm-reasoning-architecture',
-    excerpt: 'A deep dive into chain-of-thought, tree-of-thought, and emerging reasoning paradigms in large language models.',
-    published: true,
-    created_at: '2026-03-15',
-    published_at: '2026-03-15',
-    category: 'AI/LLM',
-    read_time_minutes: 12,
-  },
-  {
-    id: '2',
-    title: 'Building RAG Systems That Actually Work',
-    slug: 'rag-systems-production',
-    excerpt: 'Retrieval-augmented generation is not just about vector databases. Here\'s what actually matters in production.',
-    published: true,
-    created_at: '2026-02-28',
-    published_at: '2026-02-28',
-    category: 'Data Systems',
-    read_time_minutes: 9,
-  },
-  {
-    id: '3',
-    title: 'AI Governance in 2026: The Regulatory Landscape',
-    slug: 'ai-governance-2026',
-    excerpt: 'From the EU AI Act to US executive orders — how global regulation is shaping AI development and deployment.',
-    published: true,
-    created_at: '2026-02-10',
-    published_at: '2026-02-10',
-    category: 'Policy',
-    read_time_minutes: 8,
-  },
-]
-
 export default function Blog() {
-  const [posts, setPosts] = useState<BlogPost[]>(DEMO_POSTS)
+  const [posts, setPosts] = useState<BlogPost[]>([])
   const [categories, setCategories] = useState<string[]>([])
   const [activeCategory, setActiveCategory] = useState<string>('all')
   const [loading, setLoading] = useState(true)
@@ -126,7 +90,14 @@ export default function Blog() {
               <span className="font-mono text-[0.65rem] tracking-wider text-smoke-faint uppercase">Loading posts…</span>
             </div>
           ) : filtered.length === 0 ? (
-            <p className="text-smoke-dim py-12">No posts found.</p>
+            <div className="py-12 max-w-xl">
+              <p className="text-smoke-dim mb-3">Nothing published yet.</p>
+              <p className="text-smoke-dim">
+                Write-ups are planned on the consensus work, safe self-modification, and
+                durable agent memory. In the meantime the systems themselves are described
+                on the <Link to="/" className="text-signal underline underline-offset-4 decoration-signal/40 hover:decoration-signal">front page</Link>.
+              </p>
+            </div>
           ) : (
             <div className="flex flex-col divide-y divide-white/5">
               {filtered.map((post) => (
