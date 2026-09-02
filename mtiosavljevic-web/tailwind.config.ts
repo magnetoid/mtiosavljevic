@@ -26,6 +26,12 @@ export default {
           dim: '#7A2518',
           bright: '#FF5A3D',
         },
+        // Single site accent. Named `signal` because shadcn already owns `accent`
+        // (hsl(var(--accent)) = near-black) and colliding would render invisible text.
+        signal: {
+          DEFAULT: '#C6A15B',
+          dim: '#8A6F3C',
+        },
         gold: {
           DEFAULT: '#C9A96E',
           dim: '#6B5330',

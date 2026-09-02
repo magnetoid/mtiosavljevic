@@ -5,11 +5,8 @@ import Footer from '@/components/Footer'
 import Home from '@/pages/Home'
 import Blog from '@/pages/Blog'
 import BlogPost from '@/pages/BlogPost'
-import About from '@/pages/About'
-import Services from '@/pages/Services'
 import Projects from '@/pages/Projects'
 import Contact from '@/pages/Contact'
-import ServicePage from '@/pages/services/ServicePage'
 import ProjectPage from '@/pages/projects/ProjectPage'
 import AdminLayout from '@/admin/AdminLayout'
 import AdminLanding from '@/admin/AdminLanding'
@@ -65,9 +62,6 @@ export default function App() {
       <Route path="/" element={<PublicLayout><Home /></PublicLayout>} />
       <Route path="/blog" element={<PublicLayout><Blog /></PublicLayout>} />
       <Route path="/blog/:slug" element={<PublicLayout><BlogPost /></PublicLayout>} />
-      <Route path="/about" element={<PublicLayout><About /></PublicLayout>} />
-      <Route path="/services" element={<PublicLayout><Services /></PublicLayout>} />
-      <Route path="/services/:slug" element={<PublicLayout><ServicePage /></PublicLayout>} />
       <Route path="/projects" element={<PublicLayout><Projects /></PublicLayout>} />
       <Route path="/projects/:slug" element={<PublicLayout><ProjectPage /></PublicLayout>} />
       <Route path="/contact" element={<PublicLayout><Contact /></PublicLayout>} />

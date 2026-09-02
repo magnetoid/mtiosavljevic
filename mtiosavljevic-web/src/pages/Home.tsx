@@ -1,105 +1,48 @@
 import { Link } from 'react-router-dom'
-import { useEffect, useState } from 'react'
-import { supabase } from '@/lib/supabase'
-import type { BlogPost } from '@/lib/supabase'
-
-const EXPERTISE = [
-  {
-    icon: '◈',
-    title: 'Multi-model consensus & reasoning',
-    desc: 'Getting heterogeneous models to agree reliably — semantic clustering of answers, agreement scoring, and surfacing dissent instead of hiding it behind one model\'s confidence.',
-  },
-  {
-    icon: '◉',
-    title: 'Autonomous & self-improving agents',
-    desc: 'Agents that diagnose and repair themselves. The open question is safe self-modification: how much an agent may rewrite before its own guarantees stop holding.',
-  },
-  {
-    icon: '▣',
-    title: 'Agent memory, guardrails & MCP tooling',
-    desc: 'Durable memory that outlives a context window, ranked by what is stable rather than what is recent, plus architectural rules an agent cannot quietly drift away from.',
-  },
-  {
-    icon: '◫',
-    title: 'Systems engineering',
-    desc: 'Next.js, TypeScript, Python, Postgres, Docker. The production substrate the research runs on — 38 years of shipping software that has to stay up.',
-  },
-  {
-    icon: '◬',
-    title: 'Commerce architecture',
-    desc: 'WooCommerce, Shopify, and full-stack e-commerce — the domain most of the applied agent work is grounded in.',
-  },
-  {
-    icon: '▤',
-    title: 'Marketing & AEO',
-    desc: 'Offline to digital across 30 years: social, SEM, SEO, and now answer-engine optimisation. Certified analyst on Google Marketing Platform and Meta.',
-  },
-]
+import Seo from '@/components/Seo'
+import { RESEARCH_AREAS } from '@/data/research'
+import { SYSTEMS } from '@/data/systems'
+import { NOTE_STUBS } from '@/data/notes'
 
 const CURRENTLY_EXPLORING = [
   'Consensus protocols across heterogeneous models',
   'Tenso — an experimental language for neural-network development',
 ]
 
-const DEMO_POSTS: BlogPost[] = [
+const CREDENTIALS = [
   {
-    id: '1',
-    title: 'The Architecture of Reasoning: How LLMs Think',
-    slug: 'llm-reasoning-architecture',
-    excerpt: 'A deep dive into chain-of-thought, tree-of-thought, and emerging reasoning paradigms in large language models.',
-    published: true,
-    created_at: '2026-03-15',
-    published_at: '2026-03-15',
-    category: 'AI/LLM',
-    read_time_minutes: 12,
+    label: 'Imba Production LLC',
+    body: 'Founded 2005, Wyoming-registered. Custom omnichannel CRM and marketing applications, and autonomous agents running lead generation and affiliate systems.',
   },
   {
-    id: '2',
-    title: 'Building RAG Systems That Actually Work',
-    slug: 'rag-systems-production',
-    excerpt: 'Retrieval-augmented generation is not just about vector databases. Here\'s what actually matters in production.',
-    published: true,
-    created_at: '2026-02-28',
-    published_at: '2026-02-28',
-    category: 'Data Systems',
-    read_time_minutes: 9,
+    label: 'Upwork',
+    body: 'Top Rated Plus with a 100% Job Success Score since 2011, across 130+ clients.',
   },
   {
-    id: '3',
-    title: 'AI Governance in 2026: The Regulatory Landscape',
-    slug: 'ai-governance-2026',
-    excerpt: 'From the EU AI Act to US executive orders — how global regulation is shaping AI development and deployment.',
-    published: true,
-    created_at: '2026-02-10',
-    published_at: '2026-02-10',
-    category: 'Policy',
-    read_time_minutes: 8,
+    label: 'Commerce stack',
+    body: 'Anthropic/Claude API, Next.js, WooCommerce, Shopify, full-stack e-commerce.',
+  },
+  {
+    label: 'Marketing',
+    body: 'Offline through digital — social, SEM, SEO, now AEO. Certified analyst on Google Marketing Platform and Meta. Mostly e-commerce and SaaS.',
+  },
+  {
+    label: 'Cloud Industry LLC',
+    body: 'Co-founded 2014, Delaware.',
   },
 ]
 
 export default function Home() {
-  const [posts, setPosts] = useState<BlogPost[]>(DEMO_POSTS)
-
-  useEffect(() => {
-    supabase
-      .from('blog_posts')
-      .select('*')
-      .eq('published', true)
-      .order('published_at', { ascending: false })
-      .limit(3)
-      .then(({ data }) => {
-        if (data?.length) setPosts(data)
-      })
-  }, [])
-
   return (
     <>
-      {/* ── HERO ─────────────────────────────────────────────── */}
+      <Seo canonicalPath="/" />
+
+      {/* ── 1. HERO ──────────────────────────────────────────── */}
       <section className="pt-40 pb-28 px-6 lg:px-12">
         <div className="max-w-screen-xl mx-auto">
           <p className="font-mono text-smoke-dim text-sm mb-2">Marko Tiosavljević</p>
-          <p className="font-mono text-[0.8rem] mb-10">
-            <span className="text-emerald-400">AI &amp; LLM scientist</span>
+          <p className="font-mono text-[0.85rem] mb-10">
+            <span className="text-signal">AI &amp; LLM scientist</span>
             <span className="text-smoke-dim"> · developer · marketer</span>
           </p>
 
@@ -116,25 +59,24 @@ export default function Home() {
           </p>
 
           <div className="flex flex-wrap gap-4 mb-16">
-            <Link
-              to="/projects"
-              className="font-mono text-[0.8rem] px-5 py-3 border border-emerald-400 text-emerald-400 hover:bg-emerald-400/10 transition-colors"
+            <a
+              href="#systems"
+              className="font-mono text-[0.85rem] px-5 py-3 border border-signal text-signal hover:bg-signal/10 transition-colors"
             >
               Research &amp; systems
-            </Link>
+            </a>
             <a
               href="https://github.com/magnetoid"
               target="_blank"
               rel="noopener noreferrer"
-              className="font-mono text-[0.8rem] px-5 py-3 border border-white/20 text-smoke-dim hover:border-white/40 hover:text-smoke transition-colors"
+              className="font-mono text-[0.85rem] px-5 py-3 border border-white/25 text-smoke-dim hover:border-white/50 hover:text-smoke transition-colors"
             >
               GitHub ↗
             </a>
           </div>
 
-          {/* Currently exploring */}
-          <div className="border-l border-white/15 pl-5 max-w-xl">
-            <p className="font-mono text-[0.7rem] uppercase tracking-[0.2em] text-smoke-dim mb-3">
+          <div className="border-l border-white/20 pl-5 max-w-xl">
+            <p className="font-mono text-[0.75rem] uppercase tracking-[0.2em] text-smoke-dim mb-3">
               Currently exploring
             </p>
             <ul className="flex flex-col gap-2">
@@ -148,73 +90,179 @@ export default function Home() {
         </div>
       </section>
 
-      {/* ── RESEARCH & PRACTICE ──────────────────────────────── */}
-      <section className="py-24 px-6 lg:px-12 bg-ink-2">
+      {/* ── 2. RESEARCH AREAS ────────────────────────────────── */}
+      <section id="research" className="py-24 px-6 lg:px-12 bg-ink-2 border-t border-white/10">
         <div className="max-w-screen-xl mx-auto">
-          <h2 className="font-mono text-[0.75rem] tracking-[0.2em] uppercase text-smoke-dim mb-12">
-            Research &amp; practice
-          </h2>
+          <h2 className="font-mono text-smoke text-xl font-light mb-8">Research areas</h2>
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-            {EXPERTISE.map((item) => (
-              <div key={item.title} className="p-6 border border-white/10 bg-ink-3/50">
-                <div className="font-mono text-emerald-400 text-xl mb-4">{item.icon}</div>
-                <h3 className="font-mono text-smoke text-sm leading-snug mb-3">{item.title}</h3>
-                <p className="text-smoke-dim text-sm leading-relaxed" style={{ fontWeight: 300 }}>
-                  {item.desc}
+          <div className="max-w-3xl flex flex-col gap-5 text-smoke-dim leading-relaxed mb-16" style={{ fontWeight: 300 }}>
+            <p>
+              Three questions organise the work: how heterogeneous models can be made to agree
+              reliably; how far an agent can safely modify itself; and what durable memory and
+              guardrails look like once a context window is no longer enough.
+            </p>
+            <p>
+              Six years of that research sit on top of 38 years writing software and 30 years in
+              marketing — which is mostly useful for knowing which parts of a system break first
+              once real users arrive.
+            </p>
+            <p>
+              I run <span className="text-smoke">Imba Production LLC</span>, operating since 2005,
+              where the same work pays rent as custom CRM and marketing systems and autonomous
+              agents for clients.
+            </p>
+          </div>
+
+          <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+            {RESEARCH_AREAS.map(area => (
+              <div key={area.id} className="p-6 border border-white/10 bg-ink-3/40 flex flex-col">
+                <h3 className="font-mono text-smoke text-sm leading-snug mb-4">{area.title}</h3>
+                <p className="text-smoke-dim text-sm leading-relaxed mb-5 flex-1" style={{ fontWeight: 300 }}>
+                  {area.thesis}
                 </p>
+                <a
+                  href={area.repoUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="font-mono text-[0.75rem] text-signal hover:underline break-all"
+                >
+                  {area.repoLabel} ↗
+                </a>
               </div>
             ))}
           </div>
         </div>
       </section>
 
-      {/* ── RECENT POSTS ─────────────────────────────────────── */}
-      <section className="py-24 px-6 lg:px-12">
+      {/* ── 3. SYSTEMS & EXPERIMENTS ─────────────────────────── */}
+      <section id="systems" className="py-24 px-6 lg:px-12 border-t border-white/10">
         <div className="max-w-screen-xl mx-auto">
-          <div className="flex items-center justify-between mb-12">
-            <h2 className="font-mono text-[0.75rem] tracking-[0.2em] uppercase text-smoke-dim">
-              Writing
-            </h2>
-            <Link to="/blog" className="font-mono text-[0.75rem] text-emerald-400 hover:underline">
-              All posts →
-            </Link>
-          </div>
+          <h2 className="font-mono text-smoke text-xl font-light mb-4">Systems &amp; experiments</h2>
+          <p className="text-smoke-dim text-sm mb-16 max-w-2xl" style={{ fontWeight: 300 }}>
+            Problem, approach, and current status for each. Longer write-ups live in{' '}
+            <Link to="/projects" className="text-signal hover:underline">case studies</Link>.
+          </p>
 
-          <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-            {posts.map((post) => (
-              <Link
-                key={post.id}
-                to={`/blog/${post.slug}`}
-                className="p-6 border border-white/10 bg-ink-2/50 hover:border-white/25 transition-colors"
-              >
-                {post.category && (
-                  <span className="font-mono text-[0.7rem] text-emerald-400 mb-3 block">
-                    {post.category}
-                  </span>
-                )}
-                <h3 className="font-mono text-smoke text-base leading-snug mb-3">
-                  {post.title}
-                </h3>
-                {post.excerpt && (
-                  <p className="text-smoke-dim text-sm leading-relaxed line-clamp-3" style={{ fontWeight: 300 }}
-                    dangerouslySetInnerHTML={{ __html: post.excerpt }} />
-                )}
-                <div className="flex items-center gap-4 mt-4 pt-4 border-t border-white/10">
-                  <span className="font-mono text-[0.7rem] text-smoke-dim">
-                    {post.published_at ? new Date(post.published_at).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' }) : ''}
-                  </span>
-                  {post.read_time_minutes && (
-                    <span className="font-mono text-[0.7rem] text-smoke-dim">
-                      {post.read_time_minutes} min read
-                    </span>
+          <ol className="flex flex-col gap-12">
+            {SYSTEMS.map((s, i) => (
+              <li key={s.id} className="grid lg:grid-cols-12 gap-6 pb-12 border-b border-white/10 last:border-b-0">
+                <div className="lg:col-span-3">
+                  <p className="font-mono text-[0.75rem] text-smoke-dim mb-2">
+                    {String(i + 1).padStart(2, '0')}
+                  </p>
+                  <h3 className="font-mono text-smoke text-lg font-light mb-1">{s.name}</h3>
+                  <p className="font-mono text-[0.75rem] text-smoke-dim leading-snug">{s.kind}</p>
+                </div>
+
+                <div className="lg:col-span-9 flex flex-col gap-4">
+                  <Field label="Problem" value={s.problem} />
+                  <Field label="Approach" value={s.approach} />
+                  <Field label="Status" value={s.status} />
+
+                  {s.repoUrl && (
+                    <a
+                      href={s.repoUrl}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="font-mono text-[0.8rem] text-signal hover:underline break-all"
+                    >
+                      {s.repoLabel} ↗
+                    </a>
+                  )}
+                  {s.todo && (
+                    <p className="font-mono text-[0.75rem] text-smoke-dim border-l-2 border-white/25 pl-3">
+                      TODO — {s.todo}
+                    </p>
                   )}
                 </div>
-              </Link>
+              </li>
             ))}
-          </div>
+          </ol>
+        </div>
+      </section>
+
+      {/* ── 4. WRITING / NOTES ───────────────────────────────── */}
+      <section id="writing" className="py-24 px-6 lg:px-12 bg-ink-2 border-t border-white/10">
+        <div className="max-w-screen-xl mx-auto">
+          <h2 className="font-mono text-smoke text-xl font-light mb-4">Writing / notes</h2>
+          <p className="text-smoke-dim text-sm mb-12 max-w-2xl" style={{ fontWeight: 300 }}>
+            One write-up planned per major system. Nothing published here yet — these are
+            placeholders, not links to work that exists.
+          </p>
+
+          <ul className="flex flex-col divide-y divide-white/10 border-y border-white/10">
+            {NOTE_STUBS.map(note => (
+              <li key={note.id} className="py-5 flex flex-wrap items-baseline gap-x-4 gap-y-1">
+                <span className="font-mono text-[0.75rem] text-smoke-dim w-28 shrink-0">
+                  {note.about}
+                </span>
+                <span className="text-smoke-dim" style={{ fontWeight: 300 }}>{note.title}</span>
+              </li>
+            ))}
+          </ul>
+
+          <Link to="/blog" className="inline-block mt-8 font-mono text-[0.8rem] text-signal hover:underline">
+            Existing posts →
+          </Link>
+        </div>
+      </section>
+
+      {/* ── 5. APPLIED WORK & CREDENTIALS ────────────────────── */}
+      <section id="applied" className="py-24 px-6 lg:px-12 border-t border-white/10">
+        <div className="max-w-screen-xl mx-auto">
+          <h2 className="font-mono text-smoke text-xl font-light mb-12">Applied work &amp; credentials</h2>
+
+          <dl className="max-w-4xl grid grid-cols-1 md:grid-cols-[10rem_1fr] gap-x-8 gap-y-5">
+            {CREDENTIALS.map(c => (
+              <div key={c.label} className="contents">
+                <dt className="font-mono text-[0.8rem] text-smoke pt-0.5">{c.label}</dt>
+                <dd className="text-smoke-dim text-sm leading-relaxed mb-4 md:mb-0" style={{ fontWeight: 300 }}>
+                  {c.body}
+                </dd>
+              </div>
+            ))}
+          </dl>
+        </div>
+      </section>
+
+      {/* ── 6. CONTACT ───────────────────────────────────────── */}
+      <section id="contact" className="py-24 px-6 lg:px-12 bg-ink-2 border-t border-white/10">
+        <div className="max-w-screen-xl mx-auto">
+          <h2 className="font-mono text-smoke text-xl font-light mb-8">Contact</h2>
+          <ul className="flex flex-col gap-3 font-mono text-[0.9rem]">
+            <li>
+              <a href="mailto:marko.tiosavljevic@gmail.com" className="text-signal hover:underline">
+                marko.tiosavljevic@gmail.com
+              </a>
+            </li>
+            <li>
+              <a href="https://github.com/magnetoid" target="_blank" rel="noopener noreferrer"
+                className="text-signal hover:underline">
+                github.com/magnetoid ↗
+              </a>
+            </li>
+            <li>
+              {/* TODO: replace with the personal Upwork profile URL once confirmed. */}
+              <a href="https://www.upwork.com/" target="_blank" rel="noopener noreferrer"
+                className="text-signal hover:underline">
+                Upwork ↗
+              </a>
+              <span className="text-smoke-dim"> — TODO: profile URL</span>
+            </li>
+          </ul>
         </div>
       </section>
     </>
+  )
+}
+
+function Field({ label, value }: { label: string; value: string }) {
+  return (
+    <div className="grid sm:grid-cols-[6rem_1fr] gap-x-4 gap-y-1">
+      <span className="font-mono text-[0.75rem] uppercase tracking-[0.14em] text-smoke-dim pt-1">
+        {label}
+      </span>
+      <p className="text-smoke-dim leading-relaxed" style={{ fontWeight: 300 }}>{value}</p>
+    </div>
   )
 }

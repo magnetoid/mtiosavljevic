@@ -6,8 +6,8 @@ export default function Projects() {
   return (
     <>
       <Seo
-        title="Projects — Selected Case Studies"
-        description="Selected case studies across AI, marketing, development, and DevOps: Aletheia, Morpheus OS, WooPulse, Quorum, Vektor, Imba CRM, and more — platforms and products built end-to-end."
+        title="Case studies"
+        description="Long-form case studies behind the research: Quorum, Torsor Helper, Morpheus OS, Aletheia, Vektor, WooPulse and more — AI and LLM systems built end-to-end."
         canonicalPath="/projects"
       />
 
@@ -23,7 +23,7 @@ export default function Projects() {
         <div className="relative max-w-screen-xl mx-auto">
           <div className="flex items-center gap-3 mb-6 reveal">
             <span className="font-mono text-emerald-400 text-[0.65rem] tracking-[0.3em] uppercase">
-              Selected work
+              Case studies
             </span>
             <div className="h-px w-12 bg-emerald-400/40" />
           </div>
@@ -32,18 +32,16 @@ export default function Projects() {
             className="font-mono font-light text-smoke leading-[1.05] mb-6 reveal reveal-delay-1"
             style={{ fontSize: 'clamp(2.4rem, 5vw, 4.2rem)' }}
           >
-            Things I built.<br />
-            <span className="text-smoke-dim">Stories I can tell.</span>
+            Case studies
           </h1>
 
           <p
             className="text-smoke-dim max-w-2xl leading-relaxed reveal reveal-delay-2"
             style={{ fontSize: '1.05rem', fontWeight: 300 }}
           >
-            Long-form case studies across AI, marketing, development, and DevOps —
-            a forensic intelligence platform, a plugin-native commerce OS, a multi-model
-            consensus engine, an autonomous newsroom, an AI CRM, and more.
-            All shipped, all mine end-to-end.
+            Long-form write-ups of the systems listed on the front page — a multi-model
+            consensus engine, an agent memory server, a plugin-native commerce OS, a
+            forensic intelligence platform, an autonomous newsroom. All built end-to-end.
           </p>
         </div>
       </section>
@@ -148,34 +146,6 @@ export default function Projects() {
         </div>
       </section>
 
-      {/* ── CTA BAND ─────────────────────────────────────────── */}
-      <section className="border-t border-emerald-400/20 bg-emerald-400/5">
-        <div className="px-6 lg:px-12 py-16 max-w-screen-xl mx-auto flex flex-col lg:flex-row items-start lg:items-center justify-between gap-8">
-          <div>
-            <div className="font-mono text-emerald-400 text-[0.65rem] tracking-[0.3em] uppercase mb-3">
-              &gt; available for engagements
-            </div>
-            <h2
-              className="font-mono font-light text-smoke leading-tight"
-              style={{ fontSize: 'clamp(1.6rem, 3vw, 2.2rem)' }}
-            >
-              Have a project that belongs on this list?
-            </h2>
-            <p
-              className="text-smoke-dim mt-2 max-w-xl"
-              style={{ fontSize: '0.95rem', fontWeight: 300 }}
-            >
-              I take on a small number of product builds a year — AI platforms, SaaS MVPs, ecommerce infrastructure. Let's talk.
-            </p>
-          </div>
-          <Link
-            to="/contact"
-            className="flex-shrink-0 font-mono text-[0.7rem] tracking-widest uppercase px-6 py-3 bg-emerald-400 text-ink hover:bg-emerald-300 transition-colors"
-          >
-            Start a conversation →
-          </Link>
-        </div>
-      </section>
     </>
   )
 }

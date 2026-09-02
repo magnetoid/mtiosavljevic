@@ -32,7 +32,7 @@ export default function Footer() {
                 href={href}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="font-mono text-[0.75rem] text-smoke-dim hover:text-emerald-400 transition-colors"
+                className="font-mono text-[0.75rem] text-smoke-dim hover:text-signal transition-colors"
               >
                 {label} ↗
               </a>
@@ -58,12 +58,12 @@ export default function Footer() {
         <div>
           <p className="font-mono text-[0.75rem] tracking-[0.18em] uppercase text-smoke-dim mb-4">Contact</p>
           <div className="flex flex-col gap-3 text-sm text-smoke-dim">
-            <a href="mailto:marko.tiosavljevic@gmail.com" className="hover:text-emerald-400 transition-colors">
+            <a href="mailto:marko.tiosavljevic@gmail.com" className="hover:text-signal transition-colors">
               marko.tiosavljevic@gmail.com
             </a>
             <Link
               to="/contact"
-              className="self-start font-mono text-[0.75rem] px-4 py-2 border border-emerald-400 text-emerald-400 hover:bg-emerald-400/10 transition-colors"
+              className="self-start font-mono text-[0.75rem] px-4 py-2 border border-signal text-signal hover:bg-signal/10 transition-colors"
             >
               Work with me
             </Link>

@@ -2,10 +2,10 @@ import { useState, useEffect } from 'react'
 import { NavLink, Link } from 'react-router-dom'
 
 const LINKS = [
-  { to: '/about', label: 'About' },
-  { to: '/services', label: 'Services' },
-  { to: '/projects', label: 'Projects' },
-  { to: '/blog', label: 'Blog' },
+  { to: '/#research', label: 'Research' },
+  { to: '/#systems', label: 'Systems' },
+  { to: '/projects', label: 'Case studies' },
+  { to: '/blog', label: 'Writing' },
   { to: '/contact', label: 'Contact' },
 ]
 
@@ -30,11 +30,9 @@ export default function Nav() {
 
           {/* Logo */}
           <Link to="/" className="flex items-center gap-3 group">
-            <div className="font-mono text-emerald-400 text-xs tracking-wider opacity-60 group-hover:opacity-100 transition-all duration-300 select-none">
-              &gt;_
-            </div>
-            <span className="font-mono text-smoke font-light tracking-wider" style={{ fontSize: '1.1rem' }}>
-              MT<span className="text-emerald-400 group-hover:text-cyan-400 transition-colors duration-300">.</span>
+            
+            <span className="font-mono text-smoke font-light tracking-wider" style={{ fontSize: '1.05rem' }}>
+              MT<span className="text-signal">.</span>
             </span>
           </Link>
 
@@ -45,8 +43,8 @@ export default function Nav() {
                 key={to}
                 to={to}
                 className={({ isActive }) =>
-                  `font-mono text-[0.65rem] tracking-[0.18em] uppercase transition-colors ${
-                    isActive ? 'text-emerald-400' : 'text-smoke-dim hover:text-smoke'
+                  `font-mono text-[0.8rem] tracking-[0.1em] py-2 transition-colors ${
+                    isActive && !to.includes('#') ? 'text-signal' : 'text-smoke-dim hover:text-smoke'
                   }`
                 }
               >
@@ -81,7 +79,7 @@ export default function Nav() {
               key={to}
               to={to}
               onClick={() => setOpen(false)}
-              className="font-mono font-light text-4xl text-smoke hover:text-emerald-400 transition-colors"
+              className="font-mono font-light text-3xl text-smoke hover:text-signal transition-colors py-1"
             >
               {label}
             </NavLink>

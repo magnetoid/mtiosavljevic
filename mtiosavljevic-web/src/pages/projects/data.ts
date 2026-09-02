@@ -132,7 +132,7 @@ export const PROJECTS_DATA: CaseStudyData[] = [
     ],
     stats: [
       { num: '7', label: 'phase forensic pipeline' },
-      { num: '98%', label: 'investigation time saved' },
+      { num: '5', label: 'providers merged in Ensemble mode' },
       { num: '0', label: 'hallucination tolerance' },
       { num: '2', label: 'languages (EN / SR)' },
     ],
@@ -167,20 +167,16 @@ export const PROJECTS_DATA: CaseStudyData[] = [
       { title: 'Watchlist monitoring', desc: 'Persistent tracking of entities of interest. Automated alerts when new filings, sanctions, or media mentions surface.' },
     ],
     outcomes: [
-      { metric: '98%', label: 'reduction in investigation cycle time (internal pilot)' },
       { metric: '5', label: 'AI providers merged in Ensemble mode' },
       { metric: '7', label: 'forensic phases automated end-to-end' },
-      { metric: '100%', label: 'source citation coverage — every fact traceable' },
+      { metric: 'Cited', label: 'by protocol — unsourced claims are labelled, not asserted' },
+      { metric: 'Air-gap', label: 'capable via on-premise Ollama' },
     ],
     lessons: [
       'For high-stakes AI, consensus beats benchmarks. Accuracy claims from a single model are meaningless when the cost of being wrong is a thrown case.',
       'Air-gap is a feature, not a limitation. Building for Ollama first forced an architecture that works everywhere — cloud, on-prem, or behind a firewall — without code changes.',
       'Structured handoffs between AI phases are what separates a demo from a platform. Unstructured chain-of-thought cannot be audited; typed contracts can.',
     ],
-    quote: {
-      text: 'What used to be a year of reading disclosures is now an afternoon of reviewing findings. The work we produce is stronger — because the AI never lets us skip a source.',
-      attribution: 'Pilot user — investigative team, Western Balkans',
-    },
   },
 
   // ────────────────────────────────────────────────────────────
@@ -214,10 +210,10 @@ export const PROJECTS_DATA: CaseStudyData[] = [
       'Mailgun',
     ],
     stats: [
-      { num: '€2.3M', label: 'recovered carts across platform' },
-      { num: '500+', label: 'WooCommerce stores running' },
-      { num: '3.5×', label: 'cart recovery lift vs baseline' },
-      { num: '18%', label: 'average margin improvement' },
+      { num: '3', label: 'models in consensus drafting' },
+      { num: 'REST', label: 'single WooCommerce API integration' },
+      { num: '3', label: 'pricing tiers' },
+      { num: 'Local', label: 'Ollama routing for private stores' },
     ],
     problem: {
       title: 'Small stores are drowning in the work that makes them grow',
@@ -250,20 +246,16 @@ export const PROJECTS_DATA: CaseStudyData[] = [
       { title: 'Agency multi-store mode', desc: 'Manage unlimited client stores from one login. White-label reports, per-client billing, and role-based access built in.' },
     ],
     outcomes: [
-      { metric: '€8.4k', label: 'recovered in the first month by a single pilot store' },
-      { metric: '60%', label: 'reduction in weekly operator workload' },
-      { metric: '10×', label: 'faster insight-to-action loop vs manual analytics' },
-      { metric: '10,000+', label: 'products analyzed and re-written' },
+      { metric: 'One', label: 'install, no tag manager or event schema' },
+      { metric: 'Consensus', label: 'drafting where judgement matters' },
+      { metric: 'Cheap', label: 'models where it does not' },
+      { metric: 'Private', label: 'generation stays in the trust boundary' },
     ],
     lessons: [
       'WooCommerce is an unfair distribution advantage. A third of the ecommerce web runs on it, and almost nobody is building AI-native tooling specifically for that layer.',
       'Founders don\'t want dashboards — they want verdicts. Every screen we shipped got ruthlessly simplified down to the question: "What should I do today?"',
-      'Pricing is product. Moving from flat per-store to tiered by order volume doubled free-to-paid conversion within the first cohort.',
+      'Pricing is product. Tiering by order volume rather than charging flat per store is what matched the pricing to how stores actually grow.',
     ],
-    quote: {
-      text: 'Installed it on a Monday. Recovered €8,400 by the end of the month from carts I thought were dead. It pays for a year of itself every week now.',
-      attribution: 'Pilot customer — fashion DTC, Berlin',
-    },
   },
 
   // ────────────────────────────────────────────────────────────
