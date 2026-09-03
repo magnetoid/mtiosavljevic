@@ -67,10 +67,18 @@ export default function Home() {
       {/* ── 1. HERO ──────────────────────────────────────────── */}
       <section className="pt-40 pb-28 px-6 lg:px-12">
         <div className="max-w-screen-xl mx-auto">
-          <p className="font-mono text-smoke-dim text-sm mb-2">Marko Tiosavljević</p>
-          <p className="font-mono text-[0.85rem] mb-10">
+          <p
+            className="font-mono text-smoke mb-3"
+            style={{ fontSize: 'clamp(1.5rem, 3.4vw, 2.6rem)', lineHeight: 1.1 }}
+          >
+            Marko Tiosavljević
+          </p>
+          <p
+            className="font-mono mb-12"
+            style={{ fontSize: 'clamp(0.95rem, 1.5vw, 1.25rem)', lineHeight: 1.5 }}
+          >
             <span className="text-signal">AI &amp; LLM scientist</span>
-            <span className="text-smoke-dim"> · developer · marketer</span>
+            <span className="text-smoke-dim"> · developer · marketer · tech consultant</span>
           </p>
 
           <h1

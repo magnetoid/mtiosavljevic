@@ -1,0 +1,6 @@
+
+# Real secrets — never commit. See scripts/generate-jwt-keys.js to rotate.
+.env
+.env.production
+.env.production.new
+.env.*.local
