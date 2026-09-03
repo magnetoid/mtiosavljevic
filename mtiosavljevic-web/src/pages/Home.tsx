@@ -7,6 +7,7 @@ import SystemSketch from '@/components/SystemSketch'
 import { PERSON_SCHEMA } from '@/data/person-schema'
 import { supabase } from '@/lib/supabase'
 import type { BlogPost } from '@/lib/supabase'
+import { getSsrData } from '@/lib/ssr-data'
 
 /**
  * The homepage list is scoped to the AI category so the front page of a research
@@ -47,7 +48,9 @@ const CREDENTIALS = [
 ]
 
 export default function Home() {
-  const [posts, setPosts] = useState<BlogPost[]>([])
+  const [posts, setPosts] = useState<BlogPost[]>(
+    () => (getSsrData().posts ?? []).filter(p => p.category === AI_CATEGORY).slice(0, 5)
+  )
 
   useEffect(() => {
     supabase

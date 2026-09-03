@@ -2,12 +2,18 @@ import { useState, useEffect } from 'react'
 import { Link } from 'react-router-dom'
 import { supabase } from '@/lib/supabase'
 import type { BlogPost } from '@/lib/supabase'
+import { getSsrData } from '@/lib/ssr-data'
+
+const catOf = (p: BlogPost) => (p as { blog_categories?: { name?: string } }).blog_categories?.name || p.category
+const uniqueCats = (rows: BlogPost[]) => Array.from(new Set(rows.map(catOf).filter(Boolean))) as string[]
 
 export default function Blog() {
-  const [posts, setPosts] = useState<BlogPost[]>([])
-  const [categories, setCategories] = useState<string[]>([])
+  // Seeded from the prerendered payload so the archive is in the static HTML.
+  const seeded = getSsrData().posts ?? []
+  const [posts, setPosts] = useState<BlogPost[]>(seeded)
+  const [categories, setCategories] = useState<string[]>(uniqueCats(seeded))
   const [activeCategory, setActiveCategory] = useState<string>('all')
-  const [loading, setLoading] = useState(true)
+  const [loading, setLoading] = useState(seeded.length === 0)
 
   useEffect(() => {
     supabase
@@ -25,9 +31,7 @@ export default function Blog() {
       })
   }, [])
 
-  const filtered = activeCategory === 'all'
-    ? posts
-    : posts.filter(p => ((p as any).blog_categories?.name || p.category) === activeCategory)
+  const filtered = activeCategory === 'all' ? posts : posts.filter(p => catOf(p) === activeCategory)
 
   return (
     <>

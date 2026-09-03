@@ -3,6 +3,7 @@ import { renderToString } from 'react-dom/server'
 import { StaticRouter } from 'react-router-dom/server'
 import { HelmetProvider, type HelmetServerState } from 'react-helmet-async'
 import Root, { createQueryClient } from './Root'
+import { setSsrData, type SsrData } from './lib/ssr-data'
 
 /**
  * Renders one route to static HTML at build time (see scripts/prerender.mjs).
@@ -12,7 +13,9 @@ import Root, { createQueryClient } from './Root'
  * Only public routes are prerendered — /admin stays client-only because it is
  * gated on a live Supabase session and has nothing useful to serve a crawler.
  */
-export function render(url: string) {
+export function render(url: string, data: SsrData = {}) {
+  setSsrData(data)
+
   const helmetContext: { helmet?: HelmetServerState } = {}
 
   const html = renderToString(
