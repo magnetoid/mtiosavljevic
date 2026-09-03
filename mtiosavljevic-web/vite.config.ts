@@ -5,6 +5,12 @@ import path from 'path'
 // `vite build --ssr` reuses this config; only the build target differs.
 export default defineConfig(({ isSsrBuild }) => ({
   plugins: [react()],
+  // The env file lives at the repo root, not in this package. Without this,
+  // Vite never found VITE_SUPABASE_ANON_KEY, the client fell back to the literal
+  // string 'placeholder', and every PostgREST request on production returned 401.
+  // Only VITE_-prefixed vars are exposed to the bundle; the secrets in that file
+  // (JWT_SECRET, POSTGRES_PASSWORD, SUPABASE_SERVICE_KEY) are not.
+  envDir: path.resolve(__dirname, '..'),
   resolve: {
     alias: {
       '@': path.resolve(__dirname, './src'),
