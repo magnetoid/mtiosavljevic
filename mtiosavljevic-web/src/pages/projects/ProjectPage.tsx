@@ -54,14 +54,16 @@ export default function ProjectPage() {
                 <span className="font-mono text-[0.6rem] tracking-widest uppercase text-smoke-faint">
                   {project.year}
                 </span>
-                <a
-                  href={project.url}
-                  target="_blank"
-                  rel="noreferrer"
-                  className="font-mono text-[0.6rem] tracking-widest uppercase text-smoke-faint hover:text-smoke transition-colors underline decoration-dotted underline-offset-4"
-                >
-                  Visit live ↗
-                </a>
+                {project.url && (
+                  <a
+                    href={project.url}
+                    target="_blank"
+                    rel="noreferrer"
+                    className="font-mono text-[0.6rem] tracking-widest uppercase text-smoke-faint hover:text-smoke transition-colors underline decoration-dotted underline-offset-4"
+                  >
+                    Visit live ↗
+                  </a>
+                )}
               </div>
 
               <h1
@@ -86,15 +88,17 @@ export default function ProjectPage() {
               </p>
 
               <div className="flex flex-wrap gap-4">
-                <a
-                  href={project.url}
-                  target="_blank"
-                  rel="noreferrer"
-                  className="font-mono text-[0.7rem] tracking-widest uppercase px-6 py-3 transition-colors"
-                  style={{ background: accent, color: '#0A0A0B' }}
-                >
-                  Visit {project.name} →
-                </a>
+                {project.url && (
+                  <a
+                    href={project.url}
+                    target="_blank"
+                    rel="noreferrer"
+                    className="font-mono text-[0.7rem] tracking-widest uppercase px-6 py-3 transition-colors"
+                    style={{ background: accent, color: '#0A0A0B' }}
+                  >
+                    Visit {project.name} →
+                  </a>
+                )}
                 <Link
                   to="/contact"
                   className="font-mono text-[0.7rem] tracking-widest uppercase px-6 py-3 border border-white/10 text-smoke hover:border-white/30 transition-colors"

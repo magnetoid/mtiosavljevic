@@ -102,15 +102,17 @@ export default function Projects() {
                     >
                       Read case study →
                     </span>
-                    <a
-                      href={p.url}
-                      target="_blank"
-                      rel="noreferrer"
-                      onClick={e => e.stopPropagation()}
-                      className="font-mono text-[0.65rem] tracking-widest uppercase text-smoke-faint hover:text-smoke transition-colors underline decoration-dotted underline-offset-4"
-                    >
-                      Visit live ↗
-                    </a>
+                    {p.url && (
+                      <a
+                        href={p.url}
+                        target="_blank"
+                        rel="noreferrer"
+                        onClick={e => e.stopPropagation()}
+                        className="font-mono text-[0.65rem] tracking-widest uppercase text-smoke-faint hover:text-smoke transition-colors underline decoration-dotted underline-offset-4"
+                      >
+                        Visit live ↗
+                      </a>
+                    )}
                   </div>
                 </div>
 

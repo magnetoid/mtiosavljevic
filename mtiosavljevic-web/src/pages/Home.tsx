@@ -1,10 +1,22 @@
+import { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
 import Seo from '@/components/Seo'
 import { RESEARCH_AREAS } from '@/data/research'
 import { SYSTEMS } from '@/data/systems'
-import { NOTE_STUBS } from '@/data/notes'
 import SystemSketch from '@/components/SystemSketch'
 import { PERSON_SCHEMA } from '@/data/person-schema'
+import { supabase } from '@/lib/supabase'
+import type { BlogPost } from '@/lib/supabase'
+
+/**
+ * The homepage list is scoped to the AI category so the front page of a research
+ * profile does not lead with the video-production and politics posts that also
+ * live in the archive. The full archive is at /blog.
+ *
+ * NOTE: "Inteligence" is misspelt in the database, not here. Fix it there and this
+ * constant has to change with it — or better, recategorise and widen this list.
+ */
+const AI_CATEGORY = 'Artificial Inteligence'
 
 const CURRENTLY_EXPLORING = [
   'Consensus protocols across heterogeneous models',
@@ -35,6 +47,19 @@ const CREDENTIALS = [
 ]
 
 export default function Home() {
+  const [posts, setPosts] = useState<BlogPost[]>([])
+
+  useEffect(() => {
+    supabase
+      .from('blog_posts')
+      .select('id,title,slug,published_at')
+      .eq('published', true)
+      .eq('category', AI_CATEGORY)
+      .order('published_at', { ascending: false })
+      .limit(5)
+      .then(({ data }) => { if (data?.length) setPosts(data as BlogPost[]) })
+  }, [])
+
   return (
     <>
       <Seo canonicalPath="/" structuredData={PERSON_SCHEMA} />
@@ -171,11 +196,6 @@ export default function Home() {
                       {sys.repoLabel}
                     </a>
                   )}
-                  {sys.todo && (
-                    <p className="font-mono text-[0.78rem] text-smoke-dim border-l border-smoke-faint/50 pl-3">
-                      TODO — {sys.todo}
-                    </p>
-                  )}
                 </div>
 
                 <div className="lg:col-span-3">
@@ -192,23 +212,38 @@ export default function Home() {
         <div className="max-w-screen-xl mx-auto">
           <h2 className="font-mono text-smoke text-xl mb-4">Writing / notes</h2>
           <p className="text-smoke-dim text-sm mb-12 max-w-2xl">
-            One write-up planned per major system. Nothing published here yet — these are
-            placeholders, not links to work that exists.
+            Notes on models, agents, and the systems around them. The wider archive also
+            covers security, policy, and earlier commercial work.
           </p>
 
-          <ul className="flex flex-col divide-y divide-white/10 border-y border-white/10">
-            {NOTE_STUBS.map(note => (
-              <li key={note.id} className="py-5 flex flex-wrap items-baseline gap-x-4 gap-y-1">
-                <span className="font-mono text-[0.75rem] text-smoke-dim w-28 shrink-0">
-                  {note.about}
-                </span>
-                <span className="text-smoke-dim">{note.title}</span>
-              </li>
-            ))}
-          </ul>
+          {posts.length > 0 ? (
+            <ul className="flex flex-col divide-y divide-smoke-faint/40 border-y border-smoke-faint/40">
+              {posts.map(post => (
+                <li key={post.id}>
+                  <Link
+                    to={`/blog/${post.slug}`}
+                    className="py-5 flex flex-wrap items-baseline gap-x-6 gap-y-1 group"
+                  >
+                    <span className="font-mono text-[0.78rem] text-smoke-faint w-24 shrink-0">
+                      {post.published_at
+                        ? new Date(post.published_at).toLocaleDateString('en-GB', { month: 'short', year: 'numeric' })
+                        : ''}
+                    </span>
+                    <span className="text-smoke-dim group-hover:text-smoke transition-colors flex-1">
+                      {post.title}
+                    </span>
+                  </Link>
+                </li>
+              ))}
+            </ul>
+          ) : (
+            <p className="text-smoke-dim max-w-2xl">
+              Posts are served from the CMS — open the archive to read them.
+            </p>
+          )}
 
           <Link to="/blog" className="inline-block mt-8 font-mono text-[0.8rem] text-signal underline underline-offset-4 decoration-signal/40 hover:decoration-signal py-1">
-            Existing posts
+            All writing
           </Link>
         </div>
       </section>
@@ -247,14 +282,8 @@ export default function Home() {
                 github.com/magnetoid ↗
               </a>
             </li>
-            <li>
-              {/* TODO: replace with the personal Upwork profile URL once confirmed. */}
-              <a href="https://www.upwork.com/" target="_blank" rel="noopener noreferrer"
-                className="text-signal underline underline-offset-4 decoration-signal/40 hover:decoration-signal">
-                Upwork ↗
-              </a>
-              <span className="text-smoke-dim"> — TODO: profile URL</span>
-            </li>
+            {/* TODO: add the Upwork profile link here once the URL is known. Listing it
+                without a working href, or pointing it at upwork.com, is worse than omitting it. */}
           </ul>
         </div>
       </section>

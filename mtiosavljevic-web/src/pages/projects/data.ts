@@ -1,7 +1,8 @@
 export interface CaseStudyData {
   slug: string
   name: string
-  url: string
+  /** Omitted when there is no public URL — the repo is private or the site is down. */
+  url?: string
   year: string
   category: string
   tagline: string
@@ -567,7 +568,7 @@ export const PROJECTS_DATA: CaseStudyData[] = [
   {
     slug: 'vektor',
     name: 'Vektor',
-    url: 'https://github.com/magnetoid/vektor',
+    // Repo is not public (github.com/magnetoid/vektor returns 404), so no link.
     year: '2026',
     category: 'AI · Autonomous Media',
     accent: '#3B82F6',
@@ -717,7 +718,7 @@ export const PROJECTS_DATA: CaseStudyData[] = [
   {
     slug: 'influencer-hub',
     name: 'Influencer Hub',
-    url: 'https://influencer-hub.info',
+    // influencer-hub.info does not currently resolve, so no link.
     year: '2026',
     category: 'Development · Marketplace',
     accent: '#EC4899',
