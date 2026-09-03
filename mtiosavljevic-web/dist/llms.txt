@@ -4,9 +4,11 @@
 > multi-model consensus, self-developing agents, and durable agent memory, and
 > builds the production systems that research runs on. Founder of Imba Production LLC.
 
-Role: AI & LLM scientist · developer · marketer. Based in Belgrade / Kragujevac,
-Serbia. 38 years in software development, 30 years in marketing, 6 years in AI and
-LLM research.
+Role: AI & LLM scientist · developer · marketer · tech consultant. Based in
+Belgrade / Kragujevac, Serbia. 38 years in software development, 30 years in
+marketing, 6 years in AI and LLM research.
+
+Contact: marko@mtiosavljevic.com
 
 ## Research areas
 

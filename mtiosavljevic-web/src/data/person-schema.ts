@@ -13,6 +13,7 @@ export const PERSON_SCHEMA = {
   alternateName: 'Marko Tiosavljevic',
   jobTitle: 'AI & LLM Scientist',
   url: 'https://mtiosavljevic.com',
+  email: 'marko@mtiosavljevic.com',
   description:
     'AI & LLM scientist working on multi-model consensus, self-developing agents, and agent memory systems. 38 years in software development, 30 in marketing, 6 in AI and LLM research.',
   sameAs: [
