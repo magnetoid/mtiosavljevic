@@ -106,8 +106,8 @@ async function migrateHtmlImages(
       img.setAttribute('src', newSrc)
       const srcset = img.getAttribute('srcset')
       if (srcset) img.removeAttribute('srcset')
-    } catch (e: any) {
-      const reason = e?.message || 'unknown error'
+    } catch (e) {
+      const reason = e instanceof Error ? e.message : 'unknown error'
       stats?.failed.push({ url: src, reason })
       console.warn('Image migration failed, keeping original URL:', src, e)
     }
@@ -294,7 +294,7 @@ export default function ImportAdmin() {
       let done = 0
       for (let i = 0; i < parsedPosts.length; i += BATCH) {
         const batch = parsedPosts.slice(i, i + BATCH)
-        const payload: any[] = []
+        const payload: Record<string, unknown>[] = []
 
         for (const p of batch) {
           let migratedBody = p.body || ''
@@ -306,8 +306,8 @@ export default function ImportAdmin() {
             if (migratedFeatured && /^https?:\/\//i.test(migratedFeatured)) {
               try {
                 migratedFeatured = await migrateImageToMedia(migratedFeatured, p.slug, imageCache, imageStats, dryRun)
-              } catch (e: any) {
-                imageStats.failed.push({ url: migratedFeatured, reason: e?.message || 'unknown error' })
+              } catch (e) {
+                imageStats.failed.push({ url: migratedFeatured, reason: e instanceof Error ? e.message : 'unknown error' })
                 console.warn('Featured image migration failed, keeping original URL:', migratedFeatured, e)
               }
             }
@@ -336,7 +336,7 @@ export default function ImportAdmin() {
           const { error: err } = await supabase.from('blog_posts').upsert(payload, { onConflict: 'slug' })
           if (err) {
             console.error("Batch insert error:", err)
-            throw new Error(`Failed to import batch: ${err.message}`)
+            throw new Error(`Failed to import batch: ${(err instanceof Error ? err.message : String(err))}`)
           }
         }
         done += batch.length
@@ -346,9 +346,9 @@ export default function ImportAdmin() {
       console.log('Import completed successfully!');
       setReport(imageStats)
       setImportDone(true)
-    } catch (err: any) {
+    } catch (err) {
       console.error("Import failed:", err)
-      setImportError(err.message || "An unexpected error occurred during import. Check console for details.")
+      setImportError((err instanceof Error ? err.message : String(err)) || "An unexpected error occurred during import. Check console for details.")
     } finally {
       setImporting(false)
     }

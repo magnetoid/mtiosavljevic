@@ -13,11 +13,8 @@ import { getSsrData } from '@/lib/ssr-data'
  * The homepage list is scoped to the AI category so the front page of a research
  * profile does not lead with the video-production and politics posts that also
  * live in the archive. The full archive is at /blog.
- *
- * NOTE: "Inteligence" is misspelt in the database, not here. Fix it there and this
- * constant has to change with it — or better, recategorise and widen this list.
  */
-const AI_CATEGORY = 'Artificial Inteligence'
+const AI_CATEGORY = 'Artificial Intelligence'
 
 const CURRENTLY_EXPLORING = [
   'Consensus protocols across heterogeneous models',
@@ -283,8 +280,8 @@ export default function Home() {
           <h2 className="font-mono text-smoke text-xl mb-8">Contact</h2>
           <ul className="flex flex-col gap-3 font-mono text-[0.9rem]">
             <li>
-              <a href="mailto:marko.tiosavljevic@gmail.com" className="text-signal underline underline-offset-4 decoration-signal/40 hover:decoration-signal">
-                marko.tiosavljevic@gmail.com
+              <a href="mailto:marko@mtiosavljevic.com" className="text-signal underline underline-offset-4 decoration-signal/40 hover:decoration-signal">
+                marko@mtiosavljevic.com
               </a>
             </li>
             <li>

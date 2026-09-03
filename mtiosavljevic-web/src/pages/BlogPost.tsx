@@ -70,9 +70,9 @@ export default function BlogPostPage() {
           <Link to="/blog" className="font-mono text-[0.65rem] tracking-widest uppercase text-smoke-faint hover:text-signal transition-colors mb-8 inline-block">
             ← Blog
           </Link>
-          {((post as any).blog_categories?.name || post.category) && (
+          {(post.blog_categories?.name || post.category) && (
             <div className="font-mono text-[0.65rem] tracking-[0.3em] uppercase text-signal mb-4">
-              {(post as any).blog_categories?.name || post.category}
+              {post.blog_categories?.name || post.category}
             </div>
           )}
           <h1

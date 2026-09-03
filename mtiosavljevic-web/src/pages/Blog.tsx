@@ -4,7 +4,7 @@ import { supabase } from '@/lib/supabase'
 import type { BlogPost } from '@/lib/supabase'
 import { getSsrData } from '@/lib/ssr-data'
 
-const catOf = (p: BlogPost) => (p as { blog_categories?: { name?: string } }).blog_categories?.name || p.category
+const catOf = (p: BlogPost) => p.blog_categories?.name || p.category
 const uniqueCats = (rows: BlogPost[]) => Array.from(new Set(rows.map(catOf).filter(Boolean))) as string[]
 
 export default function Blog() {
@@ -24,7 +24,7 @@ export default function Blog() {
       .then(({ data }) => {
         if (data?.length) {
           setPosts(data as BlogPost[])
-          const cats = Array.from(new Set(data.map((p: any) => p.blog_categories?.name || p.category).filter(Boolean))) as string[]
+          const cats = uniqueCats(data as BlogPost[])
           setCategories(cats)
         }
         setLoading(false)
@@ -121,9 +121,9 @@ export default function Blog() {
 
                   {/* Content */}
                   <div className="flex-1 min-w-0">
-                    {(post as any).blog_categories?.name || post.category ? (
+                    {catOf(post) ? (
                       <span className="font-mono text-[0.6rem] tracking-widest uppercase text-signal mb-2 block">
-                        {(post as any).blog_categories?.name || post.category}
+                        {catOf(post)}
                       </span>
                     ) : null}
                     <h2 className="font-mono text-smoke text-lg leading-snug mb-2 group-hover:text-signal transition-colors">

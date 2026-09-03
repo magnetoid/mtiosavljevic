@@ -172,9 +172,9 @@ export default function Contact() {
           <div className="lg:col-span-2 flex flex-col gap-10">
             <div>
               <p className="font-mono text-[0.6rem] tracking-[0.2em] uppercase text-signal mb-4">Direct contact</p>
-              <a href="mailto:marko.tiosavljevic@gmail.com"
+              <a href="mailto:marko@mtiosavljevic.com"
                 className="font-mono text-sm text-smoke hover:text-signal transition-colors block">
-                marko.tiosavljevic@gmail.com
+                marko@mtiosavljevic.com
               </a>
             </div>
 

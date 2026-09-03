@@ -58,8 +58,8 @@ export default function Footer() {
         <div>
           <p className="font-mono text-[0.75rem] tracking-[0.18em] uppercase text-smoke-dim mb-4">Contact</p>
           <div className="flex flex-col gap-3 text-sm text-smoke-dim">
-            <a href="mailto:marko.tiosavljevic@gmail.com" className="hover:text-signal transition-colors">
-              marko.tiosavljevic@gmail.com
+            <a href="mailto:marko@mtiosavljevic.com" className="hover:text-signal transition-colors">
+              marko@mtiosavljevic.com
             </a>
             <Link
               to="/contact"

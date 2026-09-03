@@ -1,4 +1,5 @@
 import { Routes, Route } from 'react-router-dom'
+import { lazy, Suspense } from 'react'
 import Nav from '@/components/Nav'
 import Footer from '@/components/Footer'
 import Home from '@/pages/Home'
@@ -7,20 +8,23 @@ import BlogPost from '@/pages/BlogPost'
 import Projects from '@/pages/Projects'
 import Contact from '@/pages/Contact'
 import ProjectPage from '@/pages/projects/ProjectPage'
-import AdminLayout from '@/admin/AdminLayout'
-import AdminLanding from '@/admin/AdminLanding'
-import Dashboard from '@/admin/Dashboard'
-import BlogAdmin from '@/admin/BlogAdmin'
-import QuoteRequests from '@/admin/QuoteRequests'
-import MediaAdmin from '@/admin/MediaAdmin'
-import BlogCategoriesAdmin from '@/admin/BlogCategoriesAdmin'
-import ImportAdmin from '@/admin/ImportAdmin'
-import TranslationsAdmin from '@/admin/TranslationsAdmin'
-import PortfolioAdmin from '@/admin/PortfolioAdmin'
-import HeroVideosAdmin from '@/admin/HeroVideosAdmin'
-import TestimonialsAdmin from '@/admin/TestimonialsAdmin'
-import SeoAdmin from '@/admin/SeoAdmin'
-import CRMLauncher from '@/admin/crm/CRMLauncher'
+
+// Admin is behind a login and never prerendered, so it is split out of the main
+// bundle — public visitors no longer download Tiptap and the CRM.
+const AdminLayout = lazy(() => import('@/admin/AdminLayout'))
+const AdminLanding = lazy(() => import('@/admin/AdminLanding'))
+const Dashboard = lazy(() => import('@/admin/Dashboard'))
+const BlogAdmin = lazy(() => import('@/admin/BlogAdmin'))
+const QuoteRequests = lazy(() => import('@/admin/QuoteRequests'))
+const MediaAdmin = lazy(() => import('@/admin/MediaAdmin'))
+const BlogCategoriesAdmin = lazy(() => import('@/admin/BlogCategoriesAdmin'))
+const ImportAdmin = lazy(() => import('@/admin/ImportAdmin'))
+const TranslationsAdmin = lazy(() => import('@/admin/TranslationsAdmin'))
+const PortfolioAdmin = lazy(() => import('@/admin/PortfolioAdmin'))
+const HeroVideosAdmin = lazy(() => import('@/admin/HeroVideosAdmin'))
+const TestimonialsAdmin = lazy(() => import('@/admin/TestimonialsAdmin'))
+const SeoAdmin = lazy(() => import('@/admin/SeoAdmin'))
+const CRMLauncher = lazy(() => import('@/admin/crm/CRMLauncher'))
 
 function PublicLayout({ children }: { children: React.ReactNode }) {
   return (
@@ -30,6 +34,14 @@ function PublicLayout({ children }: { children: React.ReactNode }) {
       <main id="main-content">{children}</main>
       <Footer />
     </>
+  )
+}
+
+function AdminLoading() {
+  return (
+    <div className="min-h-screen flex items-center justify-center bg-ink">
+      <p className="font-mono text-sm text-smoke-dim">Loading…</p>
+    </div>
   )
 }
 
@@ -45,7 +57,7 @@ export default function App() {
       <Route path="/contact" element={<PublicLayout><Contact /></PublicLayout>} />
 
       {/* Admin */}
-      <Route path="/admin" element={<AdminLayout />}>
+      <Route path="/admin" element={<Suspense fallback={<AdminLoading />}><AdminLayout /></Suspense>}>
         <Route index element={<AdminLanding />} />
         <Route path="dashboard" element={<Dashboard />} />
         <Route path="hero-videos" element={<HeroVideosAdmin />} />

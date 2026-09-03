@@ -91,7 +91,7 @@ services:
       SMTP_SECURE: ${SMTP_SECURE:-false}
       SMTP_USER: ${SMTP_USER:-}
       SMTP_PASS: ${SMTP_PASS:-}
-      CONTACT_NOTIFY_TO: ${CONTACT_NOTIFY_TO:-marko.tiosavljevic@gmail.com}
+      CONTACT_NOTIFY_TO: ${CONTACT_NOTIFY_TO:-marko@mtiosavljevic.com}
       CONTACT_NOTIFY_FROM: ${CONTACT_NOTIFY_FROM:-}
       POLL_INTERVAL_SECONDS: ${POLL_INTERVAL_SECONDS:-60}
       MAX_ATTEMPTS: ${MAX_ATTEMPTS:-5}
@@ -171,12 +171,12 @@ services:
       GOTRUE_JWT_SECRET: ${JWT_SECRET:-your-super-secret-jwt-key-min-32-chars}
       GOTRUE_EXTERNAL_EMAIL_ENABLED: "true"
       GOTRUE_MAILER_AUTOCONFIRM: ${MAILER_AUTOCONFIRM:-true}
-      GOTRUE_SMTP_ADMIN_EMAIL: ${SMTP_ADMIN_EMAIL:-marko.tiosavljevic@gmail.com}
-      GOTRUE_SMTP_HOST: ${SMTP_HOST:-smtp.gmail.com}
+      GOTRUE_SMTP_ADMIN_EMAIL: ${SMTP_ADMIN_EMAIL:-marko@mtiosavljevic.com}
+      GOTRUE_SMTP_HOST: ${SMTP_HOST:-mail.mtiosavljevic.com}
       GOTRUE_SMTP_PORT: ${SMTP_PORT:-587}
       GOTRUE_SMTP_USER: ${SMTP_USER:-}
       GOTRUE_SMTP_PASS: ${SMTP_PASS:-}
-      GOTRUE_SMTP_SENDER_NAME: ${SMTP_SENDER_NAME:-Marko Tiosavljevic}
+      GOTRUE_SMTP_SENDER_NAME: ${SMTP_SENDER_NAME:-Marko Tiosavljević}
     ports:
       - "127.0.0.1:${AUTH_PORT:-9144}:9999"
     labels:

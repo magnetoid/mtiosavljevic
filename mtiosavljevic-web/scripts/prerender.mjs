@@ -114,6 +114,15 @@ for (const route of ROUTES) {
   written++
 }
 
+/**
+ * Routes that are not prerendered — /admin, /blog/:slug, anything unknown — fall
+ * through to this shell. It must keep an EMPTY #root: serving the prerendered
+ * homepage as the fallback made React hydrate an admin or article page over the
+ * homepage's markup, which mismatched and threw the whole tree away.
+ */
+await fs.writeFile(path.join(dist, 'app.html'), template)
+console.log('  wrote        app.html   (empty-shell SPA fallback)')
+
 // The server bundle is a build artifact, not something to deploy.
 await fs.rm(path.join(dist, 'server'), { recursive: true, force: true })
 console.log(`\n  ${written} routes prerendered`)

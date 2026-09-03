@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef, useCallback } from 'react'
+import { useState, useEffect, useRef } from 'react'
 import { supabase } from '@/lib/supabase'
 import type { MediaFile } from '@/lib/supabase'
 import { Button } from '@/components/ui/button'
@@ -88,11 +88,13 @@ export default function MediaAdmin() {
     if (e.target.files) uploadFiles(e.target.files)
   }
 
-  const handleDrop = useCallback((e: React.DragEvent) => {
+  // Plain function: the empty dep array froze uploadFiles at its first render,
+  // and this handler is only attached to a div, so it needs no stable identity.
+  function handleDrop(e: React.DragEvent) {
     e.preventDefault()
     setDragging(false)
     if (e.dataTransfer.files) uploadFiles(e.dataTransfer.files)
-  }, [])
+  }
 
   function selectFile(f: MediaFile) {
     setSelected(f)

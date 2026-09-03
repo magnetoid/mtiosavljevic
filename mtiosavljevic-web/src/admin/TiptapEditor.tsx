@@ -39,7 +39,7 @@ export default function TiptapEditor({ value, onChange, placeholder = 'Write you
     if (editor && value !== editor.getHTML()) {
       editor.commands.setContent(value || '')
     }
-  }, [value])
+  }, [value, editor])
 
   if (!editor) return null
 
