@@ -66,6 +66,36 @@ services:
       - "traefik.http.middlewares.mtio-redirect-https.redirectscheme.scheme=https"
       - "traefik.http.middlewares.mtio-redirect-https.redirectscheme.permanent=true"
 
+  # ── Contact-form notifier ─────────────────────────────────
+  # Emails new quote_requests over the server's SMTP. Before this, the contact
+  # form wrote to the database and notified nobody.
+  mtio-mailer:
+    build:
+      context: ./services/contact-mailer
+      dockerfile: Dockerfile
+    container_name: mtio-mailer
+    restart: unless-stopped
+    networks:
+      - mtio-net
+    depends_on:
+      mtio-db:
+        condition: service_healthy
+    environment:
+      # Internal only — never leaves the Docker network.
+      SUPABASE_URL: http://mtio-kong:8000
+      SUPABASE_SERVICE_KEY: ${SUPABASE_SERVICE_KEY:-your-service-key}
+      APP_DOMAIN: ${APP_DOMAIN:-mtiosavljevic.com}
+      # The server's SMTP. Set these in Coolify.
+      SMTP_HOST: ${SMTP_HOST:-}
+      SMTP_PORT: ${SMTP_PORT:-587}
+      SMTP_SECURE: ${SMTP_SECURE:-false}
+      SMTP_USER: ${SMTP_USER:-}
+      SMTP_PASS: ${SMTP_PASS:-}
+      CONTACT_NOTIFY_TO: ${CONTACT_NOTIFY_TO:-marko.tiosavljevic@gmail.com}
+      CONTACT_NOTIFY_FROM: ${CONTACT_NOTIFY_FROM:-}
+      POLL_INTERVAL_SECONDS: ${POLL_INTERVAL_SECONDS:-60}
+      MAX_ATTEMPTS: ${MAX_ATTEMPTS:-5}
+
   # ── Supabase PostgreSQL ───────────────────────────────────
   mtio-db:
     image: supabase/postgres:15.1.0.147

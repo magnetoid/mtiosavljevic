@@ -7,7 +7,8 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 This is a single-app repo with two top levels:
 
 - **`mtiosavljevic-web/`** — the Vite + React + TypeScript SPA (frontend **and** admin). Almost all application work happens here. Run `npm` commands from inside this directory.
-- **Repo root** — infrastructure: `docker-compose.yml` (self-hosted Supabase stack), `migrations/` (versioned SQL), `scripts/` (migration runner, kong config, JWT key gen), and `init.sql`.
+- **Repo root** — infrastructure: `docker-compose.yml` (self-hosted Supabase stack), `migrations/` (versioned SQL), `scripts/` (migration runner, kong config, JWT key gen), `services/` (small sidecars), and `init.sql`.
+- **`services/contact-mailer/`** — Node sidecar that emails new `quote_requests` over the server's SMTP and stamps `notified_at`. Runs as the `mtio-mailer` compose service. See its README for the SMTP env vars.
 
 Note: package/README metadata still references the project's prior identities ("imba-production-web", "woopulse-web"). The deployed product is **mtiosavljevic** — a video-production agency site with a self-hosted CMS + AI CRM.
 
@@ -22,7 +23,13 @@ npm run lint       # eslint, --max-warnings 0 (zero-warning policy)
 npm run preview    # serve the production build
 ```
 
-There is **no test suite** — verify changes via `npm run build` (catches type errors) and `npm run lint`.
+There is **no test suite** — verify changes via `npm run build` (catches type errors). Note `npm run lint` currently fails: **there is no ESLint config file in the repo**, so the zero-warning policy is unenforceable until one is added.
+
+`npm run build` does four things: `tsc`, the client build, an SSR build of `src/entry-server.tsx`, and `node scripts/prerender.mjs`, which renders `/`, `/projects`, `/blog` and `/contact` to static HTML in `dist/`. The site was previously a bare SPA that served crawlers an empty `<div id="root">`. If you add a public route, add it to `ROUTES` in that script.
+
+**Env lives at the repo root, not in the package.** `vite.config.ts` sets `envDir` to `..` so Vite loads `./.env.production`. Without that, `VITE_SUPABASE_ANON_KEY` is undefined and `lib/supabase.ts` silently falls back to the string `'placeholder'` — which is what shipped to production and made every PostgREST request 401.
+
+**Secrets.** `.env.production` is gitignored and must stay that way; it was previously committed to this public repo. `node scripts/generate-jwt-keys.js out.env --from .env.production` mints a fresh `JWT_SECRET`, `POSTGRES_PASSWORD` and correctly-signed anon/service JWTs. Rotating `JWT_SECRET` invalidates the anon key baked into `dist/`, so the frontend must be rebuilt and redeployed in the same window.
 
 ### Database migrations (from repo root)
 
@@ -73,5 +80,7 @@ The CRM modules under [src/admin/crm/](mtiosavljevic-web/src/admin/crm/) call th
 - Brand fonts: Cormorant Garamond (display) + DM Mono (mono accents).
 
 ## Deployment
+
+**`dist/` is committed and the web Dockerfile copies it — it does not build.** So `npm run build` must be run and `dist/` committed before every deploy, or the live site silently serves stale prerendered HTML.
 
 Built as a Docker image ([mtiosavljevic-web/Dockerfile](mtiosavljevic-web/Dockerfile)) served by nginx, deployed via the root `docker-compose.yml` on Coolify/Hetzner. The compose stack runs the full self-hosted Supabase set (`mtio-db`, `mtio-rest`, `mtio-auth`, `mtio-storage`, `mtio-kong`, `mtio-studio`, `mtio-meta`) plus Redis and the web container, fronted by Traefik for TLS. Coolify deploys on push to `main`.

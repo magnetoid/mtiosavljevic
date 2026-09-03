@@ -68,22 +68,22 @@ export default function Home() {
       <section className="pt-40 pb-28 px-6 lg:px-12">
         <div className="max-w-screen-xl mx-auto">
           <p
-            className="font-mono text-smoke mb-3"
-            style={{ fontSize: 'clamp(1.5rem, 3.4vw, 2.6rem)', lineHeight: 1.1 }}
+            className="font-mono font-light text-smoke mb-4"
+            style={{ fontSize: 'clamp(2.6rem, 5.5vw, 5rem)', lineHeight: 1.05 }}
           >
             Marko Tiosavljević
           </p>
           <p
             className="font-mono mb-12"
-            style={{ fontSize: 'clamp(0.95rem, 1.5vw, 1.25rem)', lineHeight: 1.5 }}
+            style={{ fontSize: 'clamp(1rem, 1.7vw, 1.4rem)', lineHeight: 1.5 }}
           >
             <span className="text-signal">AI &amp; LLM scientist</span>
             <span className="text-smoke-dim"> · developer · marketer · tech consultant</span>
           </p>
 
           <h1
-            className="font-mono font-light leading-[1.15] mb-8 text-smoke max-w-4xl"
-            style={{ fontSize: 'clamp(1.9rem, 4vw, 3.2rem)' }}
+            className="font-mono font-light leading-[1.25] mb-8 text-smoke max-w-3xl"
+            style={{ fontSize: 'clamp(1.35rem, 2.4vw, 1.95rem)' }}
           >
             I build AI systems that reason together, repair themselves, and remember.
           </h1>

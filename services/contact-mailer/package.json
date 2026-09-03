@@ -1,0 +1,10 @@
+{
+  "name": "mtio-contact-mailer",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "description": "Emails new contact-form submissions over the server's SMTP.",
+  "main": "index.js",
+  "scripts": { "start": "node index.js" },
+  "dependencies": { "nodemailer": "^6.9.14" }
+}
