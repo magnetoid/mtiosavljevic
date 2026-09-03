@@ -37,11 +37,19 @@ const FROM = env('CONTACT_NOTIFY_FROM') || env('SMTP_USER') || `no-reply@${env('
 const INTERVAL = Number(env('POLL_INTERVAL_SECONDS', '60')) * 1000
 const MAX_ATTEMPTS = Number(env('MAX_ATTEMPTS', '5'))
 
+const SECURE = env('SMTP_SECURE', 'false') === 'true'
+const AUTH = env('SMTP_USER') ? { user: env('SMTP_USER'), pass: env('SMTP_PASS') } : undefined
+
 const transport = nodemailer.createTransport({
   host: env('SMTP_HOST'),
   port: Number(env('SMTP_PORT', '587')),
-  secure: env('SMTP_SECURE', 'false') === 'true',
-  auth: env('SMTP_USER') ? { user: env('SMTP_USER'), pass: env('SMTP_PASS') } : undefined,
+  secure: SECURE,
+  // On 587 the session starts in the clear and upgrades. requireTLS makes the
+  // upgrade mandatory, so credentials are never sent over a plaintext session
+  // if STARTTLS is missing or stripped. Only relaxed for an unauthenticated
+  // local relay, where there is nothing to protect.
+  requireTLS: !SECURE && Boolean(AUTH),
+  auth: AUTH,
 })
 
 const headers = {
